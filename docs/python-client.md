@@ -1,6 +1,6 @@
 # Python client
 
-The Simvue Python client allows users to be easily able to collect metadata, time-series metrics and artifacts from existing Python codes.
+The Simvue Python client allows users to be easily able to capture information such as metadata, metrics and files from the execution of existing Python codes. It can also be used to create a sidecar in order to capture information from an application written in another language.
 
 ## Installation
 
@@ -62,7 +62,7 @@ run.log({'parameter1': 1.2, 'parameter2': 3.5})
 ```
 The argument is a dictionary consisting of the metric names and their values.
 
-The `log` method can be run as many times as necessary, and the time at which it is run each time is recorded.
+The `log` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision.
 
 ### Artifacts
 
@@ -87,12 +87,42 @@ run.folder_details('/tests',
                    tags=['test'],
                    description='My first tests')
 ```
-Each of these are optional so only the required information needs to be set.
+Each of these are optional so only the information required by the user needs to be set.
+
+### Events
+
+Arbitrary text can be logged using the `event` method. These can be used for storing log messages, exceptions or any other useful
+information. For example, 
+```
+try:
+    ...
+except Exception as exc:
+    run.event(exc)
+    ...
+```
+The timestamp at which the `event` method is called is recorded.
 
 ### Alerts
 
 The `add_alert` method can be used to associate an alert with the current run. If the alert definition does not exist it will
-be created. For example, to create a threshold alert:
+be created. The arguments are:
+
+ * `name`: name of the alert
+ * `type`: type of alert, which needs to be one of `is above`, `is below`, `is outside range`, `is inside range`
+ * `metric`: name of the metric to use
+ * `frequency`: how often (in minutes) to calculate the average of the metric
+ * `window`: what time period (in minutes) over which to calculate the average of the metric
+
+In addition, for the case of `is above` and `is below`:
+
+ * `threshold`: threshold
+
+and for `is outside range` and `is inside range`:
+
+ * `range_low`: lower limit of range
+ * `range_high`: upper limit of range
+
+For example, to create a threshold alert:
 ```
 run.add_alert(name='quality too low',
               type='is below',
@@ -120,6 +150,8 @@ To cleanly finish a run:
 ```
 run.close()
 ```
+Any batches of metrics or events not yet sent to the remote server will be sent at this point.
+
 An alternative to this is to use a context manager, for example:
 ```
 with Simvue() as run:
@@ -128,3 +160,5 @@ with Simvue() as run:
    ...
 ```
 In this case it is not necessary to explicitly run `run.close()`.
+
+If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`.
