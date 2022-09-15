@@ -23,7 +23,9 @@ or via environment variables:
 export SIMVUE_URL=
 export SIMVUE_TOKEN=
 ```
-The exact values to use can be obtained most simply from the web UI by clicking **Create new run**.
+Environment variables take precedance over the configuration file.
+
+The exact values to use can be obtained from the web UI by clicking **Create new run**.
 
 ## Usage
 
