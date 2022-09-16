@@ -58,13 +58,13 @@ run.init(name='my-first-run',
 
 ### Metrics
 
-To log time-series metrics use the `log` method, for example:
+To log time-series metrics use the `log_metrics` method, for example:
 ```
-run.log({'parameter1': 1.2, 'parameter2': 3.5})
+run.log_metrics({'parameter1': 1.2, 'parameter2': 3.5})
 ```
 The argument is a dictionary consisting of the metric names and their values.
 
-The `log` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision.
+The `log_metrics` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision.
 
 ### Artifacts
 
@@ -93,16 +93,16 @@ Each of these are optional so only the information required by the user needs to
 
 ### Events
 
-Arbitrary text can be logged using the `event` method. These can be used for storing log messages, exceptions or any other useful
+Arbitrary text can be logged using the `log_event` method. These can be used for storing log messages, exceptions or any other useful
 information. For example, 
 ```
 try:
     ...
 except Exception as exc:
-    run.event(exc)
+    run.log_event(exc)
     ...
 ```
-The timestamp at which the `event` method is called is recorded.
+The timestamp at which the `log_event` method is called is recorded.
 
 ### Alerts
 
