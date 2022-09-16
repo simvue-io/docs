@@ -114,6 +114,7 @@ be created. The arguments are:
  * `metric`: name of the metric to use
  * `frequency`: how often (in minutes) to calculate the average of the metric
  * `window`: what time period (in minutes) over which to calculate the average of the metric
+ * `notification`: either `none` or `email`
 
 In addition, for the case of `is above` and `is below`:
 
@@ -146,6 +147,8 @@ run.add_alert(name='density invalid',
               range_high=5.0)
 ```
 In this case, if the 1-minute average of the `density`, calculated at 1-minute intervals, goes below 1.0 or above 5.0 the alert will be triggered.
+
+If `notification` is set to `email` an email will be sent to the user when the alert first goes critical.
 
 ### Ending the run
 To cleanly finish a run:
