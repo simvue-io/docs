@@ -114,7 +114,7 @@ be created. The arguments are:
  * `metric`: name of the metric to use
  * `frequency`: how often (in minutes) to calculate the average of the metric
  * `window`: what time period (in minutes) over which to calculate the average of the metric
- * `notification`: either `none` or `email`
+ * `notification`: type of notification, either `none` or `email`
 
 In addition, for the case of `is above` and `is below`:
 
