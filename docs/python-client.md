@@ -79,6 +79,9 @@ For example:
 run.save('data.png', 'output')
 ```
 
+An optional `filetype` argument can be used to specify the MIME type of the file. By default the MIME type is determined
+autoatically.
+
 ### Folders
 
 If a new folder is specified in `init` we can use `folder_details` to specify more information about the folder, specifically metdata, tags and a description. For
@@ -94,7 +97,7 @@ Each of these are optional so only the information required by the user needs to
 ### Events
 
 Arbitrary text can be logged using the `log_event` method. These can be used for storing log messages, exceptions or any other useful
-information. For example, 
+information. For example:
 ```
 try:
     ...
@@ -103,6 +106,20 @@ except Exception as exc:
     ...
 ```
 The timestamp at which the `log_event` method is called is recorded.
+
+#### Python logging module
+
+Logs from the standard [Python logging module](https://docs.python.org/3/library/logging.html) can be captured. This is done
+by adding the `SimvueHandler` to the `logger`, for example:
+```
+from simvue import Simvue, SimvueHandler
+
+run = Simvue()
+run.init()
+
+logger = logging.getLogger(__name__)
+logger.addHandler(SimvueHandler(run))
+```
 
 ### Alerts
 
@@ -114,7 +131,7 @@ be created. The arguments are:
  * `metric`: name of the metric to use
  * `frequency`: how often (in minutes) to calculate the average of the metric
  * `window`: what time period (in minutes) over which to calculate the average of the metric
- * `notification`: type of notification, either `none` or `email`
+ * `notification`: type of notification, either `none` (default) or `email`
 
 In addition, for the case of `is above` and `is below`:
 
@@ -166,4 +183,5 @@ with Simvue() as run:
 ```
 In this case it is not necessary to explicitly run `run.close()`.
 
-If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`.
+If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`. If a code is
+killed by control-c or SIGINT the state will change to `terminated`.
