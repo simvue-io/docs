@@ -42,4 +42,5 @@ can be associated with different folders within the main project folder.
 ### Alerts
 The metrics being collected during the lifetime of a run can have important implications, for example: is it even worth continuning
 running the simulation? Alerts automatically calculate averages of a specified metric over a specified window and frequency, and
-checks if this value falls outside of the specified criteria.
+checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being
+triggered.
