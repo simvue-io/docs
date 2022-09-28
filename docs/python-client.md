@@ -183,5 +183,4 @@ with Simvue() as run:
 ```
 In this case it is not necessary to explicitly run `run.close()`.
 
-If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`. If a code is
-killed by control-c or SIGINT the state will change to `terminated`.
+If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`.
