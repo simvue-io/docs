@@ -89,7 +89,10 @@ run.save('data.png', 'output')
 ```
 
 An optional `filetype` argument can be used to specify the MIME type of the file. By default the MIME type is determined
-autoatically.
+autoatically. For example:
+```
+run.save('in.lj', 'input', 'text/plain')
+```
 
 ### Folders
 
