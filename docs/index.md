@@ -36,7 +36,7 @@ An event is a timestamped text record. Examples include exceptions, errors and o
 Simvue has an arbitrary hierarchical structure of folders allowing users to group runs in different ways. Each folder can have a variety of information associated with it, such as metadata and tags.
 
 For example, a user could make use of folders to separate different
-projects they are working on. In this scenario, the hierarchical nature of folders means that different activities within each project
+projects they are working on. In this scenario the hierarchical nature of folders means that different activities within each project
 can be associated with different folders within the main project folder.
 
 ### Alerts
