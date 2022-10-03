@@ -104,7 +104,7 @@ run.folder_details('/tests',
                    tags=['test'],
                    description='My first tests')
 ```
-Each of these are optional so only the information required by the user needs to be set.
+All of these are optional so only the information required by the user needs to be set.
 
 ### Events
 
