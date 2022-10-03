@@ -64,7 +64,16 @@ run.log_metrics({'parameter1': 1.2, 'parameter2': 3.5})
 ```
 The argument is a dictionary consisting of the metric names and their values.
 
-The `log_metrics` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision.
+The `log_metrics` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision. The
+timestamp can be overriden if necessary, for example if the metrics are being extracted from another source with its own timestamps. For example:
+```
+run.log_metrics({'parameter1': 1.2}, timestamp='2021-05-03 14:13:27.281920')
+```
+In addition to the timestamp the relative time since `init()` was called is also recorded. The relative time can be set manually if needed, e.g.:
+```
+run.log_metrics({'parameter1': 1.2}, time=time)
+```
+where here `time` is a floating point number.
 
 ### Artifacts
 
@@ -105,7 +114,10 @@ except Exception as exc:
     run.log_event(exc)
     ...
 ```
-The timestamp at which the `log_event` method is called is recorded.
+The timestamp at which the `log_event` method is called is recorded, and similar to metrics this can be overriden if necessary, for example:
+```
+run.log_event(message, timestamp='2022-01-03 16:42:30.849617')
+```
 
 #### Python logging module
 
