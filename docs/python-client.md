@@ -202,7 +202,8 @@ If a code crashes without calling `close()` after a few minutes the state of the
 
 ## Configuration
 
-The `config` method can be used to set some configuration options.
+The `config` method can be used to set some configuration options. It should be called before calling `init`.
 
 * `suppress_errors`: if set to `True` problems with the Simvue client will trigger exceptions. By default this is `False`.
 * `queue_blocking`: when set to `True` the metrics and events queues will block if they become full. By default this is `False`, meaning that metrics and/or events will be silently dropped if either of the queues fills.
+* `queue_size`: maximum numbers of items which can be stored in the metrics and events queues. The default is 10000. For extremely high-frequency metrics or events it might be necessary to increase this number.
