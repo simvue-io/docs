@@ -27,7 +27,7 @@ Environment variables take precedance over the configuration file.
 
 The exact values to use can be obtained from the web UI by clicking **Create new run**.
 
-## Usage
+## Tracking simulations
 
 ### Initialisation
 
@@ -221,10 +221,53 @@ In this case it is not necessary to explicitly run `run.close()`.
 
 If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`.
 
-## Configuration
+### Configuration
 
 The `config` method can be used to set some configuration options. It should be called before calling `init`.
 
 * `suppress_errors`: if set to `True` problems with the Simvue client will trigger exceptions. By default this is `False`, ensuring that the main application can run successfully even in the event of misconfiguration or problems with the monitoring.
 * `queue_blocking`: when set to `True` the metrics and events queues will block if they become full. By default this is `False`, meaning that metrics and/or events will be silently dropped if either of the queues fills.
 * `queue_size`: maximum numbers of items which can be stored in the metrics and events queues. The default is 10000. For extremely high-frequency metrics or events it might be necessary to increase this number.
+
+## Querying existing runs and obtaining existing data
+
+The Simvue Python client can also be used for querying existing runs and downloading data from existing runs. In this case the `init`
+method does not need to be called.
+
+### Listing artifacts associated with a run
+
+The method `list_artifacts(run, category=None)` can be used to obtain a list of artifacts associated with an existing run. By default
+all artifacts are listed but the `category` argument can be used to specify either `input`, `output` or `code` if needed.
+
+For example, assuming the variable `run_name` is set to the name of the run:
+```
+client = Simvue()
+artifacts = client.list_artifacts(run_name, category='input')
+```
+will create an array `artifacts` listing all input files associated with run `run_name`.
+
+### Downloading a single artifact
+
+The method `get_artifact_as_file` can be used to download a single artifact from an exsting run. For example:
+```
+client.get_artifact_as_file(run_name, artifact_name, path='/tmp')
+```
+will download `artifact_name` from run `run_name` into `tmp`. If a path is not provided the file will be downloaded into the current working directory.
+
+### Downloading multiple artifacts
+
+The method `get_artifacts_as_files` can be used to download multiple artifacts from an existing run. For example:
+```
+client.get_artifacts_as_files(run_name, path='/tmp')
+```
+will download all artifacts from run `run_name` into `/tmp`. A category can be specified in order to restrict which files are
+downloaded, for example:
+```
+client.get_artifacts_as_files(run_name, path='/tmp', category=`output`)
+```
+There are additional optional arguments for further restricting what files are downloaded:
+* `startswith`: only files which begin with the specified text will be downloaded,
+* `contains`: only files which contain the specified text will be downloaded,
+* `endswith`: only files which end with the specified text will be downloaded.
+
+These can be combined with specification of a `property`.
