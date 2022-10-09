@@ -270,4 +270,4 @@ There are additional optional arguments for further restricting what files are d
 * `contains`: only files which contain the specified text will be downloaded,
 * `endswith`: only files which end with the specified text will be downloaded.
 
-These can be combined with specification of a `property`.
+These can be combined with specification of a `category`.
