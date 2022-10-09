@@ -110,7 +110,7 @@ in the directory will be set to the same MIME type.
 For example, suppose you have a directory `system` containing the following files: `blockMeshDict`, `controlDict`, `fvSchemes`,
 `fvSolution`, `meshQualityDict`, `snappyHexMeshDict` and `surfaceFeaturesDict`. Using:
 ```
-run.save_directory(system, 'input', preserve_path=True)
+run.save_directory('system', 'input', preserve_path=True)
 ```
 will result in 7 artifacts being uploaded with names `system/blockMeshDict`, `system/controlDict`, `system/fvSchemes`,
 `system/fvSolution`, `system/meshQualityDict`, `system/snappyHexMeshDict` and `system/surfaceFeaturesDict`
