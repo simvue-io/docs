@@ -56,6 +56,17 @@ run.init(name='my-first-run',
          folder='/tests')
 ```
 
+### Updating tags and metadata
+
+In some situations it may be useful to update tags or metadata at later points in the lifetime of a run, not just the start. A simple example could be adding a tag `unconverged` if a simulation fails to converge:
+```
+run.update_tags(['unconverged'])
+```
+Metadata can be added in a similar way, for example:
+```
+run.update_metadata({'status': 'unconverged'})
+```
+
 ### Metrics
 
 To log time-series metrics use the `log_metrics` method, for example:
