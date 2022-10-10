@@ -282,7 +282,7 @@ There are additional optional arguments for further restricting what files are d
 * `contains`: only files which contain the specified text,
 * `endswith`: only files which end with the specified text.
 
-These can be combined with specification of a `category`. For example, to download all input files starting with `system`':
+These can be combined with specification of a `category`. For example, to download all input files starting with `system/`:
 ```
 client.get_artifacts_as_files(run_name, category='input', startswith='system/')
 ```
