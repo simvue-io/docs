@@ -278,8 +278,8 @@ client.get_artifacts_as_files(run_name, path='/tmp', category=`output`)
 ```
 There are additional optional arguments for further restricting what files are downloaded:
 
-* `startswith`: only files which begin with the specified text will be downloaded,
-* `contains`: only files which contain the specified text will be downloaded,
-* `endswith`: only files which end with the specified text will be downloaded.
+* `startswith`: only files which begin with the specified text,
+* `contains`: only files which contain the specified text,
+* `endswith`: only files which end with the specified text.
 
 These can be combined with specification of a `category`.
