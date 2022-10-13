@@ -126,6 +126,15 @@ run.save_directory('system', 'input', preserve_path=True)
 will result in 7 artifacts being uploaded with names `system/blockMeshDict`, `system/controlDict`, `system/fvSchemes`,
 `system/fvSolution`, `system/meshQualityDict`, `system/snappyHexMeshDict` and `system/surfaceFeaturesDict`
 
+#### List of files and/or directories
+
+A list of a combination of files and directories can be provided using the `save_all` method, providing a simple way for saving a group
+of files and/or directories. For example:
+```
+run.save_all(['file1', 'file2', 'directory1'], 'input', preserve_path=True)
+```
+will save the files `file1` and `file2` in addition to the directory `directory1`.
+
 ### Folders
 
 If a new folder is specified in `init` we can use `folder_details` to specify more information about the folder, specifically metdata, tags and a description. For
