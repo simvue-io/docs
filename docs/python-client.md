@@ -272,7 +272,7 @@ The method `get_artifact_as_file` can be used to download a single artifact from
 ```
 client.get_artifact_as_file(run_name, artifact_name, path='/tmp')
 ```
-will download `artifact_name` from run `run_name` into `tmp`. If a path is not provided the file will be downloaded into the current working directory.
+will download `artifact_name` from run `run_name` into `/tmp`. If a path is not provided the file will be downloaded into the current working directory.
 
 ### Downloading multiple artifacts
 
