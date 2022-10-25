@@ -1,8 +1,30 @@
-site_name: Simvue Documentation
+site_name: Simvue
 theme:
   name: material
+  features:
+    - navigation.tabs
 nav:
-  - index.md
-  - python-client.md
-  - examples.md
-  - faq.md
+  - Overview:
+    - Welcome: index.md
+    - Concepts: concepts.md
+  - Python client:
+    - Getting started: python-client/getting-started.md
+    - Tracking simulations: python-client/tracking-simulations.md
+    - Folders: python-client/folders.md
+    - Metrics: python-client/metrics.md
+    - Events: python-client/events.md
+    - Artifacts: python-client/artifacts.md
+    - Alerts: python-client/alerts.md
+    - Logging handler: python-client/logging-handler.md
+    - Configuration: python-client/configuration.md
+  - FAQ:
+    - General: faq/general.md
+repo_url: https://github.com/simvue-io
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
