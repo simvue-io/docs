@@ -1,6 +1,7 @@
 # Getting started
 
-The Simvue Python client allows users to be easily able to capture information such as metadata, metrics and files from the execution of existing Python codes. It can also be used to create a sidecar in order to capture information from an application written in another language.
+The Simvue Python client allows users to be easily able to capture information such as metadata, metrics and files from the execution of existing Python codes. It can also be used to create an application to run in parallel to a simulation code written in another language, collecting
+metrics from log files.
 
 ## Installation
 
