@@ -20,6 +20,7 @@ nav:
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
+edit_uri: ""
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
