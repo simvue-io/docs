@@ -18,12 +18,15 @@ nav:
     - Logging handler: python-client/logging-handler.md
     - Configuration: python-client/configuration.md
     - Obtaining data: python-client/obtaining-data.md
+  - Examples:
+    - Basic Tensorflow: examples/basic-tensorflow.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
   - admonition
+  - def_list
   - attr_list
   - md_in_html
   - pymdownx.details

@@ -1,0 +1,71 @@
+# Basic Tensorflow example
+
+This example demonstrates using Simvue to track a simple Python code, in particular:
+
+- Collecting some metadata,
+- Saving the Python script,
+- Logging some metrics while the training is running,
+- Adding some additional metadata containing the final values of the metrics.
+
+The code is based on the dynamic recurrent neural network example from [here](https://github.com/aymericdamien/TensorFlow-Examples/).
+
+## Running the code
+
+To run this example, firstly clone the Simvue client GitHub repository:
+```
+git clone https://github.com/simvue-io/client
+cd client/examples
+```
+Create a virtual environment:
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+Install the required dependencies:
+```
+pip install --upgrade pip
+pip install tensorflow simvue
+```
+Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in your home directory. Click on `Create new run`
+in the UI for more information.
+
+Run the code:
+```
+python3 dynamic_rnn.py
+```
+
+## Explanation
+
+To begin with we import the required class:
+```
+from simvue import Run
+```
+We next initialise the run and specify metadata:
+```
+run = Run()
+run.init(metadata={'dataset.num_classes': num_classes,
+                   'dataset.seq_max_len': seq_max_len,
+                   'dataset.seq_min_len': seq_min_len,
+                   'dataset.masking_val': masking_val,
+                   'training.learning_rate': learning_rate,
+                   'training.training_steps': training_steps,
+                   'training.batch_size': batch_size,
+                   'network.num_units': num_units})
+```
+The Python code itself is saved:
+```
+run.save('dynamic_rnn.py', 'code')
+```
+During the part of the code which carries out the training we log metrics:
+```
+run.log_metrics({'loss': float(loss), 'accuracy': float(acc)})
+```
+Once the training has completed we add some metadata specifying the final values of the metrics:
+```
+run.update_metadata({'loss': float(loss), 'accuracy': float(acc)})
+```
+
+Finally we finish the run:
+```
+run.close()
+```
