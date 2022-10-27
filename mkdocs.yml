@@ -10,13 +10,13 @@ nav:
   - Tracking simulations:
     - Getting started: python-client/getting-started.md
     - Overview: python-client/overview.md
+    - Configuration: python-client/configuration.md
     - Folders: python-client/folders.md
     - Metrics: python-client/metrics.md
     - Events: python-client/events.md
     - Artifacts: python-client/artifacts.md
     - Alerts: python-client/alerts.md
     - Logging handler: python-client/logging-handler.md
-    - Configuration: python-client/configuration.md
     - Obtaining data: python-client/obtaining-data.md
   - Examples:
     - Basic Tensorflow: examples/basic-tensorflow.md
