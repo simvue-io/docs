@@ -24,6 +24,8 @@ repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences:
       custom_fences:
