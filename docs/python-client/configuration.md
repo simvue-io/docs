@@ -8,8 +8,8 @@ The `config` method can be used to set some configuration options. It should be 
 
 Example:
 ```
-from simvue import Simvue
-run = Simvue()
+from simvue import Run
+run = Run()
 run.config(queue_blocking=True, queue_size=20000)
 run.init()
 ```

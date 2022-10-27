@@ -3,9 +3,9 @@
 Logs from the standard [Python logging module](https://docs.python.org/3/library/logging.html) can be captured. This is done
 by adding the Simvue `Handler` to the `logger`, for example:
 ```
-from simvue import Simvue, Handler
+from simvue import Run, Handler
 
-run = Simvue()
+run = Run()
 run.init()
 
 logger = logging.getLogger(__name__)

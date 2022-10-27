@@ -4,12 +4,12 @@ theme:
   features:
     - navigation.tabs
 nav:
-  - Overview:
+  - Home:
     - Welcome: index.md
     - Concepts: concepts.md
-  - Python client:
+  - Tracking simulations:
     - Getting started: python-client/getting-started.md
-    - Tracking simulations: python-client/tracking-simulations.md
+    - Overview: python-client/overview.md
     - Folders: python-client/folders.md
     - Metrics: python-client/metrics.md
     - Events: python-client/events.md
@@ -17,11 +17,14 @@ nav:
     - Alerts: python-client/alerts.md
     - Logging handler: python-client/logging-handler.md
     - Configuration: python-client/configuration.md
+    - Obtaining data: python-client/obtaining-data.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

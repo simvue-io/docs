@@ -1,6 +1,7 @@
 # Getting started
 
-The Simvue Python client allows users to be easily able to capture information such as metadata, metrics and files from the execution of existing Python codes. It can also be used to create an application to run in parallel to a simulation code written in another language, collecting
+The Simvue Python client allows users to be easily able to capture information such as metadata, metrics and files from the execution of existing Python codes. It can also be used to create an application to run in parallel to a simulation code written in another language, for
+example collecting
 metrics from log files.
 
 ## Installation
@@ -27,7 +28,7 @@ Alternatively environment variables can be used:
 export SIMVUE_URL=
 export SIMVUE_TOKEN=
 ```
-Environment variables take precedance over the configuration file.
+This may be preferable for workloads running on cloud native resources. Environment variables take precedance over any configuration files.
 
 The exact values to use can be obtained from the web UI by clicking **Create new run**.
 

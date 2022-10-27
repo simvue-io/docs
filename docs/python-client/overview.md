@@ -1,14 +1,14 @@
-# Tracking simulations
+# Overview
 
 ## Initialisation
 
 Firstly import the required class:
 ```
-from simvue import Simvue
+from simvue import Run
 ```
-and create an instance of the `Simvue` object:
+and create an instance of the Simvue `Run` object:
 ```
-run = Simvue()
+run = Run()
 ```
 The `init` method needs to be called in order to create a run. The following can be specified but all are optional:
 
@@ -35,7 +35,7 @@ Simvue so that they can also be tracked.
 
 Firstly initialise a run with the status set to `created`, e.g.
 ```
-run = Simvue()
+run = Run()
 run.init(name=name, status='created')
 ```
 Any required tags, metadata etc can be provided here too. If you want to use the default randomly-generated name, this can be
@@ -46,7 +46,7 @@ name = run.name
 
 Later, when the simulation can be executed, the `reconnect` method can be used to start the run:
 ```
-run = Simvue()
+run = Run()
 run.reconnect(name)
 ```
 At this point the status of the run is changed to `running` and metrics can be collected.
@@ -75,7 +75,7 @@ Any batches of metrics or events not yet sent to the remote server will be sent 
 
 An alternative to this is to use a context manager, for example:
 ```
-with Simvue() as run:
+with Run() as run:
    run.init(...)
 
    ...
@@ -89,7 +89,7 @@ If a code crashes without calling `close()` after a few minutes the state of the
 Sometimes it may be necessary to create multiple Simvue runs from within a single Python code, for example for a parameter
 scan. One simple way of doing this is to make use of the context manager as mentioned above:
 ```
-with Simvue() as run:
+with Run() as run:
    run.init(...)
 
    ...
