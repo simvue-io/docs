@@ -82,7 +82,8 @@ touch .finished
 
 #------------------------------------------------------------------------------
 ```
-We use a file `.finished` to tell the Python script that the application has finished executing.
+We use a file `.finished` to tell the Python script that the application has finished executing, so that it knows
+when to close the simulation run and send any remaining metrics.
 
 OpenFOAM can then be run as normal:
 ```
