@@ -14,7 +14,7 @@ for example by following these instructions: [https://openfoam.org/download/10-u
         pip3 install simvue
     ```
 
-Copy one of the tutorials into the current directory, e.g.
+Copy one of the tutorials into an appropriate directory, e.g.
 ```
 cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone .
 cd movingCone
