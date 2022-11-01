@@ -31,6 +31,7 @@ nav:
     - Obtaining data: python-client/obtaining-data.md
   - Examples:
     - Basic Tensorflow: examples/basic-tensorflow.md
+    - OpenFOAM: examples/openfoam.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
@@ -46,6 +47,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
   - toc:
       permalink: true
 extra_css:
