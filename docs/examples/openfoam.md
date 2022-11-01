@@ -1,4 +1,6 @@
 # OpenFOAM
+
+## Introduction
 Here we demonstrate using OpenFOAM with Simvue. In this example we will assume OpenFOAM 10 has been pre-installed on a machine,
 for example by following these instructions: [https://openfoam.org/download/10-ubuntu/](https://openfoam.org/download/10-ubuntu/).
 
@@ -14,12 +16,14 @@ for example by following these instructions: [https://openfoam.org/download/10-u
         pip3 install simvue
     ```
 
+## Setup
 Copy one of the tutorials into an appropriate directory, e.g.
 ```
 cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone .
 cd movingCone
 ```
 
+## Integration with Simvue
 Instead of trying to integrate Simvue directly into OpenFOAM, which would probably be a complex task, we note that we can obtain
 useful information from log files. With this example the log file `log.pimpleFoam` has records like this:
 ```
@@ -85,6 +89,7 @@ touch .finished
 We use a file `.finished` to tell the Python script that the application has finished executing, so that it knows
 when to close the simulation run and send any remaining metrics.
 
+## Running OpenFOAM
 OpenFOAM can then be run as normal:
 ```
 ./Allrun
