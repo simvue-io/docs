@@ -69,3 +69,12 @@ Finally we finish the run:
 ```
 run.close()
 ```
+
+## Results
+
+As well as having a record of metadata associated with the training run you can visualize the metrics in real-time,
+for example loss:
+<figure markdown>
+  ![OpenFOAM residuals](images/tensorflow-loss.png){ width="1000" }
+</figure>
+
