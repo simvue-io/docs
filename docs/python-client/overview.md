@@ -18,6 +18,7 @@ The `init` method needs to be called in order to create a run. The following can
  * `description`: plain text description of the run;
  * `folder`: folder for the run. If none is provided the folder is assumed to be `/`. If the folder doesn't already exist it will be created.
  * `status`: if set to `created` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system
+ * `offline`: if set to `True` then no attempts will be made to contact the remote Simvue server, and everything will be written to disk.
 
 For example:
 ```
