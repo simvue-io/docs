@@ -66,7 +66,7 @@ subgraph "worker node"
   style B stroke-dasharray: 5 5
 end
 ```
-A process running as a cron on a login node asynchronously sends all the required metadata, metrics and data to the
+A process (`simvue_sender`) running as a cron on a login node asynchronously sends all the required metadata, metrics and data to the
 Simvue server.
 ``` mermaid
 graph LR
@@ -76,6 +76,8 @@ subgraph "login node"
 end
 C --> D[Simvue server];
 ```
+A single `simvue_sender` is can be used for any number of running tasks being monitored by Simvue.
+
 
 ### Setup
 
