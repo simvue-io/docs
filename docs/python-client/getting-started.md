@@ -78,7 +78,7 @@ end
 B[Filesystem] --> C[Simvue sender];
 C --> D[Simvue server];
 ```
-A single `simvue_sender` is can be used for any number of running tasks being monitored by Simvue.
+A single `simvue_sender` can be used for any number of running tasks being monitored by Simvue.
 
 
 ### Setup
