@@ -62,18 +62,20 @@ with login nodes.
 ``` mermaid
 graph LR
 subgraph "worker node"
-  A[Simvue Python client] --> B[Filesystem];
+  A[Simvue Python client];
   style B stroke-dasharray: 5 5
 end
+A[Simvue Python client] --> B[Filesystem];
 ```
 A process (`simvue_sender`) running as a cron on a login node asynchronously sends all the required metadata, metrics and data to the
 Simvue server.
 ``` mermaid
 graph LR
 subgraph "login node"
-  B[Filesystem] --> C[Simvue sender];
+  C[Simvue sender];
   style B stroke-dasharray: 5 5
 end
+B[Filesystem] --> C[Simvue sender];
 C --> D[Simvue server];
 ```
 A single `simvue_sender` is can be used for any number of running tasks being monitored by Simvue.
