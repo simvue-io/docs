@@ -108,3 +108,7 @@ chmod a+xr $HOME/simvue_sender.sh
 echo "* * * * * $HOME/simvue_sender.sh" | crontab - 
 ```
 
+!!! warning
+
+    Artifacts, e.g. input or output files, can be saved to Simvue when offline is used. However, it is important to note that it is currently
+    assumed that the login node has access to the required files.
