@@ -1,7 +1,7 @@
 # Welcome
 
 <figure markdown>
-  ![Simvue overview](images/overview.png){ width="400" }
+  ![Simvue overview](images/Simvue_overview.png){ width="400" }
 </figure>
 
 Instead of keeping track of simulations or any realtime processing task manually using notebooks and spreadsheets, Simvue helps to automate this
