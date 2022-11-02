@@ -10,6 +10,12 @@ The client can be installed from PyPI:
 ```
 pip install simvue
 ```
+It is usually best to make use of a Python virtual environment, for example run:
+```
+python3 -m venv simvue_venv
+source ./simvue_venv/bin/active
+```
+before running `pip`.
 
 ## Setup
 
@@ -35,4 +41,68 @@ Again, the values to use for the url and token can be obtained from the web UI b
 !!! warning
 
     Do not copy the above examples directly. The correct values of the url and token must be obtained from the web UI.
+
+## Worker nodes without outgoing internet access
+
+Many HPC systems don't provide outgoing internet access from worker nodes. This is a problem for the Simvue Python client by default
+because it needs to connect to a remote REST API.
+
+``` mermaid
+graph LR
+subgraph "worker node"
+  A[Simvue Python client]
+end
+A[Simvue Python client] --> B[Simvue server];
+```
+
+To get around this it is necessary to use the **offline** mode. With this the
+Python client does not attempt to connect to the remote Simvue server, but instead writes everything to a filesystem which is shared
+with login nodes.
+
+``` mermaid
+graph LR
+subgraph "worker node"
+  A[Simvue Python client] --> B[Filesystem];
+  style B stroke-dasharray: 5 5
+end
+```
+A process running as a cron on a login node asynchronously sends all the required metadata, metrics and data to the
+Simvue server.
+``` mermaid
+graph LR
+subgraph "login node"
+  B[Filesystem] --> C[Simvue sender];
+  style B stroke-dasharray: 5 5
+end
+C --> D[Simvue server];
+```
+
+### Setup
+
+Create a `.simvue.ini` file in your home directory as described above, but with an additional `offline` section:
+```
+[server]
+url = https://app.simvue.io
+token = eyJ0eXAi...
+
+[offline]
+cache = /home/username/.simvue
+```
+The path `/home/username/.simvue` should be replaced with an appropriate directory. The directory should be accessible from
+both the login node(s) and worker nodes.
+
+It is also necessary to setup a cron to run the command `simvue_sender` (available from the Simvue Python module) every minute.
+Firstly it is necessary to create a script called `$HOME/simvue_sender.sh`, for example, containing:
+```  sh hl_lines="2 2"
+#!/bin/sh
+source $HOME/simvue_venv/bin/activate
+simvue_sender
+```
+The highlighted line will need to be adjusted as appropriate to point to a virtual environment where the Simvue module is installed.
+
+Then setup a cron to run this script every minute
+```
+chmod a+xr $HOME/simvue_sender.sh
+echo "* * * * * $HOME/simvue_sender.sh" | crontab - 
+```
 
