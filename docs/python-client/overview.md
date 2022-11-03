@@ -96,3 +96,10 @@ with Run() as run:
    ...
 ```
 Each time the above is executed a new Simvue run is created and is automatically closed.
+
+## Disabling monitoring
+
+During testing it might be useful to disable monitoring by Simvue. To do this, use:
+```
+run = Run(disabled=True)
+```
