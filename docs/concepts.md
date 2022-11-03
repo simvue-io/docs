@@ -4,7 +4,8 @@ Before using Simvue it is important to understand some of the core concepts.
 
 ## Run
 
-A run represents the execution of a simulation application. Each run has associated information such as a name,
+A run represents the execution of an application, such as a simulation, processing task or AI/ML training.
+Each run has associated information such as a name,
 description, metadata (key-value pairs) and tags (list of short labels).
 
 ## Metrics
@@ -31,6 +32,14 @@ Simvue has an arbitrary hierarchical structure of folders allowing users to grou
 For example, a user could make use of folders to separate different
 projects they are working on. In this scenario the hierarchical nature of folders means that different activities within each project
 can be associated with different folders within the main project folder.
+
+``` mermaid
+graph LR
+  A[root] --> B[Project A];
+  A --> C[Project B];
+  B --> D[Simulations];
+  B --> E[Surrogate models];
+```
 
 ## Alerts
 The metrics being collected during the lifetime of a run can have important implications, for example: is it even worth continuning
