@@ -83,6 +83,8 @@ A single `simvue_sender` can be used for any number of running tasks being monit
 
 ### Setup
 
+By default the directory `~/.simvue` is used to store data being passed from worker nodes to Simvue, but this can
+be customized if needed.
 Create a `.simvue.ini` file in your home directory as described above, but with an additional `offline` section:
 ```
 [server]
@@ -90,9 +92,9 @@ url = https://app.simvue.io
 token = eyJ0eXAi...
 
 [offline]
-cache = /home/username/.simvue
+cache = /data/username/.simvue
 ```
-The path `/home/username/.simvue` should be replaced with an appropriate directory. The directory should be accessible from
+The path `/data/username/.simvue` should be replaced with an appropriate directory. The directory should be accessible from
 both the login node(s) and worker nodes.
 
 It is also necessary to setup a cron to run the command `simvue_sender` (available from the Simvue Python module) every minute.
