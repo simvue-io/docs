@@ -34,10 +34,10 @@ run.init(name='my-first-run',
 In HPC environments it's normal for jobs to be submitted to a batch system queue. Queued jobs can also be registered with
 Simvue so that they can also be tracked.
 
-Firstly initialise a run with the status set to `created`, e.g.
+Firstly initialise a run with `running` set to `False, i.e.
 ```
 run = Run()
-run.init(name=name, status='created')
+run.init(name=name, running=False)
 ```
 Any required tags, metadata etc can be provided here too. If you want to use the default randomly-generated name, this can be
 retrieved using the `name` property, e.g.
