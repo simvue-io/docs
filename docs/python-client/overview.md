@@ -17,7 +17,7 @@ The `init` method needs to be called in order to create a run. The following can
  * `tags`: tags in the form of a list;
  * `description`: plain text description of the run;
  * `folder`: folder for the run. If none is provided the folder is assumed to be `/`. If the folder doesn't already exist it will be created.
- * `status`: if set to `created` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system
+ * `running`: if set to `False` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system. When the job starts running it is necessary to reconnect to the run (see below).
  * `offline`: if set to `True` then no attempts will be made to contact the remote Simvue server, and everything will be written to disk. This is most useful for HPC worker nodes which have no outgoing network access.
 
 For example:
