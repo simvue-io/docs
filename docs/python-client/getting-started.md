@@ -111,6 +111,8 @@ Then setup a cron to run this script every minute
 chmod a+xr $HOME/simvue_sender.sh
 echo "* * * * * $HOME/simvue_sender.sh" | crontab - 
 ```
+We use a cron rather than permanently running a process since many HPC login nodes have strict limits on the length of time
+processes can run for.
 
 !!! warning
 
