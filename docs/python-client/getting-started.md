@@ -104,9 +104,10 @@ Firstly it is necessary to create a script called `$HOME/simvue_sender.sh`, for 
 source $HOME/simvue_venv/bin/activate
 simvue_sender
 ```
-The highlighted line will need to be adjusted as appropriate to point to a virtual environment where the Simvue module is installed.
+The highlighted line will need to be adjusted as appropriate to point to a virtual environment where the Simvue module is installed
+(see the top of this page).
 
-Then setup a cron to run this script every minute
+Then setup a cron to run this script every minute, for example:
 ```
 chmod a+xr $HOME/simvue_sender.sh
 echo "* * * * * $HOME/simvue_sender.sh" | crontab - 
