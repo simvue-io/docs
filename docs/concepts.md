@@ -6,7 +6,8 @@ Before using Simvue it is important to understand some of the core concepts.
 
 A run represents the execution of an application, such as a simulation, processing task or AI/ML training.
 Each run has associated information such as a name, description, 
-metadata (key-value pairs) and tags (list of short labels).
+metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings,
+and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
 
 ## Metrics
 
