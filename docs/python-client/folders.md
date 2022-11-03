@@ -13,6 +13,8 @@ does not exist already:
 ``` mermaid
 graph LR
   A[root] --> B[tests];
+  style A fill:#A7C7E7,stroke: #A7C7E7;
+  style B fill:#A7C7E7,stroke: #A7C7E7;
 ```
 
 Intermediate folders are created automatically as necessary.
@@ -22,4 +24,8 @@ graph LR
   A[root] --> B[tests];
   B[tests] --> C[test1];
   C --> D[sim];
+  style A fill:#A7C7E7,stroke: #A7C7E7;
+  style B fill:#A7C7E7,stroke: #A7C7E7;
+  style C fill:#A7C7E7,stroke: #A7C7E7;
+  style D fill:#A7C7E7,stroke: #A7C7E7;
 ```
