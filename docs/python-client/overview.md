@@ -13,8 +13,8 @@ run = Run()
 The `init` method needs to be called in order to create a run. The following can be specified but all are optional:
 
  * `name`: name of the run. If no name is provided a name will be genenerated consisting of two random words (in the form adjective-noun);
- * `metadata`: metadata in the form of a dictionary of key-value pairs;
- * `tags`: tags in the form of a list;
+ * `metadata`: metadata in the form of a dictionary of key-value pairs, where the keys are strings and values can be integers, floating point numbers or strings;
+ * `tags`: tags in the form of a list of strings;
  * `description`: plain text description of the run;
  * `folder`: folder for the run. If none is provided the folder is assumed to be `/`. If the folder doesn't already exist it will be created.
  * `running`: if set to `False` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system. When the job starts running it is necessary to reconnect to the run (see below).
