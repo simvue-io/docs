@@ -79,7 +79,7 @@ B[Filesystem] --> C[Simvue sender];
 C --> D[Simvue server];
 ```
 A single `simvue_sender` can be used for any number of running tasks being monitored by Simvue. Note that in offline mode metrics and
-events will not quite be real time (there will be a delay of up to a minute or so), as we send data to Simvue as a cron running 
+events will not quite be real time (there will be a delay of up to a minute or so), as data is sent to the Simvue server as a cron running 
 every minute. A cron is recommended rather than having a continuously running process because HPC login nodes sometimes have 
 restrictions on the maximum run time of processes, e.g. 5 minutes.
 
