@@ -78,7 +78,7 @@ graph LR
   style F fill:#FBEC5D,stroke: #FBEC5D;
 ```
 For any artifact it is possible
-to see it's whole lineage, including all artifacts and runs which were used to generate it.
+to see its whole lineage, including all artifacts and runs which were used to generate it.
 
 ## Events
 
