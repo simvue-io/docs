@@ -33,7 +33,7 @@ graph LR
 ## Metrics
 
 Metrics are floating point measurements which are collected repeatedly over time during the execution of a run. They can be
-visualised in the Simvue web UI or used to notify users in the event of problems (see alerts below).
+visualised in the Simvue web UI in real time or used to notify users in the event of problems (see alerts below).
 
 <figure markdown>
   ![Metrics](images/metrics.png){ width="1000" }
