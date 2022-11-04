@@ -50,7 +50,8 @@ Later, when the simulation can be executed, the `reconnect` method can be used t
 run = Run()
 run.reconnect(name)
 ```
-At this point the status of the run is changed to `running` and metrics can be collected.
+At this point the status of the run is changed to `running` and metrics can be collected. The argument `offline=True` can be added
+to both the `init` and `reconnect` methods for situations where worker nodes don't have outgoing network access.
 
 ## Updating tags and metadata
 

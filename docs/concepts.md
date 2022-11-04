@@ -9,6 +9,27 @@ Each run has associated information such as a name, description,
 metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings,
 and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
 
+## Folder
+
+Simvue has an arbitrary hierarchical structure of folders allowing users to group runs in different ways. Each folder can have a variety of information associated with it, such as metadata and tags.
+
+For example, a user could make use of folders to separate different
+projects they are working on. In this scenario the hierarchical nature of folders means that different activities within each project
+can be associated with different folders within the main project folder.
+
+``` mermaid
+graph LR
+  A[root] --> B[Project A];
+  A --> C[Project B];
+  B --> D[Simulations];
+  B --> E[Surrogate models];
+  style A fill:#A7C7E7,stroke: #A7C7E7;
+  style B fill:#A7C7E7,stroke: #A7C7E7;
+  style C fill:#A7C7E7,stroke: #A7C7E7;
+  style D fill:#A7C7E7,stroke: #A7C7E7;
+  style E fill:#A7C7E7,stroke: #A7C7E7;
+```
+
 ## Metrics
 
 Metrics are floating point measurements which are collected repeatedly over time during the execution of a run. They can be
@@ -54,27 +75,6 @@ graph LR
 ## Events
 
 An event is a timestamped text record. Examples include exceptions, errors and other useful log messages.
-
-## Folder
-
-Simvue has an arbitrary hierarchical structure of folders allowing users to group runs in different ways. Each folder can have a variety of information associated with it, such as metadata and tags.
-
-For example, a user could make use of folders to separate different
-projects they are working on. In this scenario the hierarchical nature of folders means that different activities within each project
-can be associated with different folders within the main project folder.
-
-``` mermaid
-graph LR
-  A[root] --> B[Project A];
-  A --> C[Project B];
-  B --> D[Simulations];
-  B --> E[Surrogate models];
-  style A fill:#A7C7E7,stroke: #A7C7E7;
-  style B fill:#A7C7E7,stroke: #A7C7E7;
-  style C fill:#A7C7E7,stroke: #A7C7E7;
-  style D fill:#A7C7E7,stroke: #A7C7E7;
-  style E fill:#A7C7E7,stroke: #A7C7E7;
-```
 
 ## Alerts
 The metrics being collected during the lifetime of a run can have important implications, for example: is it even worth continuning
