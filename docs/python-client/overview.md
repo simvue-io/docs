@@ -10,6 +10,12 @@ and create an instance of the Simvue `Run` object:
 ```
 run = Run()
 ```
+There is an optional `mode` argument to `Run()` which has the following options:
+
+* `online`: (default) everything is sent directly to the remote Simvue server;
+* `offline`: no attempts will be made to contact the remote Simvue server, and everything will be written to disk. This is most useful for HPC worker nodes which have no outgoing network access;
+* `disabled`: completely disables all monitoring, and as such maybe useful for testing.
+
 The `init` method needs to be called in order to create a run. The following can be specified but all are optional:
 
  * `name`: name of the run. If no name is provided a name will be genenerated consisting of two random words (in the form adjective-noun);
@@ -18,7 +24,6 @@ The `init` method needs to be called in order to create a run. The following can
  * `description`: plain text description of the run;
  * `folder`: folder for the run. If none is provided the folder is assumed to be `/`. If the folder doesn't already exist it will be created.
  * `running`: if set to `False` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system. When the job starts running it is necessary to reconnect to the run (see below).
- * `offline`: if set to `True` then no attempts will be made to contact the remote Simvue server, and everything will be written to disk. This is most useful for HPC worker nodes which have no outgoing network access.
 
 For example:
 ```
@@ -50,8 +55,7 @@ Later, when the simulation can be executed, the `reconnect` method can be used t
 run = Run()
 run.reconnect(name)
 ```
-At this point the status of the run is changed to `running` and metrics can be collected. The argument `offline=True` can be added
-to both the `init` and `reconnect` methods for situations where worker nodes don't have outgoing network access.
+At this point the status of the run is changed to `running` and metrics can be collected.
 
 ## Updating tags and metadata
 
@@ -102,5 +106,5 @@ Each time the above is executed a new Simvue run is created and is automatically
 
 During testing it might be useful to disable monitoring by Simvue. To do this, use:
 ```
-run = Run(disabled=True)
+run = Run(mode='disabled')
 ```
