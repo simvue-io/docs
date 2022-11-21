@@ -184,7 +184,7 @@ will be created.
 | `threshold` | `Union[int, float]`, optional | Threshold to use for a metrics-based alert using `is above` or `is below` |  
 | `range_low` | `Union[int, float]`, optional | Lower limit to use for a metrics-based alert using `is outside range` or `is inside range` |
 | `range_high` | `Union[int, float]`, optional | Upper limit to use for a metrics-based alert using `is outside range` or `is inside range` |  
-| `notification` | `Enum[none, email]` | Type of notification |
+| `notification` | `Enum[none, email]`, optional | Type of notification |
 | `pattern` | `str`, optional | Pattern to search for for the case of an event-based alert |
 
 ## The `Client` class
