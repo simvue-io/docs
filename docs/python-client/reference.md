@@ -59,14 +59,21 @@ Add new tags.
 
 #### `log_metrics()`
 
-Log metrics.
+Log metrics in the form of a dictionary of metrics names and values.
+By default:
+
+* `step` is an integer which starts at zero and increments automatically each time `log_metrics` is called,
+* `time` is the time in seconds since `init` was called,
+* `timestamp` is the current time.
+
+but these can all be overridden if necessary.
 
 **Parameters**
 
 | Name  | Type | Description | 
 | ----- | ---- | ----------- |
 | `metrics` | `Dict[str, Union[int, float]]` | Dictionary containing metric names and values | 
-| `step` | `int`, optional | Step or epoch | Increments automatically each time `log_metrics` is called |
+| `step` | `int`, optional | Step or epoch | 
 | `time` | `float`, optional | Time in seconds |
 | `timestamp` | `YYYY-MM-DDThh:mm:ss.zzzzzzZ`, optional | Timestamp, with up to microsecond precision |
 
