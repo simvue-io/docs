@@ -12,6 +12,17 @@ Gets the name of the run.
 
 ### Methods
 
+#### `Run()`
+
+Creates an instance of the `Run` class. The argument `mode` enables tracking and monitoring to be disabled or set to
+`offline` if being used on worker nodes without outgoing internet access.
+
+**Parameters**
+
+| Name  | Type | Description |
+| ----- | ---- | ------- |
+| mode | `Enum[online, offline, disabled]` | Specify if tracking and monitoring should be disabled or if `offline` mode should be used
+
 #### `init()`
 
 Initialises a run. If a name is not provided a random name will be assigned in the form of `<adjective>-<noun>`.
@@ -25,7 +36,7 @@ Initialises a run. If a name is not provided a random name will be assigned in t
 | `tags` | `List[str]`, optional | List of tags |
 | `description` | `str`, optional | Description |
 | `folder` | `str`, optional | Folder name |
-| `status` | `str`, optional | Initial status |
+| `running` | `Boolean`, optional | Automatically set the run to the `running` state |
 
 #### `reconnect()`
 
@@ -140,7 +151,7 @@ Set the status of a run.
 
 #### `close()`
 
-Close a run. Only needed if a context manager is not used.§
+Close a run. Only needed if a context manager is not used.
 
 #### `set_folder_details()`
 
