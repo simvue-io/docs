@@ -150,20 +150,21 @@ Set metadata, tags and a description for a folder.
 
 #### `add_alert`
 
-Define an alert and add it to the simulation run.
+Define an alert and add it to the simulation run. If the alert is not already defined a new one
+will be created.
 
 **Parameters**
 
-| Name  | Type | Description | Default |
-| ----- | ---- | ----------- | ------- |
-| `name` | `str` | Name |  |
-| `source` | |  |  |
-| `frequency` | |  |  |
-| `window` | |  |  |
-| `rule` | |  |  |
-| `metric` | |  |  |
-| `threshold` | |  |  |
-| `range_low` | |  |  |
-| `range_high` | |  |  |
-| `notification` | |  |  |
-| `pattern` | |  |  |
+| Name  | Type | Description | 
+| ----- | ---- | ----------- |
+| `name` | `str` | Name |  
+| `source` | `Enum[metrics, events]`| Source of the alert, either metrics or events |
+| `frequency` | `int` | How often the alert should be evaulated and checked |  
+| `window` | `int`, optional | Time period to average metrics over |
+| `rule` | `Enum[is above, is below, is outside range, is inside range]`, optional | Rule to use for metrics-based alerts |
+| `metric` | `str`, optional | Metric to use for metrics-based alerts |  
+| `threshold` | `Union[int, float]`, optional | Threshold to use for a metrics-based alert using `is above` or `is below` |  
+| `range_low` | `Union[int, float]`, optional | Lower limit to use for a metrics-based alert using `is outside range` or `is inside range` |
+| `range_high` | `Union[int, float]`, optional | Upper limit to use for a metrics-based alert using `is outside range` or `is inside range` |  
+| `notification` | `Enum[none, email]` | Type of notification |
+| `pattern` | `str`, optional | Pattern to search for for the case of an event-based alert |
