@@ -13,4 +13,4 @@ simulations or any processing tasks, as well as maintain connections between dif
 Simvue consists of:
 
 * a Python client that can be used to collect information from applications,
-* a web UI providing a dashboard for exploring, comparisons and visualisation
+* a web UI providing a dashboard for exploring, comparisons and visualisation.
