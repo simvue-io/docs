@@ -86,7 +86,7 @@ but these can all be overridden if necessary.
 | `metrics` | `Dict[str, Union[int, float]]` | Dictionary containing metric names and values | 
 | `step` | `int`, optional | Step or epoch | 
 | `time` | `float`, optional | Time in seconds |
-| `timestamp` | `YYYY-MM-DDThh:mm:ss.zzzzzzZ`, optional | Timestamp, with up to microsecond precision |
+| `timestamp` | `YYYY-MM-DD hh:mm:ss.zzzzzz`, optional | Timestamp, with up to microsecond precision |
 
 
 #### `log_event()`
@@ -98,7 +98,7 @@ Log an event.
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
 | `message` | `str` | Text message |
-| `timestamp` | `YYYY-MM-DDThh:mm:ss.zzzzzzZ`, optional | Timestamp, with up to microsecond precision |
+| `timestamp` | `YYYY-MM-DD hh:mm:ss.zzzzzz`, optional | Timestamp, with up to microsecond precision |
 
 #### `save()`
 
