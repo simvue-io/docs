@@ -41,7 +41,7 @@ To begin with we import the required class:
 from simvue import Run
 ```
 We next initialise the run and specify metadata:
-```
+``` py
 run = Run()
 run.init(metadata={'dataset.num_classes': num_classes,
                    'dataset.seq_max_len': seq_max_len,
@@ -53,20 +53,20 @@ run.init(metadata={'dataset.num_classes': num_classes,
                    'network.num_units': num_units})
 ```
 The Python code itself is saved:
-```
+``` py
 run.save('dynamic_rnn.py', 'code')
 ```
 During the part of the code which carries out the training we log metrics:
-```
+``` py
 run.log_metrics({'loss': float(loss), 'accuracy': float(acc)})
 ```
 Once the training has completed we add some metadata specifying the final values of the metrics:
-```
+``` py
 run.update_metadata({'loss': float(loss), 'accuracy': float(acc)})
 ```
 
 Finally we finish the run:
-```
+``` py
 run.close()
 ```
 
