@@ -13,13 +13,13 @@ Individual files can be saved using the `save` method. One of three categories n
  * `output`: output files.
 
 For example:
-```
+``` py
 run.save('data.png', 'output')
 ```
 
 An optional `filetype` argument can be used to specify the MIME type of the file. By default the MIME type is determined
 autoatically. For example:
-```
+``` py
 run.save('in.lj', 'input', 'text/plain')
 ```
 
@@ -63,7 +63,7 @@ system/surfaceFeaturesDict
 
 A list of a combination of files and directories can be provided using the `save_all` method, providing a simple way for saving a group
 of files and/or directories. For example:
-```
+``` py
 run.save_all(['file1', 'file2', 'directory1'], 'input', preserve_path=True)
 ```
 will save the files `file1` and `file2` in addition to the directory `directory1`.

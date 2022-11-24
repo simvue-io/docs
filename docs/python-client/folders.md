@@ -2,7 +2,7 @@
 
 If a new folder is specified in `init` we can use `folder_details` to specify more information about the folder, specifically metdata, tags and a description. For
 example:
-```
+```  py
 run.folder_details('/tests',
                    metadata={'environment': 'testing'},
                    tags=['test'],

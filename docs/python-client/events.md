@@ -2,7 +2,7 @@
 
 Arbitrary text can be logged using the `log_event` method. These can be used for storing log messages, exceptions or any other useful
 information. For example:
-```
+``` py
 try:
     ...
 except Exception as exc:

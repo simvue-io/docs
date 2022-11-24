@@ -40,7 +40,7 @@ Here are some examples, illustrating each type of alert.
 ### Threshold alert
 
 For example, to create a threshold alert:
-```
+``` py
 run.add_alert(name='quality too low',
               source='metrics',
               type='is below',
@@ -54,7 +54,7 @@ In this case if the 1-minute average of the `quality` metric, calculated at 1-mi
 ### Range-based alert
 
 Similarly, here is an example of a range-based alert:
-```
+``` py
 run.add_alert(name='density invalid',
               source='metrics',
               type='is outside range',
@@ -71,7 +71,7 @@ Here we set `notification` to `email`, so that an email will be sent to the user
 ### Alert based on events
 
 Finally, in this example we trigger an alert if the string `error` appears in an event message and send an email when this first happens:
-```
+``` py
 run.add_alert(name='error detector',
               source='events',
               frequency=1,

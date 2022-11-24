@@ -7,7 +7,7 @@ The `config` method can be used to set some configuration options. It should be 
 * `queue_size`: maximum numbers of items which can be stored in the metrics and events queues. The default is 10000. For extremely high-frequency metrics or events it might be necessary to increase this number.
 
 Example:
-```
+```  py
 from simvue import Run
 run = Run()
 run.config(queue_blocking=True, queue_size=20000)
