@@ -18,6 +18,7 @@ nav:
   - Home:
     - Welcome: index.md
     - Concepts: concepts.md
+  - Introduction: introduction.md
   - Tracking & monitoring:
     - Getting started: python-client/getting-started.md
     - Overview: python-client/overview.md
