@@ -5,6 +5,7 @@ theme:
     - navigation.tabs
   palette:
     - scheme: default
+  logo: images/logo.png
 nav:
   - Home:
     - Welcome: index.md
