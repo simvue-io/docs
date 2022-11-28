@@ -7,7 +7,7 @@ the Simvue Python client, in particular demonstrating:
 
 * tags,
 * metadata,
-* specifiying a folder,
+* specifying a folder,
 * saving the Python code itself,
 * logging metrics,
 * ending the run.
