@@ -1,4 +1,4 @@
-site_name: Simvue
+site_name: simvue
 theme:
   name: material
   features:
@@ -6,6 +6,9 @@ theme:
   palette:
     - scheme: default
   logo: images/logo.png
+  font:
+    text: Atkinson Hyperlegible
+    code: Source Code Pro
 nav:
   - Home:
     - Welcome: index.md
