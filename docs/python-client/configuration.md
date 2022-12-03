@@ -12,6 +12,8 @@ Example:
 ```  py
 from simvue import Run
 run = Run()
-run.config(queue_blocking=True, queue_size=20000)
+run.config(queue_blocking=True,
+           queue_size=20000,
+           resources_metrics_interval=5)
 run.init()
 ```
