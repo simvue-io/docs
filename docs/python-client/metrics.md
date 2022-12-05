@@ -56,7 +56,7 @@ In this case `residuals.U.x`, `residuals.U.y` and `residuals.U.z` would be displ
 
 ## Resource usage metrics
 
-Resource usage metrics are collected automatically by the Python client (unless disabled using the `config` method), which consists of:
+Resource usage metrics are collected automatically by the Python client (unless disabled using the `config` method), which consist of:
 
 * `resources/cpu.usage.percent`: CPU usage as a percentage, where 100% indicates one CPU is 100% utilised. For example, 800% indicates
 that 8 CPUs are fully utilised.
