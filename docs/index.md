@@ -4,12 +4,16 @@ Instead of keeping track of simulations, processing tasks and AI/ML training man
 and provide a single view of all your work, no matter where in the world the jobs are running.
 
 <figure markdown>
-  ![Simvue overview](images/Simvue_overview.PNG){ width="400" }
+  ![Simvue overview](images/simvue-overview.png){ width="520" }
 </figure>
 
 
 Simvue can track and organise metadata and files, collect metrics and logs from running
 simulations or any processing tasks, as well as maintain connections between different simulations and tasks and is even inter-operable between different platforms.
+
+<figure markdown>
+  ![Simvue resources](images/simvue-resources.png){ width="420" }
+</figure>
 
 Simvue consists of:
 
