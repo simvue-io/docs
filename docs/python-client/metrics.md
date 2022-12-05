@@ -1,5 +1,7 @@
 # Metrics
 
+## User-defined metrics
+
 To log time-series metrics use the `log_metrics` method, for example:
 ``` py
 run.log_metrics({'parameter1': 1.2, 'parameter2': 3.5})
@@ -24,7 +26,7 @@ Alternatively it can be defined explicitly, e.g.
 run.log_metrics({'parameter1': 1.2}, step=step)
 ```
 
-## Naming metrics
+### Naming metrics
 It can be useful to employ a *dot notation* for metrics names, as this helps in automatically creating the web UI view of all metrics. Any
 metrics where the part of the name before the `.` is the same is displayed in a single panel. For example, metrics with names:
 
@@ -51,3 +53,28 @@ In this case `residuals.U.x`, `residuals.U.y` and `residuals.U.z` would be displ
 !!! note
 
     You can of course select exactly what you want to displayed in a metrics plot, but for the default view displaying all metrics in a single page the dot notation is taken into account.
+
+## Resource usage metrics
+
+Resource usage metrics are collected automatically by the Python client (unless disabled using the `config` method), which consists of:
+
+* `resources/cpu.usage.percent`: CPU usage as a percentage, where 100% indicates one CPU is 100% utilised. For example, 800% indicates
+that 8 CPUs are fully utilised.
+* `resources/memory.usage`: memory usage in MB.
+* `resources/gpu.utilisation.percent.i`: GPU utilisation as a percentage.
+* `resources/gpu.memory.percent.i`: GPU memory utilisation as a percentage.
+
+In the above `i` is the GPU index. If multiple GPUs are used metrics will be available for each separately.
+
+By default the resource usage of the Python script itself is monitored. To monitor an external code, for example a FORTRAN or C++
+simulation code, the (parent) PID needs to be specified using the `set_pid` method of the `Run` class, e.g.
+```
+run.set_pid(18231)
+```
+Note that resource utilisation metrics are collected for the sum of the parent PID and all children.
+
+!!! important
+
+    There is a limitation currently for MPI jobs: only the resource usage of the processes on the node running the Python 
+    client will be measured, not any other node (for the case of multi-node jobs). This limitation will hopefully be removed
+    in future.
