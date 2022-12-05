@@ -7,8 +7,8 @@ theme:
     - scheme: default
   logo: images/logo.png
   font:
-    text: Atkinson Hyperlegible
-    code: Source Code Pro
+    text: Noto Sans
+    code: Noto Sans Mono
 nav:
   - Home:
     - Welcome: index.md
