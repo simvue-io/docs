@@ -1,7 +1,9 @@
 # Artifacts
 
 Files, directories or combinations of files and directories can easily be uploaded. Python objects
-such as NumPy arrays, PyTorch Tensors, Matploblib or Plotly plots can also be uploaded.
+such as NumPy arrays, PyTorch Tensors, Matploblib or Plotly plots can also be uploaded. For example,
+a trained model created by a machine learning framework such as PyTorch or Tensorflow can be directly
+saved without being dumped to a file first.
 
 ## Saving
 
