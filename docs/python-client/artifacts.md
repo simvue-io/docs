@@ -1,10 +1,11 @@
 # Artifacts
 
-Files, directories or combinations of files and directories can easily be uploaded.
+Files, directories or combinations of files and directories can easily be uploaded. Python objects
+such as NumPy arrays, PyTorch Tensors, Matploblib or Plotly plots can also be uploaded.
 
 ## Saving
 
-### Individual files
+### Files
 
 Individual files can be saved using the `save` method. One of three categories needs to be specified:
 
@@ -27,6 +28,33 @@ By default the name of the artifact will only be the name of the actual file spe
 If the optional argument `preserve_path=True` is added to `save` then paths will be preserved in the names. This can be useful
 in situations where the files are naturally grouped together and you want to preserve this information, e.g. `group1/file1` and
 `group2/file1`.
+
+### Python objects
+
+The `save` method can also be used to save Python objects, including:
+
+* NumPy arrays,
+* PyTorch tensors,
+* pandas dataframes,
+* Matploblib figures,
+* Plotly figures.
+
+One main difference between files and Python objects is that an arbitrary name must be specified when Python objects. For example,
+to create and save a NumPy array:
+```
+...
+import numpy as np
+array = np.array([1, 2, 3, 4, 5])
+run.save(array, 'input', name='array')
+...
+```
+
+In addition, any Python object which can be pickled can also be saved. This requires the `allow_pickle` to be set to `True`.
+For example:
+```
+dictionary = {'key': 'value'}
+run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
+```
 
 ### Directories
 

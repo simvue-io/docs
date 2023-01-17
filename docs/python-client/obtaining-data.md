@@ -11,9 +11,18 @@ client = Client()
 As with the `Run` class, there must be a valid `.simvue.ini` file in the user's home directory, a `simvue.ini` file in
 the current directory or the required environment variables must be defined.
 
-## Downloading a named artifact
+## Obtaining a named artifact
 
-The method `get_artifact_as_file` can be used to download a single named artifact from an exsting run. For example:
+The method `get_artifact` can be used to download an artifact and return its content. For example, if a run contains
+an artifact which is a NumPy array, you can retrieve it as follows:
+```
+my_array = client.get_artifact(my_run, my_numpy_array_name)
+```
+In this case the variable `my_array` would contain the array originally uploaded.
+
+## Downloading a named artifact to a file
+
+The method `get_artifact_as_file` can be used to download a single named artifact from an existing run. For example:
 ```
 client.get_artifact_as_file(run_name, artifact_name, path='/tmp')
 ```
