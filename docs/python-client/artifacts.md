@@ -36,7 +36,7 @@ in situations where the files are naturally grouped together and you want to pre
 The `save` method can also be used to save Python objects, including:
 
 * NumPy arrays,
-* PyTorch tensors,
+* PyTorch tensors and state_dicts,
 * pandas dataframes,
 * Matploblib figures,
 * Plotly figures.
