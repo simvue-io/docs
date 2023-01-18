@@ -202,6 +202,15 @@ Returns a list of artifacts associated with the specified run.
 | run | `str` | Run name |
 | category | `Enum[input, code, output`], optional | Only list artifacts of the specified category |
 
+#### `get_artifact()`
+
+Retrieves a single artifact and returns the content.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Run name |
+| name | `str` | Artifact name |
+
 #### `get_artifact_as_file()`
 
 Downloads a single artifact and saves as a file.
