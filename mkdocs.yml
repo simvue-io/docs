@@ -27,7 +27,7 @@ nav:
     - Obtaining data: python-client/obtaining-data.md
     - Reference: python-client/reference.md
   - Examples:
-    - Basic Tensorflow: examples/basic-tensorflow.md
+    - Tensorflow: examples/basic-tensorflow.md
     - OpenFOAM: examples/openfoam.md
   - FAQ:
     - General: faq/general.md
