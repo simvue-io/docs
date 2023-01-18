@@ -8,7 +8,7 @@ In order to download artifacts we first need to create an instance of the Simvue
 from simvue import Client
 client = Client()
 ```
-As with the `Run` class, there must be a valid `.simvue.ini` file in the user's home directory, a `simvue.ini` file in
+As with the `Run` class, there must either be a valid `.simvue.ini` file in the user's home directory, a `simvue.ini` file in
 the current directory or the required environment variables must be defined.
 
 ## Obtaining a named artifact
