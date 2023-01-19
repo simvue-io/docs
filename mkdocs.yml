@@ -25,7 +25,9 @@ nav:
     - Alerts: python-client/alerts.md
     - Logging handler: python-client/logging-handler.md
     - Obtaining data: python-client/obtaining-data.md
-    - Reference: python-client/reference.md
+  - Reference:
+    - The Run class: reference/run.md
+    - The Client class: reference/client.md
   - Examples:
     - Tensorflow: examples/basic-tensorflow.md
     - OpenFOAM: examples/openfoam.md
