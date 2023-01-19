@@ -1,7 +1,8 @@
 # Frequently asked questions: general
 
-## What happens if my code crashes?
-The Simvue client sends a heartbeat to the server every minute. A run goes into the **lost** state if there are no heartbeats for over 3 minutes.
+## Why is my run in the **lost** state?
+The Simvue client sends a heartbeat to the server every minute. A run goes into the **lost** state if there are no heartbeats for over 3 minutes. This would
+usually be caused by the code being terminated manually by a user or killed (e.g. by a batch system).
 
 ## Interactive plots from artifacts
 If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of [plotly.js](https://plotly.com/javascript/).
