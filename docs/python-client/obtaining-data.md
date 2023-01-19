@@ -20,6 +20,15 @@ my_array = client.get_artifact(my_run, my_numpy_array_name)
 ```
 In this case the variable `my_array` would contain the array originally uploaded.
 
+If an artifact was created with `allow_pickle=True` then this option also must be set in `get_artifact`, e.g.
+```
+my_object = client.get_artifact(my_run, my_object, allow_pickle=True)
+```
+
+!!! warning
+
+    Why does `allow_pickle` need to be explicitly set? It is possible for pickle data to execute arbitrary code during unpickling, and as such it is not considered to be secure.
+
 ## Downloading a named artifact to a file
 
 The method `get_artifact_as_file` can be used to download a single named artifact from an existing run. For example:
