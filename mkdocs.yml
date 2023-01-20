@@ -6,9 +6,6 @@ theme:
   palette:
     - scheme: default
   logo: images/logo.png
-  font:
-    text: Noto Sans
-    code: Noto Sans Mono
 nav:
   - Home:
     - Welcome: index.md
