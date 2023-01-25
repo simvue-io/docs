@@ -21,7 +21,7 @@ if __name__ == "__main__":
     run.init()
     ...
 ```
-the run automatically be set to the `lost` state if there is an exception.
+the run automatically be set to the `lost` state if there is an exception and no information is available as to what happened.
 
 ## Interactive plots from artifacts
 If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of [plotly.js](https://plotly.com/javascript/).
