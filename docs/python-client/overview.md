@@ -86,9 +86,10 @@ with Run() as run:
 
    ...
 ```
-In this case it is not necessary to explicitly run `run.close()`.
+In this case it is not necessary to explicitly run `run.close()`. Another benefit of using the context manager is
+that if the code exits with an exception the status of the run will change to `failed`.
 
-If a code crashes without calling `close()` after a few minutes the state of the run will change to `lost`.
+Without the context manager, if a code exits without calling `close()` after a few minutes the state of the run will change to `lost`.
 
 ## Multiple runs in one code
 

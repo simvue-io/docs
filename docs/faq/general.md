@@ -1,8 +1,27 @@
 # Frequently asked questions: general
 
 ## Why is my run in the **lost** state?
-The Simvue client sends a heartbeat to the server every minute. A run goes into the **lost** state if there are no heartbeats for over 3 minutes. This would
-usually be caused by the code being terminated manually by a user or killed (e.g. by a batch system).
+The Simvue client sends a heartbeat to the server every minute. A run goes into the **lost** state if there are no heartbeats for over 3 minutes. Because of this,
+it is preferable to use the context manager for the `Run()` object, for example:
+```
+from simvue import Run
+
+if __name__ == "__main__":
+    with Run() as run:
+        run.init()
+        ...
+```
+If the user's code exits with an exception the state of the run will be set to `failed` and an event will be created with details about this exception. Without the
+context manager, i.e.
+```
+from simvue import Run
+
+if __name__ == "__main__":
+    run = Run()
+    run.init()
+    ...
+```
+the run automatically be set to the `lost` state if there is an exception.
 
 ## Interactive plots from artifacts
 If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of [plotly.js](https://plotly.com/javascript/).
