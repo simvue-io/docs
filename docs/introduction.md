@@ -50,24 +50,20 @@ import time
 from simvue import Run
 
 if __name__ == "__main__":
-    run = Run()
+    with Run() as run:
+        # Initialisation
+        run.init(name='hello-world-%d' % time.time(),
+                 tags=['test'],
+                 metadata={'key1': 1, 'key2': 'hello'},
+                 folder='/tests')
 
-    # Initialisation
-    run.init(name='hello-world-%d' % time.time(),
-             tags=['test'],
-             metadata={'key1': 1, 'key2': 'hello'},
-             folder='/tests')
+        # Save this script
+        run.save(os.path.basename(__file__), 'code')
 
-    # Save this script
-    run.save(os.path.basename(__file__), 'code')
-
-    # Generate 10 random numbers, one per second
-    for count in range(0, 10):
-        run.log_metrics({'random_number': 10*random.random()})
-        time.sleep(1)
-
-    # Close the run
-    run.close()
+        # Generate 10 random numbers, one per second
+        for count in range(0, 10):
+            run.log_metrics({'random_number': 10*random.random()})
+            time.sleep(1)
 ```
 
 Run the script, for example:
