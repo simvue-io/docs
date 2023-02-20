@@ -16,11 +16,17 @@ To run this example, firstly clone the Simvue client GitHub repository:
 git clone https://github.com/simvue-io/client
 cd client/examples
 ```
-Create a virtual environment:
+Create a virtual environment (Linux):
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
+Create a virtual environment (Windows):
+```
+python3 -m venv venv
+venv\Scripts\activate
+```
+
 Install the required dependencies:
 ```
 pip install --upgrade pip
