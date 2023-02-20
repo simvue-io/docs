@@ -35,7 +35,7 @@ pip install tensorflow simvue
 Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in your home directory. Click on `Create new run`
 in the UI for more information.
 
-Run the code:
+Change directory to Tensorflow folder (cd Tensorflow) and run the code:
 ```
 python3 dynamic_rnn.py
 ```
