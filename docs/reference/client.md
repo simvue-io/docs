@@ -21,7 +21,7 @@ Returns details about a list of runs.
 
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
-| filter | `str` | Filter to select runs |
+| filters | `List[str]` | Filters to select runs |
 | system | `Boolean` | Return system information |
 | tags | `Boolean` | Return tags |
 | metadata | `Boolean` | Return metadata |
