@@ -11,9 +11,9 @@ Returns details about a specified run.
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
 | run | `str` | Name of the run |
-| system | `Boolean` | Return system information |
-| tags | `Boolean` | Return tags |
-| metadata | `Boolean` | Return metadata |
+| system | `Boolean`, optional | Return system information |
+| tags | `Boolean`, optional | Return tags |
+| metadata | `Boolean`, optional | Return metadata |
 
 #### `get_runs()`
 
@@ -22,9 +22,9 @@ Returns details about a list of runs.
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
 | filters | `List[str]` | Filters to select runs |
-| system | `Boolean` | Return system information |
-| tags | `Boolean` | Return tags |
-| metadata | `Boolean` | Return metadata |
+| system | `Boolean`, optional | Return system information |
+| tags | `Boolean`, optional | Return tags |
+| metadata | `Boolean`, optional | Return metadata |
 
 #### `list_artifacts()`
 
