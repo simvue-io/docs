@@ -4,6 +4,28 @@ The `Client` is used for querying or accessing data from existing runs.
 
 ### Methods
 
+#### `get_run()`
+
+Returns details about a specified run.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Name of the run |
+| system | `Boolean` | Return system information |
+| tags | `Boolean` | Return tags |
+| metadata | `Boolean` | Return metadata |
+
+#### `get_runs()`
+
+Returns details about a list of runs.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| filter | `str` | Filter to select runs |
+| system | `Boolean` | Return system information |
+| tags | `Boolean` | Return tags |
+| metadata | `Boolean` | Return metadata |
+
 #### `list_artifacts()`
 
 Returns a list of artifacts associated with the specified run.
