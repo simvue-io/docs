@@ -62,4 +62,5 @@ or:
 ```
 AttributeError: 'PathCollection' object has no attribute 'get_offset_position
 ```
-it means that your plot is not compatible with the Plotly [conversion function](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly).
+it means that your plot is not compatible with the Plotly [conversion function](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly). In this situation the only option currently would be do try using [Plotly](https://plotly.com/python/) rather than Matplotlib to
+create the plot.
