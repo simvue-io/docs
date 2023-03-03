@@ -10,6 +10,7 @@ As with the `Run` class, there must either be a valid `.simvue.ini` file in the 
 
 ## A single run
 The `get_run` method can be used to obtain details about a specified run. By default only basic information is returned, which includes:
+
 * name,
 * current status,
 * folder,
