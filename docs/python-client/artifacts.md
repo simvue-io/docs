@@ -1,7 +1,7 @@
 # Artifacts
 
 Files, directories or combinations of files and directories can easily be uploaded. Python objects
-such as NumPy arrays, PyTorch Tensors, Matploblib or Plotly plots can also be uploaded. For example,
+such as NumPy arrays, PyTorch Tensors, Matplotlib or Plotly plots can also be uploaded. For example,
 a trained model created by a machine learning framework such as PyTorch or Tensorflow can be directly
 saved without being dumped to a file first.
 
@@ -38,7 +38,7 @@ The `save` method can also be used to save Python objects, including:
 * NumPy arrays,
 * PyTorch tensors and state_dicts,
 * pandas dataframes,
-* Matploblib figures,
+* Matplotlib figures,
 * Plotly figures.
 
 One main difference between files and Python objects is that an arbitrary name must be specified when Python objects. For example,
