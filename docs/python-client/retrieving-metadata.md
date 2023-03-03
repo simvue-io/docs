@@ -11,7 +11,7 @@ As with the `Run` class, there must either be a valid `.simvue.ini` file in the 
 ## A single run
 The `get_run` method can be used to obtain details about a specified run. By default only basic information is returned, for example:
 ```
-print(json.dumps(client.get_run('cool-scene'), indent=2))
+client.get_run('cool-scene')
 ```
 gives:
 ```
@@ -26,7 +26,7 @@ gives:
 ```
 If tags and metadata are also required then the optional arguments `tags` and `metadata` can be set to `True`, for example:
 ```
-print(json.dumps(client.get_run('cool-scene', tags=True, metadata=True), indent=2))
+client.get_run('cool-scene', tags=True, metadata=True)
 ```
 gives:
 ```
