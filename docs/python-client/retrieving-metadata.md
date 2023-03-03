@@ -9,7 +9,13 @@ client = Client()
 As with the `Run` class, there must either be a valid `.simvue.ini` file in the user's home directory, a `simvue.ini` file in the current directory or the required environment variables must be defined.
 
 ## A single run
-The `get_run` method can be used to obtain details about a specified run. By default only basic information is returned, for example:
+The `get_run` method can be used to obtain details about a specified run. By default only basic information is returned, which includes:
+* name,
+* current status,
+* folder,
+* timestamps (e.g. created, started, ended)
+
+For example:
 ```
 client.get_run('cool-scene')
 ```
@@ -53,6 +59,7 @@ gives:
   }
 }
 ```
+The argument `system` can also be set to `True` in order to return information about the system the run executed on.
 
 ## Multiple runs
 
