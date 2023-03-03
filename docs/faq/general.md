@@ -53,3 +53,13 @@ if __name__ == "__main__":
 ```
 Note that we have provided a name for the artifact using the `name` argument, which is essential when creating artifacts directly from Python objects. This name
 is completely arbitrary and up to the user.
+
+If you get an error like:
+```
+Aw. Snap! You're gonna have to hold off on the selfies for now. Plotly can't import images from matplotlib yet!
+```
+or:
+```
+AttributeError: 'PathCollection' object has no attribute 'get_offset_position
+```
+it means that your plot is not compatible with the Plotly [conversion function](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly).
