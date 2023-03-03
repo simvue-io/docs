@@ -22,6 +22,7 @@ nav:
     - Alerts: python-client/alerts.md
     - Logging handler: python-client/logging-handler.md
     - Obtaining data: python-client/obtaining-data.md
+    - Retrieving metadata: python-client/retrieving-metadata.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
