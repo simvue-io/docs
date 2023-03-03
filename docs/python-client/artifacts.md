@@ -58,6 +58,11 @@ dictionary = {'key': 'value'}
 run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
 ```
 
+!!! note
+
+    The Simvue client uses a Plotly conversion [function](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)
+    to convert Matplotlib figures to Plotly. This function doesn't support all plot types and has limitations (see [here](https://community.plotly.com/t/mpl-to-plotly-limitations/14686)).
+
 ### Directories
 
 Multiple files in a directory can be saved using the `save_directory` method which has the same arguments as `save` but
