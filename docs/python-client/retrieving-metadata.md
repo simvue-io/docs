@@ -66,7 +66,7 @@ The argument `system` can also be set to `True` in order to return information a
 Instead of specifying the name of a run, filters can be provided with the `get_runs` method. This returns information on multiple runs.
 The output dictionary is in the form of a list, where each run has the same format as the output from the `get_run` method described above.
 
-For example, to get the metadata for all runs in folder '/Burgers_trial' use:
+For example, to get the metadata for all runs in folder `/Burgers_trial` use:
 ```
-data = client.get_runs(['/Burgers_trial'], metadata=True)
+client.get_runs(['/Burgers_trial'], metadata=True)
 ```
