@@ -14,7 +14,7 @@ The `get_run` method can be used to obtain details about a specified run. By def
 * name,
 * current status,
 * folder,
-* timestamps (e.g. created, started, ended)
+* timestamps, e.g. created, started, ended (depends on the current status of the run)
 
 For example:
 ```
