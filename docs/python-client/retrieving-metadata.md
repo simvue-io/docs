@@ -71,3 +71,8 @@ For example, to get the metadata for all runs in folder `/Burgers_trial` use:
 ```
 client.get_runs(['/Burgers_trial'], metadata=True)
 ```
+Any number of filters can be included. For example, here we want to select only runs where metadata attribute `beta` has
+a value greater than 2.0:
+```
+client.get_runs(['/Burgers_trial', 'beta > 2.0'], metadata=True)
+```
