@@ -25,6 +25,7 @@ Returns details about a list of runs.
 | system | `Boolean`, optional | Return system information |
 | tags | `Boolean`, optional | Return tags |
 | metadata | `Boolean`, optional | Return metadata |
+| format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
 
 #### `list_artifacts()`
 
