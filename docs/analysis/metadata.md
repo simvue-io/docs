@@ -6,7 +6,7 @@ data retrieved to be specified. There are two options:
 * `dict`: a dictionary (the default),
 * `dataframe`: a Pandas dataframe.
 
-The dataframe format makes it easy to create plots.
+The dataframe format makes it easy to create plots using the `plot` method in Pandas or using Matplotlib directly.
 `pandas.DataFrame.columns` can be used to get a list of the columns, for example:
 ```
 df = client.get_runs(['/fusion/neutronics/adaptive/run4'],
