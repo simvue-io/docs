@@ -43,6 +43,19 @@ plot = df.plot(kind='scatter',
 This results in the following plot:
 ![Scatter plot using metadata with coloured markers](images/scatter-metadata-colours.png)
 
+## Bar chart
+In this example we create a bar chart showing how many runs are associated with each possible
+value of a specified metadata attribute, in this case `optimizer`:
+```
+df = client.get_runs(['/optuna/tests/binary-model'],
+                     metadata=True,
+                     format='dataframe')
+
+plot = df.groupby('metadata.optimizer')['name'].nunique().plot(kind='bar', rot=0)
+```
+which gives:
+![Bar chart](images/bar-chart-count.png)
+
 ## Box plot
 Box and whisker plots can be easily created. In this example we show a metadata attribute `final accuracy`
 grouped by another attribute, `n_layers`:
