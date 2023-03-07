@@ -70,3 +70,54 @@ plot = df.boxplot(column=['metadata.final accuracy'], by=['metadata.n_layers'])
 This results in the following plot:
 ![Box plot](images/boxplot-numlayers.png)
 
+## Parallel coordinates
+While parallel coordinates plots can be made directly from a dataframe
+(see e.g. [here](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
+limitations, such as a common y-axis scale across all variables. An Alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
+where it's possible to have much more control. For example:
+```
+import plotly.graph_objects as go
+import pandas as pd
+from simvue import Client
+
+client = Client()
+df = client.get_runs(['/optuna/tests/binary-model'], metadata=True, format='dataframe')
+
+group_vars = df['metadata.optimizer'].unique()
+dfg = pd.DataFrame({'metadata.optimizer':df['metadata.optimizer'].unique()})
+dfg['dummy'] = dfg.index
+df = pd.merge(df, dfg, on='metadata.optimizer', how='left')
+
+fig = go.Figure(
+    data=go.Parcoords(
+        line=dict(
+            color=df["metadata.final accuracy"],
+            colorscale="Electric",
+            showscale=True,
+            cmin=0,
+            cmax=1,
+        ),
+        dimensions=list(
+            [
+                dict(label="lr", values=df["metadata.lr"]),
+                dict(
+                    label="optimizer",
+                    range=[0, df["dummy"].max()],
+                    tickvals=df["dummy"],
+                    ticktext=dfg["metadata.optimizer"],
+                    values=df["dummy"],
+                ),
+                dict(
+                    range=[0, 1],
+                    label="final accuracy",
+                    values=df["metadata.final accuracy"],
+                ),
+            ]
+        ),
+    )
+)
+
+fig.write_image("output.png")
+```
+which gives
+![Parallel coordinates](images/parallel-coordinates.png)
