@@ -41,7 +41,7 @@ plot = df.plot(kind='scatter',
                y='metadata.breeder_percent_in_breeder_plus_multiplier_ratio',
                c='metadata.tbr')
 ```
-This results in the following plot:
+gives:
 ![Scatter plot using metadata with coloured markers](images/scatter-metadata-colours.png)
 
 ## Bar chart
@@ -54,7 +54,7 @@ df = client.get_runs(['/optuna/tests/binary-model'],
 
 plot = df.groupby('metadata.optimizer')['name'].nunique().plot(kind='bar', rot=0)
 ```
-which gives:
+This gives:
 ![Bar chart](images/bar-chart-count.png)
 
 ## Box plot
@@ -70,11 +70,11 @@ plot = df.boxplot(column=['metadata.final accuracy'], by=['metadata.n_layers'])
 This results in the following plot:
 ![Box plot](images/boxplot-numlayers.png)
 
-## Parallel coordinates
+## Parallel coordinates plot
 While parallel coordinates plots can be made directly from a dataframe
 (see e.g. [here](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
 limitations, such as a common y-axis scale across all variables. An alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
-where it's possible to have much more control. Handling categorial requires some additional work (see [here](https://stackoverflow.com/a/64146570))
+where it's possible to have much more control. Handling categorial requires (see [some additional work](https://stackoverflow.com/a/64146570))
 as is illustrated in the
 example:
 ```
