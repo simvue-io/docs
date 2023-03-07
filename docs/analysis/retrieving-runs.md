@@ -1,4 +1,4 @@
-# Retrieving metadata
+# Retrieving runs
 
 The Simvue `Client` class can be used to obtain details about runs, including tags and metadata. We first
 need to create an instance of this class:
