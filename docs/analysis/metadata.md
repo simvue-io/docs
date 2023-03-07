@@ -73,18 +73,22 @@ This results in the following plot:
 ## Parallel coordinates
 While parallel coordinates plots can be made directly from a dataframe
 (see e.g. [here](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
-limitations, such as a common y-axis scale across all variables. An Alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
-where it's possible to have much more control. For example:
+limitations, such as a common y-axis scale across all variables. An alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
+where it's possible to have much more control. Handling categorial requires some additional work (see [here](https://stackoverflow.com/a/64146570))
+as is illustrated in the
+example:
 ```
 import plotly.graph_objects as go
 import pandas as pd
 from simvue import Client
 
 client = Client()
-df = client.get_runs(['/optuna/tests/binary-model'], metadata=True, format='dataframe')
+df = client.get_runs(['/optuna/tests/binary-model'],
+                     metadata=True,
+                     format='dataframe')
 
 group_vars = df['metadata.optimizer'].unique()
-dfg = pd.DataFrame({'metadata.optimizer':df['metadata.optimizer'].unique()})
+dfg = pd.DataFrame({'metadata.optimizer': df['metadata.optimizer'].unique()})
 dfg['dummy'] = dfg.index
 df = pd.merge(df, dfg, on='metadata.optimizer', how='left')
 
