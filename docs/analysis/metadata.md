@@ -14,6 +14,7 @@ df = client.get_runs(['/fusion/neutronics/adaptive/run4'],
                      format='dataframe')
 print(df.columns)
 ```
+Below we go through some example plots.
 
 ## Basic scatter plot from metadata
 Here is a simple example of a scatter plot using metadata from multiple runs. We plot `final accuracy` vs
