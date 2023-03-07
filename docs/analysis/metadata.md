@@ -42,3 +42,17 @@ plot = df.plot(kind='scatter',
 ```
 This results in the following plot:
 ![Scatter plot using metadata with coloured markers](images/scatter-metadata-colours.png)
+
+## Box plot
+Box and whisker plots can be easily created. In this example we show a metadata attribute `final accuracy`
+grouped by another attribute, `n_layers`:
+```
+df = client.get_runs(['/optuna/tests/binary-model'],
+                     metadata=True,
+                     format='dataframe')
+
+plot = df.boxplot(column=['metadata.final accuracy'], by=['metadata.n_layers'])
+```
+This results in the following plot:
+![Box plot](images/boxplot-numlayers.png)
+
