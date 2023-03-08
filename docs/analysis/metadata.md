@@ -73,8 +73,8 @@ This results in the following plot:
 ## Parallel coordinates plot
 While parallel coordinates plots can be made directly from a dataframe
 (see e.g. [here](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
-limitations, such as a common y-axis scale across all variables. An alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
-where it's possible to have much more control. Handling categorial requires (see [some additional work](https://stackoverflow.com/a/64146570))
+limitations, such as common y-axis limits across all variables. An alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
+where it's possible to have much more control. Handling categorical values requires (see [some additional work](https://stackoverflow.com/a/64146570))
 as is illustrated in the
 example:
 ```
