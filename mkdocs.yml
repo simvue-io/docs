@@ -25,6 +25,7 @@ nav:
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md
     - Metadata: analysis/metadata.md
+    - Metrics: analysis/metrics.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
