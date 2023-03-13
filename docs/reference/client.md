@@ -27,6 +27,31 @@ Returns details about a list of runs.
 | metadata | `Boolean`, optional | Return metadata |
 | format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
 
+#### `delete_run()`
+
+Delete the specified run.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Run name |
+
+#### `delete_runs()`
+
+Delete the runs in the specified folder.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| folder | `str` |  Folder name |
+
+#### `delete_folder()`
+
+Delete a folder and optionally any runs in it.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| folder | `str` | Folder name |
+| runs | `Boolean`, optional | Delete runs in the folder |
+
 #### `list_artifacts()`
 
 Returns a list of artifacts associated with the specified run.
