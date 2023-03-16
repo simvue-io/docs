@@ -1,12 +1,12 @@
 # Folders
 
-If a new folder is specified in `init` we can use `folder_details` to specify more information about the folder, specifically metdata, tags and a description. For
+If a new folder is specified in `init` we can use `set_folder_details` to specify more information about the folder, specifically metdata, tags and a description. For
 example:
 ```  py
-run.folder_details('/tests',
-                   metadata={'environment': 'testing'},
-                   tags=['test'],
-                   description='My first tests')
+run.set_folder_details('/tests',
+                       metadata={'environment': 'testing'},
+                       tags=['test'],
+                       description='My first tests')
 ```
 All of these are optional so only the information required by the user needs to be set. The folder `tests` will be created if it
 does not exist already:
