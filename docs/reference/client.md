@@ -43,6 +43,26 @@ Delete the runs in the specified folder.
 | ----- | ---- | ----------- |
 | folder | `str` |  Folder name |
 
+#### `get_folder()`
+
+Returns details about a specified folder.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| folder | `str` | Name of the folder |
+| tags | `Boolean`, optional | Return tags |
+| metadata | `Boolean`, optional | Return metadata |
+
+#### `get_folders()`
+
+Returns details about a list of folders.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| filters | `List[str]` | Filters to select folders |
+| tags | `Boolean`, optional | Return tags |
+| metadata | `Boolean`, optional | Return metadata |
+
 #### `delete_folder()`
 
 Delete a folder and optionally any runs in it.
