@@ -27,6 +27,26 @@ Returns details about a list of runs.
 | metadata | `Boolean`, optional | Return metadata |
 | format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
 
+#### `get_events()`
+
+Returns events from the specified run. *Available soon*.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Name of the run |
+| filter | `str`, optional | Return only events matching this filter |
+
+#### `get_metrics()`
+
+Returns metrics from the specified runs. *Available soon*.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `List[str]` | Name(s) of runs |
+| metrics | `List[str]` | Name(s) of metrics |
+| group_by | `str`, optional | Group by this metadata attribute and return aggregates |
+| format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
+
 #### `delete_run()`
 
 Delete the specified run.
