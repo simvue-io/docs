@@ -36,16 +36,39 @@ Returns events from the specified run. *Available soon*.
 | run | `str` | Name of the run |
 | filter | `str`, optional | Return only events matching this filter |
 
-#### `get_metrics()`
+#### `get_metrics_summaries()`
 
-Returns metrics from the specified runs. *Available soon*.
+Returns summaries for the specified run and metric name. Currently average, min, max and last value are returned.
 
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
-| run | `List[str]` | Name(s) of runs |
-| metrics | `List[str]` | Name(s) of metrics |
-| group_by | `str`, optional | Group by this metadata attribute and return aggregates |
-| format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
+| run | `str` | Run name |
+| name | `str` | Metric name |
+
+#### `get_metrics()`
+
+Returns time series metrics for the specified run and metric name.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Run name |
+| metrics | `str` | Metric name |
+| xaxis | `Enum[step, time, timestamp]` | X-axis |
+| format | `Enum[list, dataframe]`, optional | Data format |
+
+#### `get_metrics_multiple()`
+
+Returns time series metrics for the specified runs and metric names. In order to downsample the data
+the `sample_by` option can be used. For example, using `sample_by=1000` will downsample the data into
+bins of width 1s.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `List[str]` | Run names |
+| metrics | `List[str]` | Metric names |
+| xaxis | `Enum[step, time]` | X-axis |
+| sample_by | int, optional | Sample by (milliseconds) |
+| format | `Enum[list, dataframe]`, optional | Data format |
 
 #### `delete_run()`
 
@@ -99,7 +122,7 @@ Returns a list of artifacts associated with the specified run.
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
 | run | `str` | Run name |
-| category | `Enum[input, code, output`], optional | Only list artifacts of the specified category |
+| category | `Enum[input, code, output]`, optional | Only list artifacts of the specified category |
 
 #### `get_artifact()`
 
