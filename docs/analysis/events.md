@@ -22,3 +22,9 @@ To retrive `n` events starting from position `m`, use:
 ```
 events = client.get_events(run, start=n, num=m)
 ```
+
+## Filtering
+To retrieve all events from a run containing the word `Exception`, use:
+```
+events = client.get_events(run, filter='Exception')
+```
