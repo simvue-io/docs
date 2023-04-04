@@ -27,15 +27,6 @@ Returns details about a list of runs.
 | metadata | `Boolean`, optional | Return metadata |
 | format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
 
-#### `get_events()`
-
-Returns events from the specified run. *Available soon*.
-
-| Name  | Type | Description |
-| ----- | ---- | ----------- |
-| run | `str` | Name of the run |
-| filter | `str`, optional | Return only events matching this filter |
-
 #### `get_metrics_summaries()`
 
 Returns summaries for the specified run and metric name. Currently average, min, max and last value are returned.
@@ -67,8 +58,19 @@ bins of width 1s.
 | run | `List[str]` | Run names |
 | metrics | `List[str]` | Metric names |
 | xaxis | `Enum[step, time]` | X-axis |
-| sample_by | int, optional | Sample by (milliseconds) |
+| sample_by | `int`, optional | Sample by (milliseconds) |
 | format | `Enum[list, dataframe]`, optional | Data format |
+
+#### `get_events()`
+
+Returns events for the specified run, if necessary matching the specified filter.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Run name |
+| filter | `str` | Filter | 
+| start | `int` | Start position |
+| num | `int` | Number of events to return |
 
 #### `delete_run()`
 
