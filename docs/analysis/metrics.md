@@ -27,7 +27,29 @@ Example response:
 }
 ```
 
-## Metrics from a single run
+## Basic usage
+
+For basic line plots the method `plot_metrics` can be used. If more control is needed or more complex plots are needed
+there are also methods for obtaining dataframes which can be used with Matplotlib (described below).
+
+The `plot_metrics` class is used as follows:
+```
+plot = client.plot_metrics(runs, metrics, xaxis)
+```
+where:
+
+* `runs`: list of run names,
+* `metrics`: list of metrics names,
+* `xaxis`: either `step` or `time`.
+
+To save the plot in a file:
+```
+plot.savefig('plot.png')
+```
+
+## Advanced usage
+
+### Metrics from a single run
 
 To obtain time series metrics from a single run use the `get_metrics` method. For example, suppose we want to plot
 a metric `Train Loss` versus `step` for a run called `first-fno-8`. We can first retrieve the metrics in the form
@@ -44,7 +66,7 @@ giving the following plot:
 ![Line plot](images/metrics-single-run-plot.png)
 
 
-## Multiple metrics from a single run
+### Multiple metrics from a single run
 
 We can use the `get_metrics_multiple` method to create a single dataframe containing multiple metrics from a single
 (or multiple) runs.
@@ -75,7 +97,7 @@ plt.savefig('plot.png')
 giving the following plot:
 ![Line plot](images/metrics-multiple-plot.png)
 
-## Multiple runs
+### Multiple runs
 
 Here we again use `get_metrics_multiple` but this time use it to obtain a single metric from multiple runs and make a comparison plot. Firstly
 we create a dataframe:
