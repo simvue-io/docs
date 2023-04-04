@@ -61,6 +61,17 @@ bins of width 1s.
 | sample_by | `int`, optional | Sample by (milliseconds) |
 | format | `Enum[list, dataframe]`, optional | Data format |
 
+#### `plot_metrics()`
+
+Returns a Matplotlib plot object containing a line plot of the specified run(s) and metrics.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `List[str]` | Run names |
+| metrics | `List[str]` | Metric names |
+| xaxis | `Enum[step, time]` | X-axis |
+| sample_by | `int`, optional | Sample by (milliseconds) |
+
 #### `get_events()`
 
 Returns events for the specified run, if necessary matching the specified filter.
