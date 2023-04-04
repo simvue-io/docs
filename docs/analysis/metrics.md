@@ -11,6 +11,13 @@ from simvue import Client
 client = Client()
 ```
 
+## Metrics names
+The method `get_metrics_names` can be used to obtain a list of metrics available for the specified run. Usage:
+```
+metrics = client.get_metrics_names(run)
+```
+where `run` is the run name. The result (`metrics` in this case) is a list of the names of the metrics.
+
 ## Summaries
 The method `get_metrics_summaries` returns basic statistics such as average, min, max and latest values when
 provided with a run name and metric name:
