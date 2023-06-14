@@ -5,8 +5,8 @@
 Here we go through a very simple example from scratch which illustrates how to use
 the Simvue Python client, in particular demonstrating:
 
-* tags,
-* metadata,
+* tags [Keywords or labels assigned to an item or data to help categorise. Very useful when you want to search for an item within a large collection],
+* metadata [A descriptive detail about an item. It could include attributes e.g. date, file format, version etc.],
 * specifying a folder,
 * saving the Python code itself,
 * logging metrics,
