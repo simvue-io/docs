@@ -28,6 +28,7 @@ nav:
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
+  - UI: userinterface-guidance.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
