@@ -71,7 +71,8 @@ simulation code, the (parent) PID needs to be specified using the `set_pid` meth
 ```
 run.set_pid(18231)
 ```
-Note that resource utilisation metrics are collected for the sum of the parent PID and all children.
+Note that resource utilisation metrics are collected for the sum of the parent PID and all children. The PID must be specified before
+calling the `init` method.
 
 !!! important
 
