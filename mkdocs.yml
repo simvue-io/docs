@@ -32,6 +32,7 @@ nav:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
   - Examples:
+    - Step by Step: examples/random-numbers.md
     - Tensorflow: examples/basic-tensorflow.md
     - OpenFOAM: examples/openfoam.md
   - FAQ:
