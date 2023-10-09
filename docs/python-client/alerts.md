@@ -10,7 +10,7 @@ be created. The arguments are:
 
 When `source` is set to `metrics`, the following are also required:
 
- - `type`: type of alert, which needs to be one of:
+ - `rule`: type of alert, which needs to be one of:
 
     * `is above`,
     * `is below`,
@@ -43,7 +43,7 @@ For example, to create a threshold alert:
 ``` py
 run.add_alert(name='quality too low',
               source='metrics',
-              type='is below',
+              rule='is below',
               metric='quality',
               frequency=1,
               window=1,
@@ -57,7 +57,7 @@ Similarly, here is an example of a range-based alert:
 ``` py
 run.add_alert(name='density invalid',
               source='metrics',
-              type='is outside range',
+              rule='is outside range',
               metric='density',
               frequency=2,
               window=2,
