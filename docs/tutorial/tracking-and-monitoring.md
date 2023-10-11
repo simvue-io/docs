@@ -820,7 +820,7 @@ Now if we run this code again, we should see that these log messages are also re
 We are also going to save this data into a Numpy array, and store it as an artifact, similarly to the method which we used to save the array of random numbers. See if you can do this on your own - see the solution in the 'full code' in the next section.
 
 ## Full Code
-This completes our step by step guide of how to use Simvue to monitor your scripts in real time. Now that our script is complete, we can remove the 'WIP' tag from the `run.init()` method, and replace it with the tag 'v1'. The full code is shown below:
+This completes our step by step guide of how to use Simvue to monitor your scripts in real time! Now that our script is complete, we can remove the 'WIP' tag from the `run.init()` method, and replace it with the tag 'v1'. The full code is shown below:
 ```  py
 import random
 import time
