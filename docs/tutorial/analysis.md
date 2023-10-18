@@ -75,10 +75,10 @@ for metric_name in metrics_names:
 You can also directly plot different metrics. Firstly import `matplotlib.pyplot` to be able to display the plot (installing the module using `pip install matplotlib` if it is not installed already). You can then use the `.plot_metrics()` method to plot any matrics as a line graph. For example, if we wanted to plot `averages.mean` metric:
 ``` py
 # Plot a line graph of the averages.mean metric
-mean_plot = client.plot_metrics(run_name, 'averages.mean', 'step')
+mean_plot = client.plot_metrics([run_name,], ['averages.mean',], 'step')
 plt.show()
 ```
-We should see that this plot matches the one seen in the UI for this metric. Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers back from the metric as a dataframe:
+We should see that this plot matches the one seen in the UI for this metric. Note that `plot_metrics()` can be used on multiple runs and/or metrics at a time, so expects lists as inputs to the `runs` and `metrics` parameters. Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers back from the metric as a dataframe:
 ``` py
 rand_nums_df = client.get_metrics(run_name, 'random_number', 'step', format='dataframe')
 ```
@@ -176,7 +176,7 @@ for metric_name in metrics_names:
     print(f"Summary of {metric_name}: \n {client.get_metrics_summaries(metric_name)}")
 
 # Plot a line graph of the averages.mean metric
-mean_plot = client.plot_metrics(run_name, 'averages.mean', 'step')
+mean_plot = client.plot_metrics([run_name,], ['averages.mean',], 'step')
 
 # Plot a bar graph of the number of occrances of each random number
 rand_nums_df = client.get_metrics(run_name, 'random_number', 'step', format='dataframe')

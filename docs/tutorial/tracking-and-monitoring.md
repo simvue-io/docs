@@ -48,7 +48,7 @@ if __name__ == "__main__":
             time.sleep(1)
 ```
 
-In our case above, we have specified the name of this run and the folder to store it in. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the run is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was ran, the time it took to execute, information about the system which it was ran on and the description of the run which we supplied above.
+In our case above, we have specified the name of this run and the folder to store it in. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the code is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was ran, the time it took to execute, information about the system which it was ran on and the description of the run which we supplied above.
 
 ### Configuring the Run
 
