@@ -52,7 +52,7 @@ In our case above, we have specified the name of this run and the folder to stor
 
 ### Configuring the Run
 
-Next, we can use the `config` method to change some configuration options about the run. This must be set before the run is initialised. For example, we could set `suppress_errors` to `True` so that if we setup part of our run incorrectly, the script will fail instead of continuing to run:
+Next, we can use the `config` method to change some configuration options about the run. This must be set before the run is initialised. For example, we could set `suppress_errors` to `False` so that if we setup part of our run incorrectly, the script will fail instead of continuing to run:
 
 ```  py
 import random
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True)
+        run.config(suppress_errors=False)
 
         # Initialise the run
         run.init(name='random-numbers-%d' % time.time(),
@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True)
+        run.config(suppress_errors=False)
 
         # Initialise the run
         run.init(name='random-numbers-%d' % time.time(),
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True)
+        run.config(suppress_errors=False)
 
         # Initialise the run
         run.init(name='random-numbers-%d' % time.time(),
@@ -185,7 +185,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True)
+        run.config(suppress_errors=False)
 
         # Initialise the run
         run.init(name='random-numbers-%d' % time.time(),
@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Initialise the run
@@ -322,7 +322,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Initialise the run
@@ -412,7 +412,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Initialise the run
@@ -546,7 +546,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Create a variable to store the number of runs
@@ -676,7 +676,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Create a variable to store the number of runs
@@ -835,7 +835,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         # Configure the run
-        run.config(suppress_errors=True,
+        run.config(suppress_errors=False,
             resources_metrics_interval=10)
 
         # Create a variable to store the number of runs
