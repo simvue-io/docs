@@ -830,7 +830,7 @@ for count in range(0, num_iterations):
         percentage_change = ((mean - previous_mean) / mean) * 100
 
     # Add a debug log message containing this percentage change
-    logger.debug(f"Mean has changed by {percentage_change} in iteration {count}.")
+    logger.debug(f"Mean has changed by {percentage_change}% in iteration {count}.")
 
 ```
 Now if we run this code again, we should see that these log messages are also recorded in the Events log in the UI, along with the events which we previously added. 
@@ -934,7 +934,7 @@ if __name__ == "__main__":
             percentage_changes_in_mean = numpy.append(percentage_changes_in_mean, percentage_change)
 
             # Add a debug log message containing this percentage change
-            logger.debug(f"Mean has changed by {percentage_change} in iteration {count}.")
+            logger.debug(f"Mean has changed by {percentage_change}% in iteration {count}.")
 
             # Log the metrics, so that they can be seen in the Simvue UI in real time
             run.log_metrics({'random_number': random_number}, step=count)
