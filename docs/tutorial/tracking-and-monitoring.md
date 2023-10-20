@@ -795,20 +795,19 @@ if __name__ == "__main__":
 ```
 
 ## Logging handler
-!!! warning
-
-    This section of the tutorial does not currently behave as expected. Please skip to the next section.
-    
-In the `Events` section, we spoke about using the `run.log_event()` method to add messages to a log, which is available to view in the Simvue UI. However for more complicated programs, we may want to use a proper logging tool which allows us more functionality, such as setting the level of each log (info, debug etc). To enable this, Simvue can be added as a Handler for the default Python logger. To do this, we import the `logging` module at the top of our code, the `Handler  ` from Simvue, and then add the following code after our run initialisation:
+In the `Events` section, we spoke about using the `run.log_event()` method to add messages to a log, which is available to view in the Simvue UI. However for more complicated programs, we may want to use a proper logging tool which allows us more functionality, such as setting the level of each log (info, debug etc). To enable this, Simvue can be added as a Handler for the default Python logger. To do this, we import the `logging` module at the top of our code, the `Handler` from Simvue, and then add the following code after our run initialisation:
 ``` py
 import logging
 from simvue import Run, Handler
 with Run() as run:
     run.init(...)
     logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
     logger.addHandler(Handler(run))
 ```
-Now, any log messages which we add using the logger will also show up in our Simvue Events log. As an example, let us say that we want to use the Python logger to add `debug` log messages for each iteration, printing the percentage change in the mean value after each iteration of the code. Inside the for loop, we can add the following code:
+Now, any log messages which we add using the logger will also show up in our Simvue `Events` log. Note that above we have set the logging level to `DEBUG` - this means that the `Events` tab in the Simvue UI will show events of all severities. If you only wanted to have more severe log entries printed to the `Events` tab, you can change the level at this point.
+
+As an example, let us say that we want to use the Python logger to add `DEBUG` log messages for each iteration, printing the percentage change in the mean value after each iteration of the code. Inside the for loop, we can add the following code:
 
 ``` py
 mean = 0
@@ -872,6 +871,7 @@ if __name__ == "__main__":
 
         # Create a logger, add the Simvue Handler so that log messages are shown in the UI
         logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
         logger.addHandler(Handler(run))
 
         # Save the code as an artifact
