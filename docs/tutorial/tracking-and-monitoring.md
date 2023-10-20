@@ -48,11 +48,11 @@ if __name__ == "__main__":
             time.sleep(1)
 ```
 
-In our case above, we have specified the name of this run and the folder to store it in. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the code is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was ran, the time it took to execute, information about the system which it was ran on and the description of the run which we supplied above.
+In our case above, we have specified the name of this run and the folder to store it in on the Simvue server. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the code is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was ran, the time it took to execute, information about the system which it was ran on and the description of the run which we supplied above.
 
 ### Configuring the Run
 
-Next, we can use the `config` method to change some configuration options about the run. This must be set before the run is initialised. For example, we could set `suppress_errors` to `False` so that if we setup part of our run incorrectly, the script will fail instead of continuing to run:
+Next, we can use the `config()` method to change some configuration options about the run. This must be set before the run is initialised. For example, we could set `suppress_errors` to `False` so that if we setup part of our run incorrectly, the script will fail instead of continuing to run:
 
 ```  py
 import random
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 ```
 
 ### Add Information for Folders
-Since in our `init` method we created a new folder called `/rand_nums` to store all of our runs in, we can see this in the `Folders` tab of the Simvue UI. However folders can also have metadata, tags and descriptions which can be seen in the UI, that we can set in our run using the `run.set_folder_details` method:
+Since in our `init` method we created a new folder called `/rand_nums` to store all of our runs in, we can see this in the `Folders` tab of the Simvue UI. However folders can also have metadata, tags and descriptions which can be seen in the UI, that we can set in our run using the `set_folder_details()` method:
 
 ```  py
 import random
@@ -115,7 +115,7 @@ Running the script again and checking the `Folders` tab of the Simvue UI should 
 ## Creating Metrics
 
 ### Random Numbers
-Next, we need to create our metrics. These are measures of the performance or results of the code which we can monitor in the UI in real time. To do this, we use the `log_metrics` method, which we call at the point in the code at which we want to evaluate the metric. For example, let us create a metric which simply records the random number which is generated on each iteration of the loop. To do this, we simply pass in a dictionary which contains the metric name as the key, and the argument to store as the value:
+Next, we need to create our metrics. These are measures of the performance or results of the code which we can monitor in the UI in real time. To do this, we use the `log_metrics()` method, which we call at the point in the code at which we want to evaluate the metric. For example, let us create a metric which simply records the random number which is generated on each iteration of the loop. To do this, we simply pass in a dictionary which contains the metric name as the key, and the argument to store as the value:
 
 ```  py
 import random
@@ -149,10 +149,11 @@ if __name__ == "__main__":
             run.log_metrics({'random_number': random_number})
             time.sleep(1)
 ```
-When we run this code again, we should now see that under the `Metrics` tab of the run in the UI, a line graph is updated in real time as the code runs, showing the random number generated with each iteration of the code. You should see that the numbers plotted on this line graph match those being printed to the console. The `step` parameter along the x axis corresponds to the iteration at which that number was generated.
+When we run this code again, we should now see that under the `Metrics` tab of the run in the UI, a line graph is updated in real time as the code runs, showing the random number generated with each iteration of the code. You should see that the numbers plotted on this line graph match those being printed to the console. The `step` parameter along the x axis corresponds to the iteration at which that number was generated. The graph should look something like this:
+![Random numbers line plot](images/metrics-rand-nums.png)
 
 ### Averages
-Next, let us add some more metrics which calcuate the averages of the random numbers generated so far after each iteration. To do this, we will create a `numpy` array and append the random number generated to it after each iteration. We will then use the `nnumpy.average()` function to calculate the mean, the `numpy.median()` function to calculate the median, and `numpy.bincount().argmax()` to calculate the mode.
+Next, let us add some more metrics which calcuate the averages of the random numbers generated so far after each iteration. To do this, we will create a `numpy` array and append the random number generated to it after each iteration. We will then use the `numpy.average()` function to calculate the mean, the `numpy.median()` function to calculate the median, and `numpy.bincount().argmax()` to calculate the mode.
 
 Firstly, ensure that `numpy` is installed with your python installation. If it is not, add it using:
 ```
@@ -220,7 +221,11 @@ if __name__ == "__main__":
             })
             time.sleep(1)
 ```
-Upon running the script again and checking the UI, you should now see a new graph in the `Metrics` tab which shows three lines, one for each metric. However you may have spotted something weird is happening - whereas before the `step` parameter on the x axis corresponded to the iteration at which the metric was sampled, the x axis now goes up to 20 instead of 10! This is because we have called `log_metrics` twice in the above code, and so each time it is called it adds one to the value of `step`. We could fix this by evaluating all of the metrics in the same call, ie:
+Upon running the script again and checking the UI, you should now see a new graph in the `Metrics` tab which shows three lines, one for each metric:
+
+![Averages line plot](images/metrics-averages-twenty-steps.png)
+
+ However you may have spotted something weird is happening - whereas before the `step` parameter on the x axis corresponded to the iteration at which the metric was sampled, the x axis now goes up to 20 instead of 10! This is because we have called `log_metrics` twice in the above code, and so each time it is called it adds one to the value of `step`. We could fix this by evaluating all of the metrics in the same call, ie:
 ``` py
 run.log_metrics({
     'random_number': random_number
@@ -240,6 +245,12 @@ run.log_metrics({
 }, step=count)
 ```
 Rerunning the code with either of these solutions should show the the two graphs of the metrics in the UI go back to using the number of the iteration for the `step` parameter on the x axis.
+
+You can also customise these plots from within the UI. From the `Metrics` tab of your run, disable `Display All Metrics` using the toggle in the top left of the screen. You can now add any metrics you wish to the plot, and define the `x` and `y` axis which you wish to look at. As an example, let us plot the metrics `random_number` and `averages.mean` on a single plot. We can than also change the `x` axis to show units of `time` instead of `step`,  and set the `y` axis to be between zero and ten. Doing this gives us a plot which looks something like this:
+
+![Averages line plot](images/metrics-custom-plot.png)
+
+You should be able to see that the random number generated has a direct effect on the value of the mean - if the random number generated at any given time is below the mean, then the mean is dragged downwards, and if the random number is above the mean then the mean is pushed upwards.
 
 ### Resource Usage Metrics
 Resource usage metrics are collected automatically from the Python client, and displayed under the `Resources` tab of the run in the UI. So far we have not been able to see them, since they are collected every thirty seconds be default, and our program has only ran for 10 seconds at a time. To fix this, we will update our run config to sample the resource metrics every 10 seconds using the `resources_metrics_interval` argument, and we will increase our number of iterations in the loop to 30:
@@ -290,11 +301,11 @@ if __name__ == "__main__":
             }, step=count)
             time.sleep(1)
 ```
-Rerunning the script should now allow you to see your computer's CPU and RAM usage over time as it runs the script in the `Resources` tab in the UI.
+Rerunning the script should now allow you to see your computer's CPU and RAM usage over time as it runs the script in the `Resources` tab in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
 
 ## Events
 ### Logging
-During a run, any arbitrary text can be logged using the `log_event` method, and will show up in the `Events` tab of the run in the UI. For example, let's say that we simply want to add a log of the time at which the code began running, and when all of the iterations completed. To do this, we just need to add the following line before the for loop:
+During a run, any arbitrary text can be logged using the `log_event()` method, and will show up in the `Events` tab of the run in the UI. For example, let's say that we simply want to add a log of the time at which the code began running, and when all of the iterations completed. To do this, we just need to add the following line before the for loop:
 ``` py
 run.log_event('Random number generation started!')
 ```
@@ -530,7 +541,7 @@ In a similar way, we can update the tags of a run at any point. Let us say that 
 run.update_tags(['completed'])
 ```
 
-Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tag of the UI. If the code is ran and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
+Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tab of the UI. If the code is ran and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
 
 The full code after completing the above section is as follows:
 ```  py
@@ -631,6 +642,10 @@ if __name__ == "__main__":
 
 ## Alerts
 Alerts are a feature of Simvue which allows the program to monitor the progress of code in real time, and alert the user (either via the UI or by email) if the code exceeds a given set of parameters. This is particularly useful for code which is computationally expensive or code which is running on a HPC cluster - it allows the user to terminate the given run in good time if a poor result is guaranteed, saving time and money.
+
+!!! warning
+
+    This section of the tutorial does not currently behave as expected. Please skip to the next section.
 
 ### Alerts based on Metrics
 Alerts can be triggered based on the values of metrics being monitored by Simvue. As an example, say that we want to trigger an alert if the mean is outside a range of values for a given period of time. Let's say that if the mean value is not between the values of 4 and 6 for more than two minutes, we want to trigger an alert. To do this, we will need to define an alert after the run is initialised, but before the iterations begin. We could add the following code:
@@ -780,6 +795,10 @@ if __name__ == "__main__":
 ```
 
 ## Logging handler
+!!! warning
+
+    This section of the tutorial does not currently behave as expected. Please skip to the next section.
+    
 In the `Events` section, we spoke about using the `run.log_event()` method to add messages to a log, which is available to view in the Simvue UI. However for more complicated programs, we may want to use a proper logging tool which allows us more functionality, such as setting the level of each log (info, debug etc). To enable this, Simvue can be added as a Handler for the default Python logger. To do this, we import the `logging` module at the top of our code, the `Handler  ` from Simvue, and then add the following code after our run initialisation:
 ``` py
 import logging

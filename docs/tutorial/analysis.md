@@ -2,13 +2,13 @@
 This section of the tutorial introduces how Simvue can be used to retrieve information about a run such as metadata, metrics or artifacts, and use these to perform more in depth data analysis or create plots of important data. The topics covered in this section (and more) are described in the [Analysis](/analysis/retrieving-runs/) section of the documentation, so it may be useful to have that section of the docs open alongside this part of the tutorial.
 
 ## Simvue Client
-Results and artifacts from runs can be collected using the Simvue Client for further analysis. We will demonstrate this in a new file, called `analysis.py`. Create this new file in the same location as your `test.py` script above, and create an instance of the `Client` class:
+Results and artifacts from runs can be collected using the Simvue Client for further analysis. We will demonstrate this in a new file, called `analysis.py`. Create this new file in the same location as your `test.py` script from the previous section, and create an instance of the `Client` class:
 ``` py
 from simvue import Client
 
 client = Client()
 ```
-For the next part of the tutorial to make sense, make sure that you have ran the full code example given in the `Tracking & Monitoring` section of the tutorial at least once.
+For the next part of the tutorial to make sense, make sure that you have ran the full code example given in the final part of the `Tracking & Monitoring` section of the tutorial at least once.
 
 ## Retrieving Runs
 To retrieve a single run which we know the name of, we can use the method `get_run()` of the Client class. If you log into the UI and choose one of your recent runs, and simply run `client.get_run(<name of run>)`, you will see that you get a dictionary of information returned to you such as the name, status, folder, and the timestamps of when it was created, started and completed. You can also enable the optional parameters `tags=True` or `metadata=True` to retrieve the tags and metadata asociated with the run.
@@ -39,7 +39,7 @@ If you then run the analysis script using `python3 analysis.py` on the command l
     ...,
 ]
 ```
-This should show you a list of all of the runs which you have ran using the final code in the section above. You can check that it is correct by going to the 'Runs' tab on the UI, adding filters to the top by pressing the `Folder` and `Tags` buttons and selecting the correct values, and checking that the runs listed in the UI match those in the list of dictionaries printed to the command line.
+This should show you a list of all of the runs which you have ran using the final code in the `Tracking & Monitoring` section of the tutorial. You can check that it is correct by going to the 'Runs' tab on the UI, adding filters to the top by pressing the `Folder` and `Tags` buttons and selecting the correct values, and checking that the runs listed in the UI match those in the list of dictionaries printed to the command line.
 
 We will store the name of the first run which fits our criteria in a variable, for use in the rest of the code:
 ``` py
@@ -78,16 +78,23 @@ You can also directly plot different metrics. Firstly import `matplotlib.pyplot`
 mean_plot = client.plot_metrics([run_name,], ['averages.mean',], 'step')
 plt.show()
 ```
-We should see that this plot matches the one seen in the UI for this metric. Note that `plot_metrics()` can be used on multiple runs and/or metrics at a time, so expects lists as inputs to the `runs` and `metrics` parameters. Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers back from the metric as a dataframe:
+Note that `plot_metrics()` can be used on multiple runs and/or metrics at a time, so expects lists as inputs to the `runs` and `metrics` parameters. We should see that this plot matches the one seen in the UI for this metric, looking something like this:
+![Mean line plot](images/analysis-mean-plot.png)
+
+Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers back from the metric as a dataframe:
 ``` py
 rand_nums_df = client.get_metrics(run_name, 'random_number', 'step', format='dataframe')
 ```
 We can then group our data based on the value in the `random_number` column for each step using `.groupby()`, and collect the number of steps at which each possible random number was present using `.nunique()`. Finally we can plot this data as a bar graph to see how many of each random number we got over the course of the run using `.plot()`:
 ``` py
 rand_nums_bar_plot = rand_nums_df.groupby('random_number').nunique().plot(kind='bar', rot=0)
+rand_nums_bar_plot.set_ylabel("Number of instances")
 plt.show()
 ```
-We should then see a bar graph of the number of occurances of each random number - it should be a roughly even distribution between each of the random numbers. The full code so far can be seen below:
+We should then see a bar graph of the number of occurances of each random number - it should be a roughly even distribution between each of the random numbers, which looks like this:
+![Bar plot](images/analysis-bar-plot.png)
+
+The full code so far can be seen below:
 ``` py
 import matplotlib.pyplot as plt
 from simvue import Client
@@ -125,7 +132,7 @@ print("Number of Division by Zero Errors encountered during execution:", num_div
 ```
 
 ## Retrieving Artifacts
-Finally named artifacts can be retrieved from the run using the `get_artifact()` method. This will download the artifact, and return its contents. For example, if we wanted to retrieve our artifact of the array of percentage changes of the mean between each iteration, we can do:
+Finally, named artifacts can be retrieved from the run using the `get_artifact()` method. This will download the artifact, and return its contents. For example, if we wanted to retrieve our artifact of the array of percentage changes of the mean between each iteration, we can do:
 
 ``` py
 percentage_changes_in_mean = client.get_artifact(run_name, 'percentage_changes_in_mean')
@@ -144,7 +151,9 @@ ax.plot(iterations_arr, percentage_changes_in_mean)
 ax.set_xlabel('Iteration')
 ax.set_ylabel('Percentage Change in Mean')
 ```
-This graph should look like a kind of damped oscillation - as the number of iterations progresses, each individual random number added to the mean makes less and less impact, and so the line should begin to flatten and remain at around zero after a large number of iterations.
+This graph should look like a kind of damped oscillation - as the number of iterations progresses, each individual random number added to the mean makes less and less impact, and so the line should begin to flatten and remain at around zero after a large number of iterations:
+![Percentage change plot](images/analysis-percentage-change-plot.png)
+
 
 You can also retrieve artifacts as files and save them to your local system using `get_artifact_as_file()`. Say we want to retrieve our JSON file which contains the final values of our three averages - to do this, we simply pass in the name of the artifact and the path where we would like it to be saved (we will leave the path blank, as it will save the file to our current working directory by default):
 

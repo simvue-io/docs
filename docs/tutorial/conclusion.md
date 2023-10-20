@@ -10,8 +10,8 @@ Hopefully, you have learned how to:
 - Define metrics about the script which are monitored in real time
 - Monitor resource utilization metrics during code execution
 - Log events, catch exceptions and add support for the Python logging module
-- Save artifacts which are stored can be retrieved after the script finished running
-- Add alerts which can warn the user if things go wrong
+- Save artifacts, which can be retrieved after the script finishes running
+- Add alerts which can warn the user if things go wrong during script execution
 - Retrieve information about your runs stored on the Simvue server
 - Retrieve data from a run including events, artifacts and metrics
 - Plot data retrieved from a run
