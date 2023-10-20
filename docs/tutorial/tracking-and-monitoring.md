@@ -641,11 +641,11 @@ if __name__ == "__main__":
 ```
 
 ## Alerts
-Alerts are a feature of Simvue which allows the program to monitor the progress of code in real time, and alert the user (either via the UI or by email) if the code exceeds a given set of parameters. This is particularly useful for code which is computationally expensive or code which is running on a HPC cluster - it allows the user to terminate the given run in good time if a poor result is guaranteed, saving time and money.
-
 !!! warning
 
     This section of the tutorial does not currently behave as expected. Please skip to the next section.
+    
+Alerts are a feature of Simvue which allows the program to monitor the progress of code in real time, and alert the user (either via the UI or by email) if the code exceeds a given set of parameters. This is particularly useful for code which is computationally expensive or code which is running on a HPC cluster - it allows the user to terminate the given run in good time if a poor result is guaranteed, saving time and money.
 
 ### Alerts based on Metrics
 Alerts can be triggered based on the values of metrics being monitored by Simvue. As an example, say that we want to trigger an alert if the mean is outside a range of values for a given period of time. Let's say that if the mean value is not between the values of 4 and 6 for more than two minutes, we want to trigger an alert. To do this, we will need to define an alert after the run is initialised, but before the iterations begin. We could add the following code:
