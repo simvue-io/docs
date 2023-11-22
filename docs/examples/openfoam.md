@@ -1,8 +1,7 @@
 # OpenFOAM
 
 ## Introduction
-Here we demonstrate using OpenFOAM with Simvue. In this example we will assume OpenFOAM 10 has been pre-installed on a machine,
-for example by following these instructions: [^^https://openfoam.org/download/10-ubuntu/^^](https://openfoam.org/download/10-ubuntu/).
+Here we demonstrate using OpenFOAM with Simvue. In this example we will assume OpenFOAM 10 has been pre-installed on a machine - if you do not have this, [^^follow these instructions for installing OpenFOAM 10 on Ubuntu^^](https://openfoam.org/download/10-ubuntu/).
 
 !!! note
 

@@ -60,8 +60,7 @@ run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
 
 !!! warning
 
-    The Simvue client uses a Plotly conversion [^^function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)
-    to convert Matplotlib figures to Plotly. This function doesn't support all plot types and has limitations (see [^^here^^](https://community.plotly.com/t/mpl-to-plotly-limitations/14686)).
+    The Simvue client uses a Plotly conversion function ([^^see documentation for the Plotly conversion function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)) to convert Matplotlib figures to Plotly. This function doesn't support all plot types and has limitations ([^^view the limitations of the Plotly conversion function^^](https://community.plotly.com/t/mpl-to-plotly-limitations/14686)).
 
 ### Directories
 

@@ -165,8 +165,7 @@ run.log_event(message, timestamp='2022-01-03 16:42:30.849617')
 
 #### Python logging module
 
-Logs from the standard [^^Python logging module^^](https://docs.python.org/3/library/logging.html) can be captured. This is done
-by adding the `SimvueHandler` to the `logger`, for example:
+Logs from the standard Python logging module can be captured - [^^ see more details about the Python logging module here^^](https://docs.python.org/3/library/logging.html). This is done by adding the `SimvueHandler` to the `logger`, for example:
 ```
 from simvue import Simvue, SimvueHandler
 

@@ -7,7 +7,7 @@ This example demonstrates using Simvue to track a simple Python code, in particu
 - Logging some metrics while the training is running,
 - Adding some additional metadata containing the final values of the metrics.
 
-The code is based on the dynamic recurrent neural network example from [^^here^^](https://github.com/aymericdamien/TensorFlow-Examples/).
+The code is based on a dynamic recurrent neural network example - [^^find the original neural network code on Github^^](https://github.com/aymericdamien/TensorFlow-Examples/).
 
 ## Running the code
 

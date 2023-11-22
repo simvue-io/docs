@@ -24,9 +24,9 @@ if __name__ == "__main__":
 the run automatically be set to the `lost` state if there is an exception and no information is available as to what happened.
 
 ## Interactive plots from artifacts
-If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of [^^plotly.js^^](https://plotly.com/javascript/).
+If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of `plotly.js` - [^^see here for documentation for plotly.js^^](https://plotly.com/javascript/).
 
-Here is a simple but complete example creating a Matplotlib plot (based on one of the examples [^^here^^](https://matplotlib.org/stable/tutorials/introductory/pyplot.html)) and saving it as an artifact. Note the use of the `gcf()` method to get the current figure, as we need to 
+Here is a simple but complete example creating a Matplotlib plot ([^^based on an example from the Matplotlib documentation, seen here^^](https://matplotlib.org/stable/tutorials/introductory/pyplot.html)) and saving it as an artifact. Note the use of the `gcf()` method to get the current figure, as we need to 
 pass a `matplotlib.figure.Figure` instance to Simvue.
 ```
 import numpy as np
@@ -62,5 +62,4 @@ or:
 ```
 AttributeError: 'PathCollection' object has no attribute 'get_offset_position
 ```
-it means that your plot is not compatible with the Plotly conversion [^^function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly). In this situation the only option currently is to try using [^^Plotly^^](https://plotly.com/python/) rather than Matplotlib to
-create the plot.
+it means that your plot is not compatible with the Plotly conversion function ([^^see documentation for the Plotly conversion function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)). In this situation the only option currently is to try using Plotly  rather than Matplotlib to create the plot. If you are unfamiliar with this, [^^view the full Plotly documentation^^](https://plotly.com/python/).

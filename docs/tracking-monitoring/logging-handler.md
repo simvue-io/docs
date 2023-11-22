@@ -1,7 +1,6 @@
 # Python logging module
 
-Logs from the standard [^^Python logging module^^](https://docs.python.org/3/library/logging.html) can be captured. This is done
-by adding the Simvue `Handler` to the `logger`, for example:
+Logs from the standard Python logging module can be captured - [^^see more details about the Python logging module here^^](https://docs.python.org/3/library/logging.html). This is done by adding the `SimvueHandler` to the `logger`, for example:
 ``` py
 from simvue import Run, Handler
 
