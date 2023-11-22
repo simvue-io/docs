@@ -13,16 +13,16 @@ nav:
     - Concepts: concepts.md
   - Introduction: introduction.md
   - Tracking & monitoring:
-    - Getting started: python-client/getting-started.md
-    - Overview: python-client/overview.md
-    - Configuration: python-client/configuration.md
-    - Folders: python-client/folders.md
-    - Metrics: python-client/metrics.md
-    - Events: python-client/events.md
-    - Artifacts: python-client/artifacts.md
-    - Alerts: python-client/alerts.md
-    - Logging handler: python-client/logging-handler.md
-    - Obtaining data: python-client/obtaining-data.md
+    - Getting started: tracking-monitoring/getting-started.md
+    - Overview: tracking-monitoring/overview.md
+    - Configuration: tracking-monitoring/configuration.md
+    - Folders: tracking-monitoring/folders.md
+    - Metrics: tracking-monitoring/metrics.md
+    - Events: tracking-monitoring/events.md
+    - Artifacts: tracking-monitoring/artifacts.md
+    - Alerts: tracking-monitoring/alerts.md
+    - Logging handler: tracking-monitoring/logging-handler.md
+    - Obtaining data: tracking-monitoring/obtaining-data.md
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md
     - Metadata: analysis/metadata.md
