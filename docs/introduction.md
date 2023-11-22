@@ -76,5 +76,5 @@ This script should run for 10 seconds and will create a new run visible in the S
 
 ## Next steps
 
-Continue on to [Tracking & monitoring](/tracking-monitoring/getting-started/) in order to learn about using Simvue
+Continue on to [^^Tracking & monitoring^^](/tracking-monitoring/getting-started/) in order to learn about using Simvue
 in more detail.
