@@ -80,4 +80,4 @@ Continue on to [Tracking & monitoring](/python-client/getting-started/) in order
 in more detail.
 
 You can also see a step by step example of how to expand this script to use more of Simvue's functionality in the
-[Tutorial](/tutorial/introduction/) section.
+[^^Tutorial^^](/tutorial/introduction/) section.

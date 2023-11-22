@@ -1,5 +1,5 @@
 # Analysis
-This section of the tutorial introduces how Simvue can be used to retrieve information about a run such as metadata, metrics or artifacts, and use these to perform more in depth data analysis or create plots of important data. The topics covered in this section (and more) are described in the [Analysis](/analysis/retrieving-runs/) section of the documentation, so it may be useful to have that section of the docs open alongside this part of the tutorial.
+This section of the tutorial introduces how Simvue can be used to retrieve information about a run such as metadata, metrics or artifacts, and use these to perform more in depth data analysis or create plots of important data. The topics covered in this section (and more) are described in the [^^Analysis^^](/analysis/retrieving-runs/) section of the documentation, so it may be useful to have that section of the docs open alongside this part of the tutorial.
 
 ## Simvue Client
 Results and artifacts from runs can be collected using the Simvue Client for further analysis. We will demonstrate this in a new file, called `analysis.py`. Create this new file in the same location as your `test.py` script from the previous section, and create an instance of the `Client` class:

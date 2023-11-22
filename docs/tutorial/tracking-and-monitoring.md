@@ -1,5 +1,5 @@
 # Tracking & Monitoring
-This section of the tutorial introduces how Simvue can be used to create a new run, define metrics and use them to track the progress of the run in the Simvue UI, save metadata and artifacts from the run, log events which occur during completion of the run, and set up alerts which can tell the user if things go wrong. The topics covered in this section (and more) are described in the [Tracking & Monitoring](/python-client/getting-started/) section of the documentation, so it may be useful to have that section of the docs open alongside this part of the tutorial.
+This section of the tutorial introduces how Simvue can be used to create a new run, define metrics and use them to track the progress of the run in the Simvue UI, save metadata and artifacts from the run, log events which occur during completion of the run, and set up alerts which can tell the user if things go wrong. The topics covered in this section (and more) are described in the [^^Tracking & Monitoring^^](/python-client/getting-started/) section of the documentation, so it may be useful to have that section of the docs open alongside this part of the tutorial.
 
 ## Creating a Program to Monitor
 
@@ -982,4 +982,4 @@ if __name__ == "__main__":
         run.update_tags(['completed'])
 ```
 
-After running your full script, you can now move on to the [Analysis](/tutorial/analysis) section of the tutorial to learn about how we can retrieve data from a run and use it to perform some data analysis.
+After running your full script, you can now move on to the [^^Analysis^^](/tutorial/analysis) section of the tutorial to learn about how we can retrieve data from a run and use it to perform some data analysis.
