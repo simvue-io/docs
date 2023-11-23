@@ -9,8 +9,9 @@ theme:
   logo: images/logo.png
 nav:
   - Home:
-    - Welcome: index.md
-    - Concepts: concepts.md
+    - Welcome: home/index.md
+    - Concepts: home/concepts.md
+    - Terminology: home/terminology.md
   - Introduction: introduction.md
   - Tracking & monitoring:
     - Getting started: tracking-monitoring/getting-started.md

@@ -4,10 +4,9 @@ Before using Simvue it is important to understand some of the core concepts.
 
 ## Run
 
-A run represents the execution of an application, such as a simulation, processing task or AI/ML training.
-Each run has associated information such as a name, description, 
-metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings,
-and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
+Simvue provides the functionality to monitor the execution of an application in real time, such as a simulation, processing task or AI/ML training algorithm. To do this, a user must create a `run` - this is where information about the application is stored during execution. It is typically instantiated before the execution of the application itself begins, and is closed once the execution is completed.
+
+Each run has associated information such as a name, description, metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings, and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
 
 ## Folder
 
@@ -90,7 +89,6 @@ to see its whole lineage, including all artifacts and runs which were used to ge
 An event is a timestamped text record. Examples include exceptions, errors and other useful log messages.
 
 ## Alerts
-The metrics being collected during the lifetime of a run can have important implications, for example: is it even worth continuning
-running the simulation? Alerts automatically calculate averages of a specified metric over a specified window and frequency, and
-checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being
-triggered.
+The metrics being collected during the lifetime of a run can have important implications on the rest of the simulation. For example: if a given metric is not converging after a certain period of time,  is it even worth continuning running the simulation? Alerts automatically calculate averages of a specified metric over a specified window and frequency, and checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being triggered. This allows them 
+
+
