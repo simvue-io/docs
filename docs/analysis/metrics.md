@@ -102,7 +102,7 @@ plt.legend()
 plt.savefig('plot.png')
 ```
 giving the following plot:
-![A single line plot showing multiple different metrics for a single run. The metrics rms[RhoV], rms[RhoW] and rms[RhoE] are plotted as blue, orange and green lines respectively, versus the step parameter on the x axis. The step can be thought of as the iteration of the simulation at which the measurement of the metrics were taken.](images/metrics-multiple-plot.png)
+![A line plot showing multiple different metrics for a single run. The metrics rms[RhoV], rms[RhoW] and rms[RhoE] are plotted as blue, orange and green lines respectively, versus the step parameter on the x axis. The step can be thought of as the iteration of the simulation at which the measurement of the metrics were taken.](images/metrics-multiple-plot.png)
 
 ### Multiple runs
 

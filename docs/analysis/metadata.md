@@ -42,7 +42,7 @@ plot = df.plot(kind='scatter',
                c='metadata.tbr')
 ```
 gives:
-![A scatter plot which uses metadata from all runs in a given folder. Shows a plot of the breeding percentage in a breeder blanket (plus multiplier ratio) on the x axis, versus enrichment of a Lithium breeder blanket on the y axis. Each point is a differnt colour, with a colorbar corresponding to the Tritium Breding Ratio (TBR) on the right of the plot.](images/scatter-metadata-colours.png)
+![A scatter plot which uses metadata from all runs in a given folder. Shows a plot of the breeding percentage in a breeder blanket (plus multiplier ratio) on the y axis, versus enrichment of a Lithium breeder blanket on the x axis. Each point is a differnt colour, with a colorbar corresponding to the Tritium Breding Ratio (TBR) on the right of the plot.](images/scatter-metadata-colours.png)
 
 ## Bar chart
 In this example we create a bar chart showing how many runs are associated with each possible

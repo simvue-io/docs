@@ -12,7 +12,7 @@ Simvue can track and organise metadata and files, collect metrics and logs from 
 simulations or any processing tasks, as well as maintain connections between different simulations and tasks and is even inter-operable between different platforms.
 
 <figure markdown>
-  ![A diagram showing that Simvue can track simulation which are being run on a variety of different hardware resources, including desktops, HPC clusters and cloud computing resources.](images/simvue-resources.png){ width="420" }
+  ![A diagram showing that Simvue can track simulationS which are being run on a variety of different hardware resources, including desktops, HPC clusters and cloud computing resources.](images/simvue-resources.png){ width="420" }
 </figure>
 
 Simvue consists of:
