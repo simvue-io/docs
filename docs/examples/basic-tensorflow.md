@@ -75,6 +75,6 @@ run.close()
 As well as having a record of metadata associated with the training run you can visualize the metrics in real-time,
 for example loss:
 <figure markdown>
-  ![OpenFOAM residuals](images/tensorflow-loss.png){ width="1000" }
+  ![A plot of theOpenFOAM residuals metrics, evaluated in real time on the UI. The metrics residuals.final.Ux, residuals.final.Uy and residuals.final.Uz are plotted on the same graph in different colours (blue, green and yellow respectively), with time in seconds along the x axis.](images/tensorflow-loss.png){ width="1000" }
 </figure>
 

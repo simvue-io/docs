@@ -35,7 +35,7 @@ Metrics are floating point measurements which are collected repeatedly over time
 visualised in the Simvue web UI in real time or used to notify users in the event of problems (see alerts below).
 
 <figure markdown>
-  ![Metrics](images/metrics.png){ width="1000" }
+  ![A plot of the loss and accuracy metrics which are being tracked during a certain run. This plot is a line graph of the value of these metrics along the y axis (between 0 and 1), with step along the x axis (the iteration of the program at which the metric was evaluated). This type of plot can be seen in the UI for any given run while it is executing, and the plot is updated live with the latest values to allow the user to keep track of the progress of their simulation.](images/metrics.png){ width="1000" }
 </figure>
 
 ## Artifacts
