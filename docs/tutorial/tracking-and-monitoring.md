@@ -538,7 +538,7 @@ If we rerun our code now, we should see that the `Metadata` tab of the run's UI 
 In a similar way, we can update the tags of a run at any point. Let us say that we want to keep track of which runs have been completed, and which were interrupted / crashed before they could finish. To do this, we will add a new tag to our run initialisation when the code is complete, by adding the following line to the end of our code:
 
 ``` py
-run.update_tags(['completed'])
+run.update_tags(['random-numbers', 'WIP', 'completed'])
 ```
 
 Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tab of the UI. If the code is ran and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
@@ -636,15 +636,11 @@ if __name__ == "__main__":
         if 4.9 < mean < 5.1:
             run.update_metadata({'result_converged': True})
 
-        run.update_tags(['completed'])
+        run.update_tags(['random-numbers', 'WIP', 'completed'])
 
 ```
 
 ## Alerts
-!!! warning
-
-    This section of the tutorial does not currently behave as expected. Please skip to the next section.
-    
 Alerts are a feature of Simvue which allows the program to monitor the progress of code in real time, and alert the user (either via the UI or by email) if the code exceeds a given set of parameters. This is particularly useful for code which is computationally expensive or code which is running on a HPC cluster - it allows the user to terminate the given run in good time if a poor result is guaranteed, saving time and money.
 
 ### Alerts based on Metrics
@@ -663,7 +659,7 @@ run.add_alert(
 
 )
 ```
-This will evaluate the value of the `averages.mean` metric once per minute. IF it is outside the acceptable range (not between 4 and 6) for 2 or more consecutive evaluations, it will raise an alert on the run's UI. If we wanted it to also email us, we could set the parameter `notification='email'`. If we increase the number of iterations which the code performs, say to 300, running this code should show us that this alert shows up in the `Alerts` tab of the run's UI. If you want to check that the alert activates as expected, you could change the range to be `range_low=9` and `range_high=10` - you should then see the alert trigger after 2 minutes.
+This will evaluate the value of the `averages.mean` metric once per minute. If it is outside the acceptable range (not between 4 and 6) for 2 or more consecutive evaluations, it will raise an alert on the run's UI. If we wanted it to also email us, we could set the parameter `notification='email'`. If we increase the number of iterations which the code performs, say to 300, running this code should show us that this alert shows up in the `Alerts` tab of the run's UI. If you want to check that the alert activates as expected, you could change the range to be `range_low=9` and `range_high=10` - you should then see the alert trigger after 2 minutes.
 
 ### Alerts based on Events
 Alerts can also be triggered based on logged events. These alerts will scan the event log for a given string, and if this string is spotted it will raise the alert. For example, say we want to raise an error if we get a division by zero error during the calculation of our `mean / (median - mode)` statistic which we created earlier. To do this, we will add an alert which looks for the string `"Division by Zero Error"` as follows:
@@ -790,7 +786,7 @@ if __name__ == "__main__":
         if 4.9 < mean < 5.1:
             run.update_metadata({'result_converged': True})
 
-        run.update_tags(['completed'])
+        run.update_tags(['random-numbers', 'WIP', 'completed'])
 
 ```
 
@@ -979,7 +975,7 @@ if __name__ == "__main__":
         if 4.9 < mean < 5.1:
             run.update_metadata({'result_converged': True})
 
-        run.update_tags(['completed'])
+        run.update_tags(['random-numbers', 'v1', 'completed'])
 ```
 
 After running your full script, you can now move on to the [^^Analysis^^](/tutorial/analysis) section of the tutorial to learn about how we can retrieve data from a run and use it to perform some data analysis.
