@@ -12,7 +12,7 @@ nav:
     - Welcome: index.md
     - Concepts: concepts.md
   - Introduction: introduction.md
-  - Tracking & monitoring:
+  - Tracking & Monitoring:
     - Getting started: python-client/getting-started.md
     - Overview: python-client/overview.md
     - Configuration: python-client/configuration.md
@@ -28,6 +28,11 @@ nav:
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
+  - Tutorial:
+    - Introduction: tutorial/introduction.md
+    - Tracking & Monitoring: tutorial/tracking-and-monitoring.md
+    - Analysis: tutorial/analysis.md
+    - Conclusion: tutorial/conclusion.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
@@ -44,6 +49,7 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.details
+  - pymdownx.caret
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

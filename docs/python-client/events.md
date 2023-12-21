@@ -6,7 +6,7 @@ information. For example:
 try:
     ...
 except Exception as exc:
-    run.log_event(exc)
+    run.log_event(str(exc))
     ...
 ```
 The timestamp at which the `log_event` method is called is recorded, and similar to metrics this can be overriden if necessary, for example:
