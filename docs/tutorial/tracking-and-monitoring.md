@@ -48,7 +48,7 @@ if __name__ == "__main__":
             time.sleep(1)
 ```
 
-In our case above, we have specified the name of this run and the folder to store it in on the Simvue server. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the code is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was ran, the time it took to execute, information about the system which it was ran on and the description of the run which we supplied above.
+In our case above, we have specified the name of this run and the folder to store it in on the Simvue server. We have also given it a couple of tags, including `random-numbers` to reflect the script which the run is monitoring, and `WIP` to show that the code is still a work in progress. If you run this code and then log into the Simvue UI, you should be able to see that in the `Runs` tab a new run has appeared. Clicking on this run will show you some information about the run, such as the time at which it was started, the time it took to execute, information about the system which it was executed on and the description of the run which we supplied above.
 
 ### Configuring the Run
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 ```
 
 ### Add Information for Folders
-Since in our `init` method we created a new folder called `/rand_nums` to store all of our runs in, we can see this in the `Folders` tab of the Simvue UI. However folders can also have metadata, tags and descriptions which can be seen in the UI, that we can set in our run using the `set_folder_details()` method:
+Since in our `init` method we created a new folder called `/rand_nums` to store all of our runs in, we can see this in the `Folders` tab of the Simvue UI. However folders can also have metadata, tags and descriptions which can be seen in the UI. We can set these in our run using the `set_folder_details()` method:
 
 ```  py
 import random
@@ -253,7 +253,7 @@ You can also customise these plots from within the UI. From the `Metrics` tab of
 You should be able to see that the random number generated has a direct effect on the value of the mean - if the random number generated at any given time is below the mean, then the mean is dragged downwards, and if the random number is above the mean then the mean is pushed upwards.
 
 ### Resource Usage Metrics
-Resource usage metrics are collected automatically from the Python client, and displayed under the `Resources` tab of the run in the UI. So far we have not been able to see them, since they are collected every thirty seconds be default, and our program has only ran for 10 seconds at a time. To fix this, we will update our run config to sample the resource metrics every 10 seconds using the `resources_metrics_interval` argument, and we will increase our number of iterations in the loop to 30:
+Resource usage metrics are collected automatically from the Python client, and displayed under the `Resources` tab of the run in the UI. So far we have not been able to see them, since they are collected every thirty seconds be default, and our program has only run for 10 seconds at a time. To fix this, we will update our run config to sample the resource metrics every 10 seconds using the `resources_metrics_interval` argument, and we will increase our number of iterations in the loop to 30:
 
 ```  py
 import random
@@ -301,7 +301,7 @@ if __name__ == "__main__":
             }, step=count)
             time.sleep(1)
 ```
-Rerunning the script should now allow you to see your computer's CPU and RAM usage over time as it runs the script in the `Resources` tab in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
+Rerunning the script should now allow you to see your computer's CPU and RAM usage over time in the `Resources` tab in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
 
 ## Events
 ### Logging
@@ -491,7 +491,7 @@ if __name__ == "__main__":
 ```
 ## Metadata and Tags
 ### Initialising Metadata
-Simvue can also be used to store metadata for a run which is available to view in the UI. Metadata can be generated when initialising a run, by specifying the `metadata` parameter and passing in a dictionary of key/value pairs. For example, say we wanted to include the number of iterations which the code will run as metadata in the run. We could define a variable called `num_iterations` which we set at the very top of our code which we can use in the for loop, and then pass that argument into the run initialisation as metadata as so:
+Simvue can also be used to store metadata for a run which is available to view in the UI. Metadata can be generated when initialising a run, by specifying the `metadata` parameter and passing in a dictionary of key/value pairs. For example, say we wanted to include the number of iterations which the code will run as metadata. We could define a variable called `num_iterations` which we set at the very top of our code which we can use in the for loop, and then pass that argument into the run initialisation as metadata like so:
 ``` py
 # Create a variable to store the number of runs
 num_iterations = 30
@@ -541,7 +541,7 @@ In a similar way, we can update the tags of a run at any point. Let us say that 
 run.update_tags(['random-numbers', 'WIP', 'completed'])
 ```
 
-Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tab of the UI. If the code is ran and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
+Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tab of the UI. If the code is executed and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
 
 The full code after completing the above section is as follows:
 ```  py
@@ -659,10 +659,10 @@ run.add_alert(
 
 )
 ```
-This will evaluate the value of the `averages.mean` metric once per minute. If it is outside the acceptable range (not between 4 and 6) for 2 or more consecutive evaluations, it will raise an alert on the run's UI. If we wanted it to also email us, we could set the parameter `notification='email'`. If we increase the number of iterations which the code performs, say to 300, running this code should show us that this alert shows up in the `Alerts` tab of the run's UI. If you want to check that the alert activates as expected, you could change the range to be `range_low=9` and `range_high=10` - you should then see the alert trigger after 2 minutes.
+This will evaluate the value of the `averages.mean` metric once per minute. If it is outside the acceptable range (not between 4 and 6) for 2 or more consecutive evaluations, it will raise an alert on the run's UI. If we wanted it to also email us, we could set the parameter `notification='email'`. If we increase the number of iterations which the code performs, say to 300, running this code should show that this alert shows up in the `Alerts` tab of the run's UI. If you want to check that the alert activates as expected, you could change the range to be `range_low=9` and `range_high=10` - you should then see the alert trigger after 2 minutes.
 
 ### Alerts based on Events
-Alerts can also be triggered based on logged events. These alerts will scan the event log for a given string, and if this string is spotted it will raise the alert. For example, say we want to raise an error if we get a division by zero error during the calculation of our `mean / (median - mode)` statistic which we created earlier. To do this, we will add an alert which looks for the string `"Division by Zero Error"` as follows:
+Alerts can also be triggered based on logged events. These alerts will scan the event log for a given string, and if this string is spotted it will raise the alert. For example, say we want to trigger an alert if we get a division by zero error during the calculation of our `mean / (median - mode)` statistic which we created earlier. To do this, we will add an alert which looks for the string `"Division by Zero Error"` as follows:
 ``` py
 run.add_alert(name='zero_division_error',
               source='events',

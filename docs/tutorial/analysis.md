@@ -8,12 +8,12 @@ from simvue import Client
 
 client = Client()
 ```
-For the next part of the tutorial to make sense, make sure that you have ran the full code example given in the final part of the `Tracking & Monitoring` section of the tutorial at least once.
+For the next part of the tutorial to make sense, make sure that you have run the full code example given in the final part of the `Tracking & Monitoring` section of the tutorial at least once.
 
 ## Retrieving Runs
-To retrieve a single run which we know the name of, we can use the method `get_run()` of the Client class. If you log into the UI and choose one of your recent runs, and simply run `client.get_run(<name of run>)`, you will see that you get a dictionary of information returned to you such as the name, status, folder, and the timestamps of when it was created, started and completed. You can also enable the optional parameters `tags=True` or `metadata=True` to retrieve the tags and metadata asociated with the run.
+To retrieve a single run which we know the name of, we can use the method `get_run()` of the Client class. If you log into the UI and choose one of your recent runs, and simply run `client.get_run(<name of run>)`, you will see that you get a dictionary of information returned to you such as the run's name, status, folder, and more. You can also enable the optional parameters `tags=True` or `metadata=True` to retrieve the tags and metadata asociated with the run.
 
-However, what if we don't know the exact name of our run, or we want to retrieve multiple runs at once? We can instead use the `get_runs()` method, which allows us to specify filters to use to find our set of runs. In our case, we will want to look for any runs stored in the `/rand_nums` folder, which have the tags `completed` and `v1`:
+However what if we don't know the exact name of our run, or we want to retrieve multiple runs at once? We can instead use the `get_runs()` method, which allows us to apply filters to find our set of runs. In our case, we will want to look for any runs stored in the `/rand_nums` folder, which have the tags `completed` and `v1`:
 
 ``` py
 from simvue import Client
@@ -39,7 +39,7 @@ If you then run the analysis script using `python3 analysis.py` on the command l
     ...,
 ]
 ```
-This should show you a list of all of the runs which you have ran using the final code in the `Tracking & Monitoring` section of the tutorial. You can check that it is correct by going to the 'Runs' tab on the UI, adding filters to the top by pressing the `Folder` and `Tags` buttons and selecting the correct values, and checking that the runs listed in the UI match those in the list of dictionaries printed to the command line.
+This should show you a list of all of the runs which you have ran using the final code in the `Tracking & Monitoring` section of the tutorial. You can also apply filters in the UI by going to the 'Runs' tab on the UI, adding filters to the top by pressing the `Folder` and `Tags` buttons and selecting the correct values. Check that the runs listed in the UI match those in the list of dictionaries printed to the command line.
 
 We will store the name of the first run which fits our criteria in a variable, for use in the rest of the code:
 ``` py
@@ -72,7 +72,7 @@ for metric_name in metrics_names:
     print(f"Summary of {metric_name}: \n {client.get_metrics_summaries(metric_name)}")
 ```
 
-You can also directly plot different metrics. Firstly import `matplotlib.pyplot` to be able to display the plot (installing the module using `pip install matplotlib` if it is not installed already). You can then use the `.plot_metrics()` method to plot any matrics as a line graph. For example, if we wanted to plot `averages.mean` metric:
+You can also directly plot different metrics. Firstly import `matplotlib.pyplot` to be able to display the plot (installing the module using `pip install matplotlib` if it is not installed already). You can then use the `.plot_metrics()` method to plot any metrics as a line graph. For example, if we wanted to plot the `averages.mean` metric:
 ``` py
 # Plot a line graph of the averages.mean metric
 mean_plot = client.plot_metrics([run_name,], ['averages.mean',], 'step')
@@ -81,7 +81,7 @@ plt.show()
 Note that `plot_metrics()` can be used on multiple runs and/or metrics at a time, so expects lists as inputs to the `runs` and `metrics` parameters. We should see that this plot matches the one seen in the UI for this metric, looking something like this:
 ![Mean line plot](images/analysis-mean-plot.png)
 
-Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers back from the metric as a dataframe:
+Simvue can also output the data from the metric as a Pandas dataframe, which allows us to do more advanced analysis. For example, lets say we want to get our random numbers metric as a dataframe:
 ``` py
 rand_nums_df = client.get_metrics(run_name, 'random_number', 'step', format='dataframe')
 ```
@@ -155,7 +155,7 @@ This graph should look like a kind of damped oscillation - as the number of iter
 ![Percentage change plot](images/analysis-percentage-change-plot.png)
 
 
-You can also retrieve artifacts as files and save them to your local system using `get_artifact_as_file()`. Say we want to retrieve our JSON file which contains the final values of our three averages - to do this, we simply pass in the name of the artifact and the path where we would like it to be saved (we will leave the path blank, as it will save the file to our current working directory by default):
+You can also retrieve artifacts as files and save them to your local system using `get_artifact_as_file()`. Say we want to retrieve our JSON file which contains the final values of our three averages - to do this, we simply pass in the name of the artifact and the path where we would like it to be saved. In our case, we will leave the path blank, as it will save the file to our current working directory by default:
 
 ``` py
 client.get_artifact_as_file(run_name, 'averages_out.json')
