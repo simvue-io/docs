@@ -14,7 +14,7 @@ The code is based on a dynamic recurrent neural network example - [^^find the or
 To run this example, firstly clone the Simvue client GitHub repository:
 ```
 git clone https://github.com/simvue-io/client
-cd client/examples
+cd examples/Tensorflow
 ```
 Create a virtual environment:
 ```
@@ -26,7 +26,7 @@ Install the required dependencies:
 pip install --upgrade pip
 pip install tensorflow simvue
 ```
-Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in your home directory. Click on `Create new run`
+Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in the Tensorflow directory. Click on `Create new run`
 in the UI for more information.
 
 Run the code:

@@ -5,12 +5,12 @@ be created. The arguments are:
 
  * `name`: name of the alert
  * `source`: source for the alert, either `metrics` or `events`
- * `frequency`: how often (in minutes) to check
+ * `frequency`: how often (in minutes) to check. Must be an integer, any floats provided to this argument will be rounded up
  * `notification`: type of notification, either `none` (default) or `email`
 
 When `source` is set to `metrics`, the following are also required:
 
- - `type`: type of alert, which needs to be one of:
+ - `rule`: type of alert, which needs to be one of:
 
     * `is above`,
     * `is below`,
@@ -18,8 +18,7 @@ When `source` is set to `metrics`, the following are also required:
     * `is inside range`.
 
  - `metric`: name of the metric to use
- - `window`: what time period (in minutes) over which to calculate the average of the metric
-
+ - `window`: what time period (in minutes) over which to calculate the average of the metric. Must be an integer, any floats provided to this argument will be rounded up
 And, for the case of `is above` and `is below`:
 
  * `threshold`: threshold
@@ -43,7 +42,7 @@ For example, to create a threshold alert:
 ``` py
 run.add_alert(name='quality too low',
               source='metrics',
-              type='is below',
+              rule='is below',
               metric='quality',
               frequency=1,
               window=1,
@@ -57,7 +56,7 @@ Similarly, here is an example of a range-based alert:
 ``` py
 run.add_alert(name='density invalid',
               source='metrics',
-              type='is outside range',
+              rule='is outside range',
               metric='density',
               frequency=2,
               window=2,

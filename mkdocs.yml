@@ -30,6 +30,11 @@ nav:
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
+  - Tutorial:
+    - Introduction: tutorial/introduction.md
+    - Tracking & Monitoring: tutorial/tracking-and-monitoring.md
+    - Analysis: tutorial/analysis.md
+    - Conclusion: tutorial/conclusion.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
