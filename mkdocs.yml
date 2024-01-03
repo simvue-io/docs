@@ -27,6 +27,7 @@ nav:
     - Obtaining data: tracking-monitoring/obtaining-data.md
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md
+    - Folders: analysis/folders.md
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
