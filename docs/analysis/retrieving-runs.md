@@ -76,3 +76,11 @@ a value greater than 2.0:
 ```
 client.get_runs(['/Burgers_trial', 'beta > 2.0'], metadata=True)
 ```
+
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the get_run() method^^](/reference/client#get_run)
+
+    - [^^View reference documentation for the get_runs() method^^](/reference/client#get_runs)
+    
+    - [^^View example usage of get_runs() in the tutorial^^](/tutorial/analysis/#retrieving-runs)

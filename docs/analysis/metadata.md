@@ -73,7 +73,7 @@ This results in the following plot:
 ## Parallel coordinates plot
 While parallel coordinates plots can be made directly from a dataframe
 ([^^see documentation for how to directly plot parallel coordinates from a Pandas dataframe^^](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
-limitations, such as common y-axis limits across all variables. An alternative is to use Plotly where it's possible to have much more control - [^^see doccumentation for creating a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/). Handling categorical values requires some additional work ([^^view a solution for handling categorical values here^^](https://stackoverflow.com/a/64146570))
+limitations, such as common y-axis limits across all variables. An alternative is to use Plotly where it's possible to have much more control - [^^see documentation for creating a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/). Handling categorical values requires some additional work ([^^view a solution for handling categorical values here^^](https://stackoverflow.com/a/64146570))
 as is illustrated in the example:
 ```
 import plotly.graph_objects as go
@@ -124,3 +124,11 @@ fig.write_image("output.png")
 Which gives:
 
 ![A parallel coordinates plot, allowing the comparison of several pieces of metadata for all runs in a folder. On the left of the chart, the linear regression value for the simulation is plotted along the y axis. In the centre of the chart, the type of optimizer used (AdamW, SGD or RMSprop) is plotted along the y axis. On the right of the chart, the final accuracy of the simulation is plotted against the y axis. Lines are drawn through each of the corresponding metadata values for each run. The plot shows that using low values for linear regression (between 0 and 0.01), and either the AdamW or RMSProp optimizer, gives the best results (around 85% accuracy overall). ](images/parallel-coordinates.png)
+
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the get_runs() method^^](/reference/client#get_runs)
+
+    - [^^View documentation for the Pandas dataframe plot() method^^](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html)
+    
+    - [^^View doccumentation for creating a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/)

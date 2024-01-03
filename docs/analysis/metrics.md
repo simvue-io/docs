@@ -139,3 +139,18 @@ plt.savefig('plot.png')
 giving the following plot:
 ![A line plot used to compare the values of a single metric across multiple different runs. The metric rms[RhoV] is plotted along the y axis, versus the step on the x axis. Four lines are present corresponding to the metric's value across four different runs, and are coloured blue, orange, green and red.](images/metrics-multiple-runs-plot.png)
 
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the get_metrics_names() method^^](/reference/client#get_metrics_names)
+
+    - [^^View reference documentation for the get_metrics_summaries() method^^](/reference/client#get_metrics_summaries)
+    
+    - [^^View reference documentation for the plot_metrics() method^^](/reference/client#plot_metrics)
+
+    - [^^View reference documentation for the get_metrics() method^^](/reference/client#get_metrics)
+
+    - [^^View reference documentation for the get_metrics_multiple() method^^](/reference/client#get_metrics_multiple)
+
+    - [^^View an example of how to get and plot Metrics in the Tutorial^^](/tutorial/analysis/#retrieving-metrics)
+
+    - [^^View documentation for plotting with Matplotlib^^](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)

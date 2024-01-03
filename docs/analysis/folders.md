@@ -68,3 +68,10 @@ for folder in folders:
     if datetime.strptime(folder['created'], "%Y-%m-%d %H:%M:%S.%f") < date_30d_ago:
             client.delete_folder(folder['path'], runs=True)
 ```
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the get_folder() method^^](/reference/client#get_folder)
+
+    - [^^View reference documentation for the get_folders() method^^](/reference/client#get_folders)
+    
+    - [^^View reference documentation for the delete_folder() method^^](/reference/client#delete_folder)
