@@ -85,3 +85,13 @@ run.close()
 ```
 It's important to note that the `save_directory` step will not upload and store the same files again if they already exist in Simvue.
 Instead they will automatically be registered as being associated with `run2` but will not be re-uploaded.
+
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the get_artifact() method^^](/reference/client#get_artifact)
+
+    - [^^View reference documentation for the get_artifact_as_file() method^^](/reference/client#get_artifact_as_file)
+
+    - [^^View reference documentation for the get_artifacts_as_files() method^^](/reference/client#get_artifacts_as_files)
+
+    - [^^View an example of retrieving artifacts in the Tutorial^^](/tutorial/analysis/#retrieving-artifacts)

@@ -17,3 +17,8 @@ run.config(queue_blocking=True,
            resources_metrics_interval=5)
 run.init()
 ```
+??? further-docs "Further Documentation"
+
+    - [^^View reference documentation for the config() method^^](/reference/run/#config)
+    
+    - [^^View an example of configuring a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#configuring-the-run)

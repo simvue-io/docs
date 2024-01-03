@@ -20,3 +20,6 @@ will be displayed. You can change this for your logger using `logger.setLevel`. 
 ``` py
 logger.setLevel(logging.DEBUG)
 ```
+??? further-docs "Further Documentation"
+    
+    - [^^View an example of adding a logging handler in the Tutorial^^](/tutorial/tracking-and-monitoring/#logging-handler)
