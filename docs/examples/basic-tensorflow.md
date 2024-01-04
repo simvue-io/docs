@@ -16,11 +16,17 @@ To run this example, firstly clone the Simvue client GitHub repository:
 git clone https://github.com/simvue-io/client
 cd examples/Tensorflow
 ```
-Create a virtual environment:
+Create a virtual environment (Linux):
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
+Create a virtual environment (Windows):
+```
+python3 -m venv venv
+venv\Scripts\activate
+```
+
 Install the required dependencies:
 ```
 pip install --upgrade pip
@@ -29,7 +35,7 @@ pip install tensorflow simvue
 Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in the Tensorflow directory. Click on `Create new run`
 in the UI for more information.
 
-Run the code:
+Change directory to Tensorflow folder (cd Tensorflow) and run the code:
 ```
 python3 dynamic_rnn.py
 ```

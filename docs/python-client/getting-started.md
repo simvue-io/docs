@@ -10,10 +10,16 @@ The client can be installed from PyPI:
 ```
 pip install simvue
 ```
-It is usually best to make use of a Python virtual environment, for example run:
+It is usually best to make use of a Python virtual environment, for example 
+in a Linux environment run:
 ```
 python3 -m venv simvue_venv
 source ./simvue_venv/bin/active
+```
+in a Windows environment run:
+```
+python3 -m venv simvue_venv
+simvue_venv/Scripts/activate
 ```
 before running `pip`.
 
