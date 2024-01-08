@@ -79,8 +79,8 @@ run.add_alert(name='error detector',
 ```
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the add_alert() method^^](/reference/run/#add_alert)
+    - [^^The add_alert() method^^](/reference/run/#add_alert)
 
-    - [^^View an example of creating a range based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-metrics)
+    - [^^Example of creating a range based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-metrics)
     
-    - [^^View an example of creating an events based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-events)
+    - [^^Example of creating an events based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-events)

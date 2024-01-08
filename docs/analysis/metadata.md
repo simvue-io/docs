@@ -127,8 +127,8 @@ Which gives:
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_runs() method^^](/reference/client#get_runs)
+    - [^^The get_runs() method^^](/reference/client#get_runs)
 
-    - [^^View documentation for the Pandas dataframe plot() method^^](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html)
+    - [^^The Pandas dataframe plot() method^^](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html)
     
-    - [^^View doccumentation for creating a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/)
+    - [^^How to create a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/)

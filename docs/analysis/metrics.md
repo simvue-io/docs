@@ -141,16 +141,16 @@ giving the following plot:
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_metrics_names() method^^](/reference/client#get_metrics_names)
+    - [^^The get_metrics_names() method^^](/reference/client#get_metrics_names)
 
-    - [^^View reference documentation for the get_metrics_summaries() method^^](/reference/client#get_metrics_summaries)
+    - [^^The get_metrics_summaries() method^^](/reference/client#get_metrics_summaries)
     
-    - [^^View reference documentation for the plot_metrics() method^^](/reference/client#plot_metrics)
+    - [^^The plot_metrics() method^^](/reference/client#plot_metrics)
 
-    - [^^View reference documentation for the get_metrics() method^^](/reference/client#get_metrics)
+    - [^^The get_metrics() method^^](/reference/client#get_metrics)
 
-    - [^^View reference documentation for the get_metrics_multiple() method^^](/reference/client#get_metrics_multiple)
+    - [^^The get_metrics_multiple() method^^](/reference/client#get_metrics_multiple)
 
-    - [^^View an example of how to get and plot Metrics in the Tutorial^^](/tutorial/analysis/#retrieving-metrics)
+    - [^^Example of how to get and plot Metrics in the Tutorial^^](/tutorial/analysis/#retrieving-metrics)
 
-    - [^^View documentation for plotting with Matplotlib^^](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
+    - [^^Documentation for plotting with Matplotlib^^](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)

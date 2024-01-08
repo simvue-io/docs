@@ -19,6 +19,6 @@ run.init()
 ```
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the config() method^^](/reference/run/#config)
+    - [^^The config() method^^](/reference/run/#config)
     
-    - [^^View an example of configuring a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#configuring-the-run)
+    - [^^Example of configuring a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#configuring-the-run)

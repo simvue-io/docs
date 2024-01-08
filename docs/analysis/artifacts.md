@@ -88,10 +88,10 @@ Instead they will automatically be registered as being associated with `run2` bu
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_artifact() method^^](/reference/client#get_artifact)
+    - [^^The get_artifact() method^^](/reference/client#get_artifact)
 
-    - [^^View reference documentation for the get_artifact_as_file() method^^](/reference/client#get_artifact_as_file)
+    - [^^The get_artifact_as_file() method^^](/reference/client#get_artifact_as_file)
 
-    - [^^View reference documentation for the get_artifacts_as_files() method^^](/reference/client#get_artifacts_as_files)
+    - [^^The get_artifacts_as_files() method^^](/reference/client#get_artifacts_as_files)
 
-    - [^^View an example of retrieving artifacts in the Tutorial^^](/tutorial/analysis/#retrieving-artifacts)
+    - [^^Example of retrieving artifacts in the Tutorial^^](/tutorial/analysis/#retrieving-artifacts)

@@ -70,8 +70,8 @@ for folder in folders:
 ```
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_folder() method^^](/reference/client#get_folder)
+    - [^^The get_folder() method^^](/reference/client#get_folder)
 
-    - [^^View reference documentation for the get_folders() method^^](/reference/client#get_folders)
+    - [^^The get_folders() method^^](/reference/client#get_folders)
     
-    - [^^View reference documentation for the delete_folder() method^^](/reference/client#delete_folder)
+    - [^^The delete_folder() method^^](/reference/client#delete_folder)

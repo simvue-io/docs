@@ -111,14 +111,14 @@ run = Run(mode='disabled')
 ```
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the init() method^^](/reference/run/#init)
+    - [^^The init() method^^](/reference/run/#init)
 
-    - [^^View reference documentation for the close() method^^](/reference/run/#close)
+    - [^^The close() method^^](/reference/run/#close)
 
-    - [^^View reference documentation for the update_tags() method^^](/reference/run/#update_tags)
+    - [^^The update_tags() method^^](/reference/run/#update_tags)
 
-    - [^^View reference documentation for the update_metadata() method^^](/reference/run/#update_metadata)
+    - [^^The update_metadata() method^^](/reference/run/#update_metadata)
     
-    - [^^View an example of initializing a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#initialising-the-run)
+    - [^^Example of initializing a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#initialising-the-run)
 
-    - [^^View an example of adding metadata and tags in the Tutorial^^](/tutorial/tracking-and-monitoring/#metadata-and-tags)
+    - [^^Example of adding metadata and tags in the Tutorial^^](/tutorial/tracking-and-monitoring/#metadata-and-tags)

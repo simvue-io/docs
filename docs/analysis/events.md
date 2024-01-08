@@ -31,5 +31,5 @@ events = client.get_events(run, filter='Exception')
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_events() method^^](/reference/client#get_events)
-    - [^^View an example of using the get_events() method in the Tutorial^^](/tutorial/analysis/#retrieving-events)
+    - [^^The get_events() method^^](/reference/client#get_events)
+    - [^^Example of using the get_events() method in the Tutorial^^](/tutorial/analysis/#retrieving-events)

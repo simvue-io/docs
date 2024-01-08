@@ -79,8 +79,8 @@ client.get_runs(['/Burgers_trial', 'beta > 2.0'], metadata=True)
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the get_run() method^^](/reference/client#get_run)
+    - [^^The get_run() method^^](/reference/client#get_run)
 
-    - [^^View reference documentation for the get_runs() method^^](/reference/client#get_runs)
+    - [^^The get_runs() method^^](/reference/client#get_runs)
     
-    - [^^View example usage of get_runs() in the tutorial^^](/tutorial/analysis/#retrieving-runs)
+    - [^^Example usage of get_runs() in the Tutorial^^](/tutorial/analysis/#retrieving-runs)

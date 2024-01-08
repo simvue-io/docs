@@ -82,6 +82,6 @@ calling the `init` method.
 
 ??? further-docs "Further Documentation"
 
-    - [^^View reference documentation for the log_metrics() method^^](/reference/run/#log_metrics)
+    - [^^The log_metrics() method^^](/reference/run/#log_metrics)
     
-    - [^^View an example of logging metrics in the Tutorial^^](/tutorial/tracking-and-monitoring/#creating-metrics)
+    - [^^Example of logging metrics in the Tutorial^^](/tutorial/tracking-and-monitoring/#creating-metrics)

@@ -22,4 +22,4 @@ logger.setLevel(logging.DEBUG)
 ```
 ??? further-docs "Further Documentation"
     
-    - [^^View an example of adding a logging handler in the Tutorial^^](/tutorial/tracking-and-monitoring/#logging-handler)
+    - [^^Example of adding a logging handler in the Tutorial^^](/tutorial/tracking-and-monitoring/#logging-handler)
