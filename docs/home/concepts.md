@@ -89,6 +89,6 @@ to see its whole lineage, including all artifacts and runs which were used to ge
 An event is a timestamped text record. Examples include exceptions, errors and other useful log messages.
 
 ## Alerts
-The metrics being collected during the lifetime of a run can have important implications on the rest of the simulation. For example: if a given metric is not converging after a certain period of time,  is it even worth continuning running the simulation? Alerts automatically calculate averages of a specified metric over a specified window and frequency, and checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being triggered. This allows them 
+The metrics being collected during the lifetime of a run can have important implications on the rest of the simulation. For example: if a given metric is not converging after a certain period of time,  is it even worth continuning running the simulation? Alerts automatically calculate averages of a specified metric over a given window and frequency, and checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being triggered. This allows them to take action based on an alert, for example by stopping a run to change some input parameters before running again. This allows the user to save time and computational cost, by stopping runs early instead of allowing them to complete and return an unusable result.
 
 

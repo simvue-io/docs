@@ -3,8 +3,8 @@ A table of commonly used terminology can be found below.
 
 | Term  | Description |
 | ----- | ----------- |
-| Simvue | A program for tracking and monitoring simulations. |
-| Run | An instance of a simulation which is being monitored by Simvue. |
+| Simvue |  A generic real-time monitoring and alerting framework with data lineage for any simulation or data processing application. |
+| Run | An instance of a simulation or data processing task which is being monitored by Simvue. |
 | Folder | A location to store information about a run on the Simvue storage system. |
 | Metric | Time series data which is being evaluated and stored as a run is being executed. |
 | Artifact | A file or object that is used as an input or output to the simulation which is stored on the Simvue server |
