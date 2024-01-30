@@ -28,11 +28,17 @@ nav:
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
-  - Tutorial:
+  - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial/introduction.md
     - Tracking & Monitoring: tutorial/tracking-and-monitoring.md
     - Analysis: tutorial/analysis.md
     - Conclusion: tutorial/conclusion.md
+  - Tutorial 2 - Using Multiparser:
+    - Introduction: tutorial_moose/introduction.md
+    - Defining The Problem: tutorial_moose/defining-the-problem.md
+    - Tracking The Console Log: tutorial_moose/tracking-the-log.md
+    - Tracking Results: tutorial_moose/tracking-results.md
+    - Conclusion: tutorial_moose/conclusion.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
@@ -60,5 +66,11 @@ markdown_extensions:
       anchor_linenums: true
   - toc:
       permalink: true
+  - pymdownx.arithmatex:
+      generic: true
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

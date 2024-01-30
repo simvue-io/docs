@@ -19,3 +19,5 @@ Hopefully, you have learned how to:
 ## Further Examples
 This tutorial only scratched the surface of the kinds of things you can achieve with Simvue! For more examples,
 see the [^^Examples^^](/examples/basic-tensorflow/) section of the documentation.
+
+For more advanced functionality of Simvue, including adding processes to be able to begin and stop simulations automatically, or use Multiparser to track simulations which are not Python based, [^^see the second tutorial here^^](tutorial_moose/introduction)
