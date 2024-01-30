@@ -1,8 +1,7 @@
 # OpenFOAM
 
 ## Introduction
-Here we demonstrate using OpenFOAM with Simvue. In this example we will assume OpenFOAM 10 has been pre-installed on a machine,
-for example by following these instructions: [https://openfoam.org/download/10-ubuntu/](https://openfoam.org/download/10-ubuntu/).
+Here we demonstrate using OpenFOAM with Simvue. In this example we will assume OpenFOAM 10 has been pre-installed on a machine - if you do not have this, [^^follow these instructions for installing OpenFOAM 10 on Ubuntu^^](https://openfoam.org/download/10-ubuntu/).
 
 !!! note
 
@@ -98,7 +97,7 @@ OpenFOAM can then be run as normal:
 While the simulation is running we can visualize the residuals in the UI in order to understand how well it is converging, for example:
 
 <figure markdown>
-  ![OpenFOAM residuals](images/openfoam-residuals.png){ width="1000" }
+  ![A plot of theOpenFOAM residuals metrics, evaluated in real time on the UI. The metrics residuals.final.Ux, residuals.final.Uy and residuals.final.Uz are plotted on the same graph in different colours (blue, green and yellow respectively), with time in seconds along the x axis.](images/openfoam-residuals.png){ width="1000" }
 </figure>
 
 

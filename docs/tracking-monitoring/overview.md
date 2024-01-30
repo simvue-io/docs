@@ -109,3 +109,16 @@ During testing it might be useful to disable monitoring by Simvue. To do this, u
 ```  py
 run = Run(mode='disabled')
 ```
+??? further-docs "Further Documentation"
+
+    - [^^The init() method^^](/reference/run/#init)
+
+    - [^^The close() method^^](/reference/run/#close)
+
+    - [^^The update_tags() method^^](/reference/run/#update_tags)
+
+    - [^^The update_metadata() method^^](/reference/run/#update_metadata)
+    
+    - [^^Example of initializing a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#initialising-the-run)
+
+    - [^^Example of adding metadata and tags in the Tutorial^^](/tutorial/tracking-and-monitoring/#metadata-and-tags)

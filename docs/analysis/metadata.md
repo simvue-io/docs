@@ -28,7 +28,7 @@ plot = df.plot(kind='scatter',
                y='metadata.final accuracy')
 ```
 This results in the following plot:
-![Scatter plot using metadata](images/scatter-metadata.png)
+![A scatter plot which uses metadata from all runs in a given folder. Shows a plot of the trial number on the x axis, versus final accuracy of the simulation on the y axis.](images/scatter-metadata.png)
 
 ## Scatter plot with coloured markers
 We can easily extend a scatter plot by using the value of another metadata attribute to colour the markers. For example:
@@ -42,7 +42,7 @@ plot = df.plot(kind='scatter',
                c='metadata.tbr')
 ```
 gives:
-![Scatter plot using metadata with coloured markers](images/scatter-metadata-colours.png)
+![A scatter plot which uses metadata from all runs in a given folder. Shows a plot of the breeding percentage in a breeder blanket (plus multiplier ratio) on the y axis, versus enrichment of a Lithium breeder blanket on the x axis. Each point is a differnt colour, with a colorbar corresponding to the Tritium Breding Ratio (TBR) on the right of the plot.](images/scatter-metadata-colours.png)
 
 ## Bar chart
 In this example we create a bar chart showing how many runs are associated with each possible
@@ -55,7 +55,7 @@ df = client.get_runs(['/optuna/tests/binary-model'],
 plot = df.groupby('metadata.optimizer')['name'].nunique().plot(kind='bar', rot=0)
 ```
 This gives:
-![Bar chart](images/bar-chart-count.png)
+![A bar chart showing the total number of runs in a folder which use a given optimizer (either AdamW, RMSprop or SGD), based on the value of the metadata attribute 'optimizer' for each run.](images/bar-chart-count.png)
 
 ## Box plot
 Box and whisker plots can be easily created. In this example we show a metadata attribute `final accuracy`
@@ -68,15 +68,13 @@ df = client.get_runs(['/optuna/tests/binary-model'],
 plot = df.boxplot(column=['metadata.final accuracy'], by=['metadata.n_layers'])
 ```
 This results in the following plot:
-![Box plot](images/boxplot-numlayers.png)
+![A box and whisker plot showing the distribution of final accuracies for all runs in a folder. The runs are grouped by their number of layers (based on the n_layers metadata attribute) along the x axis, with values of either 1, 2, or 3, while the y axis shows the final accuracy of each run. The plots show the minimum and maximum values of each distribution as 'whiskers', with the first quartile, mean and third quartile values shown as 'boxes'. Outliers are marked as points outside of the whiskers.](images/boxplot-numlayers.png)
 
 ## Parallel coordinates plot
 While parallel coordinates plots can be made directly from a dataframe
-(see e.g. [here](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
-limitations, such as common y-axis limits across all variables. An alternative is to use [Plotly](https://plotly.com/python/parallel-coordinates-plot/)
-where it's possible to have much more control. Handling categorical values requires (see [some additional work](https://stackoverflow.com/a/64146570))
-as is illustrated in the
-example:
+([^^see documentation for how to directly plot parallel coordinates from a Pandas dataframe^^](https://pandas.pydata.org/docs/reference/api/pandas.plotting.parallel_coordinates.html)) this has some
+limitations, such as common y-axis limits across all variables. An alternative is to use Plotly where it's possible to have much more control - [^^see documentation for creating a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/). Handling categorical values requires some additional work ([^^view a solution for handling categorical values here^^](https://stackoverflow.com/a/64146570))
+as is illustrated in the example:
 ```
 import plotly.graph_objects as go
 import pandas as pd
@@ -123,5 +121,14 @@ fig = go.Figure(
 
 fig.write_image("output.png")
 ```
-which gives
-![Parallel coordinates](images/parallel-coordinates.png)
+Which gives:
+
+![A parallel coordinates plot, allowing the comparison of several pieces of metadata for all runs in a folder. On the left of the chart, the linear regression value for the simulation is plotted along the y axis. In the centre of the chart, the type of optimizer used (AdamW, SGD or RMSprop) is plotted along the y axis. On the right of the chart, the final accuracy of the simulation is plotted against the y axis. Lines are drawn through each of the corresponding metadata values for each run. The plot shows that using low values for linear regression (between 0 and 0.01), and either the AdamW or RMSProp optimizer, gives the best results (around 85% accuracy overall). ](images/parallel-coordinates.png)
+
+??? further-docs "Further Documentation"
+
+    - [^^The get_runs() method^^](/reference/client#get_runs)
+
+    - [^^The Pandas dataframe plot() method^^](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html)
+    
+    - [^^How to create a parallel coordinates plot using Plotly^^](https://plotly.com/python/parallel-coordinates-plot/)

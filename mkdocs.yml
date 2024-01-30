@@ -7,27 +7,30 @@ theme:
   palette:
     - scheme: default
   logo: images/logo.png
+  favicon: images/favicon.png
 nav:
   - Home:
     - Welcome: index.md
-    - Concepts: concepts.md
+    - Concepts: home/concepts.md
+    - Terminology: home/terminology.md
   - Introduction: introduction.md
-  - Tracking & Monitoring:
-    - Getting started: python-client/getting-started.md
-    - Overview: python-client/overview.md
-    - Configuration: python-client/configuration.md
-    - Folders: python-client/folders.md
-    - Metrics: python-client/metrics.md
-    - Events: python-client/events.md
-    - Artifacts: python-client/artifacts.md
-    - Alerts: python-client/alerts.md
-    - Logging handler: python-client/logging-handler.md
-    - Obtaining data: python-client/obtaining-data.md
+  - Tracking & monitoring:
+    - Getting started: tracking-monitoring/getting-started.md
+    - Overview: tracking-monitoring/overview.md
+    - Configuration: tracking-monitoring/configuration.md
+    - Folders: tracking-monitoring/folders.md
+    - Metrics: tracking-monitoring/metrics.md
+    - Events: tracking-monitoring/events.md
+    - Artifacts: tracking-monitoring/artifacts.md
+    - Alerts: tracking-monitoring/alerts.md
+    - Logging handler: tracking-monitoring/logging-handler.md
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md
+    - Folders: analysis/folders.md
     - Metadata: analysis/metadata.md
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
+    - Artifacts: analysis/artifacts.md
   - Tutorial:
     - Introduction: tutorial/introduction.md
     - Tracking & Monitoring: tutorial/tracking-and-monitoring.md

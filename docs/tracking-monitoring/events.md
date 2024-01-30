@@ -13,3 +13,8 @@ The timestamp at which the `log_event` method is called is recorded, and similar
 ```
 run.log_event(message, timestamp='2022-01-03 16:42:30.849617')
 ```
+??? further-docs "Further Documentation"
+
+    - [^^The log_event() method^^](/reference/run/#log_event)
+    
+    - [^^Example of logging events in the Tutorial^^](/tutorial/tracking-and-monitoring/#logging)

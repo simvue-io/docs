@@ -70,7 +70,7 @@ fig = df.plot(kind='line', x='step', y='Train Loss').get_figure()
 fig.savefig('plot.png')
 ```
 giving the following plot:
-![Line plot](images/metrics-single-run-plot.png)
+![A line plot of the 'training loss' metric for a single run. The loss is plotted on the y axis, varying from 0 to 1, and the step of the simulation is plotted along the x axis. The step can be thought of as the iteration of the simulation at which the measurement of the metric was taken.](images/metrics-single-run-plot.png)
 
 
 ### Multiple metrics from a single run
@@ -102,7 +102,7 @@ plt.legend()
 plt.savefig('plot.png')
 ```
 giving the following plot:
-![Line plot](images/metrics-multiple-plot.png)
+![A line plot showing multiple different metrics for a single run. The metrics rms[RhoV], rms[RhoW] and rms[RhoE] are plotted as blue, orange and green lines respectively, versus the step parameter on the x axis. The step can be thought of as the iteration of the simulation at which the measurement of the metrics were taken.](images/metrics-multiple-plot.png)
 
 ### Multiple runs
 
@@ -137,5 +137,20 @@ plt.legend()
 plt.savefig('plot.png')
 ```
 giving the following plot:
-![Line plot](images/metrics-multiple-runs-plot.png)
+![A line plot used to compare the values of a single metric across multiple different runs. The metric rms[RhoV] is plotted along the y axis, versus the step on the x axis. Four lines are present corresponding to the metric's value across four different runs, and are coloured blue, orange, green and red.](images/metrics-multiple-runs-plot.png)
 
+??? further-docs "Further Documentation"
+
+    - [^^The get_metrics_names() method^^](/reference/client#get_metrics_names)
+
+    - [^^The get_metrics_summaries() method^^](/reference/client#get_metrics_summaries)
+    
+    - [^^The plot_metrics() method^^](/reference/client#plot_metrics)
+
+    - [^^The get_metrics() method^^](/reference/client#get_metrics)
+
+    - [^^The get_metrics_multiple() method^^](/reference/client#get_metrics_multiple)
+
+    - [^^Example of how to get and plot Metrics in the Tutorial^^](/tutorial/analysis/#retrieving-metrics)
+
+    - [^^Documentation for plotting with Matplotlib^^](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
