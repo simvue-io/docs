@@ -1,9 +1,36 @@
 # Introduction
-
-## Welcome
 Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focusses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use the Simvue Multiparser to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial/introduction).
-## Setup Simvue
-This setup step is the same as in the first tutorial, so you can [^^skip to the next step^^](#setup-moose) if you have already completed that tutorial.
+
+There are two options for following along with this tutorial. The recommended option is to use the provided Docker container, which has MOOSE, Paraview, Simvue and Multiparser pre installed. You could alternatively install each component individually, and brief instructions for this are also listed below.
+
+## Option 1: Setup using Docker container
+### Install Docker
+You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. (Full instructions for installing Docker can be found here)[https://docs.docker.com/engine/install/]. If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
+```
+sudo apt-get update && sudo apt-get install docker.io
+```
+To check that this worked, run `docker` - you should see a list of help for the commands.
+### Pull Docker image
+Next we need to obtain the tutorial materials from Docker Hub:
+```
+docker pull wk9874/simvue-moose
+```
+This may take some time to download. Once complete, if you run `docker images`, you should see an image with the name `wk9874/simvue-moose` listed.
+
+## Run Docker container
+Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
+```
+xhost +local:docker
+```
+Then you can run the container:
+```
+docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it wk9874/simvue-moose:latest
+```
+If this is running correctly, you should see your command prompt change to something like:
+```
+dev:~/simue-moose$
+```
+## Option 2: Custom Setup
 ### Create a virtual environment
 
 Run the following commands to create and activate a new virtual environment:
@@ -12,11 +39,12 @@ python3 -m venv venv
 source ./venv/bin/activate
 ```
 
-### Install
+### Install Simvue and Multiparser
 
 Install the Python client:
 ```
 pip install simvue
+pip install multiparser
 ```
 
 ### Configuring Simvue
@@ -32,7 +60,6 @@ url = https://app.simvue.io
 token = eyJ0eXAi...
 ```
 
-## Setup MOOSE and Paraview
 ### Install MOOSE
 Next you will need to setup MOOSE on your computer. [^^See the installation instructions here^^](https://mooseframework.inl.gov/getting_started/installation/index.html), using the link corresponding to your operating system. 
 
