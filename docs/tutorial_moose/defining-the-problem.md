@@ -190,7 +190,20 @@ This should be in your `simvue_thermal.i` file. Next, locate where your MOOSE ap
 ```cmd
 /path/to/MOOSE/application/file -i /path/to/simvue_thermal.i --color off
 ```
-You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files: `simvue_thermal_exodus.e` and `simvue_thermal_console.txt`. You can open the Exodus file in your CAD software, if using paraview this is done using the command `paraview simvue_thermal_exodus.e`. Once Paraview is opened, follow these steps to see the heat diffuse across the bar:
+
+!!! docker "Run on Docker Container"
+    If you are doing this tutorial on the provided Docker container, you can run this command:
+    ```
+    app/moose_tutorial-opt -i tutorial/step_1/simvue_thermal.i --color off
+    ```
+
+You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files: `simvue_thermal_exodus.e` and `simvue_thermal_console.txt`. You can open the Exodus file in your CAD software. 
+!!! docker "Run on Docker Container"
+    ```
+    paraview tutorial/step_1/simvue_thermal_exodus.e
+    ```
+
+Once Paraview is opened, follow these steps to see the heat diffuse across the bar:
 
 - In the Properties panel in the left hand side, in the Variables tab, tick the box next to $T$. Press Apply
 - In the second bar of icons at the top of the window, click the 'vtkBlockColours' dropdown and change this to $T$

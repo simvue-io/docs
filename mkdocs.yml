@@ -4,6 +4,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - content.code.copy
   palette:
     - scheme: default
   logo: images/logo.png

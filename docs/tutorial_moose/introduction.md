@@ -4,6 +4,10 @@ Welcome to the second tutorial on how to use Simvue, which uses the techniques c
 There are two options for following along with this tutorial. The recommended option is to use the provided Docker container, which has MOOSE, Paraview, Simvue and Multiparser pre installed. You could alternatively install each component individually, and brief instructions for this are also listed below.
 
 ## Option 1: Setup using Docker container
+When running inside the provided docker container, each step in the tutorial has a corresponding file stored in the container. To run these, look out for boxes in each step which look like this:
+!!! docker "Run on Docker Container"
+    The commands to run on the docker container will be inside boxes like this.
+
 ### Install Docker
 You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. (Full instructions for installing Docker can be found here)[https://docs.docker.com/engine/install/]. If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
 ```
