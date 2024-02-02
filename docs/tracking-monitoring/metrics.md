@@ -79,3 +79,9 @@ calling the `init` method.
     There is a limitation currently for MPI jobs: only the resource usage of the processes on the node running the Python 
     client will be measured, not any other node (for the case of multi-node jobs). This limitation will hopefully be removed
     in future.
+
+??? further-docs "Further Documentation"
+
+    - [^^The log_metrics() method^^](/reference/run/#log_metrics)
+    
+    - [^^Example of logging metrics in the Tutorial^^](/tutorial/tracking-and-monitoring/#creating-metrics)

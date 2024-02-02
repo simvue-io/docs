@@ -21,6 +21,20 @@ Creates an instance of the `Run` class. The argument `mode` enables tracking and
 | ----- | ---- | ------- |
 | mode | `Enum[online, offline, disabled]` | Specify if tracking and monitoring should be disabled or if `offline` mode should be used
 
+#### `config()`
+
+Configures a run. should be called before calling the init method for the run.
+
+**Parameters**
+
+| Name  | Type | Description |
+| ----- | ---- | ------- |
+| `suppress_errors` | `bool`, optional | Whether to suppress errors from Simvue to allow the simulation code to continue, by default True |
+| `queue_blocking` | `bool`, optional | Whether metrics and events queues will block if they become full, otherwise metrics/events will be silently dropped, by default False |
+| `queue_size` | `int`, optional | Maximum number of items which can be stored in metrics or events queues, by default 10000 |
+| `disable_resources_metrics` | `bool`, optional | Whether resource metric collection should be disabled, by default False |
+| `resources_metrics_interval` | `int`, optional | How often resource metrics are collected in seconds, by default 30 |
+
 #### `init()`
 
 Initialises a run. If a name is not provided a random name will be assigned in the form of `<adjective>-<noun>`.
@@ -35,6 +49,16 @@ Initialises a run. If a name is not provided a random name will be assigned in t
 | `description` | `str`, optional | Description |
 | `folder` | `str`, optional | Folder name |
 | `running` | `Boolean`, optional | Automatically set the run to the `running` state |
+
+#### `set_pid()`
+
+Set the process ID (PID) of the process to be monitored.
+
+**Parameters**
+
+| Name  | Type | Description |
+| ----- | ---- | ------- |
+| `pid` | `int` | The PID of the process to be monitored |
 
 #### `reconnect()`
 

@@ -4,10 +4,9 @@ Before using Simvue it is important to understand some of the core concepts.
 
 ## Run
 
-A run represents the execution of an application, such as a simulation, processing task or AI/ML training.
-Each run has associated information such as a name, description, 
-metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings,
-and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
+Simvue provides the functionality to monitor the execution of an application in real time, such as a simulation, processing task or AI/ML training algorithm. To do this, a user must create a `run` - this is where information about the application is stored during execution. It is typically instantiated before the execution of the application itself begins, and is closed once the execution is completed.
+
+Each run has associated information such as a name, description, metadata (key-value pairs) and tags (list of short labels). Metadata values are integers, floating point numbers or strings, and would typically be input or output parameters associated with a run. Runs can be filtered using both metadata and tags.
 
 ## Folder
 
@@ -36,7 +35,7 @@ Metrics are floating point measurements which are collected repeatedly over time
 visualised in the Simvue web UI in real time or used to notify users in the event of problems (see alerts below).
 
 <figure markdown>
-  ![Metrics](images/metrics.png){ width="1000" }
+  ![A plot of the loss and accuracy metrics which are being tracked during a certain run. This plot is a line graph of the value of these metrics along the y axis (between 0 and 1), with step along the x axis (the iteration of the program at which the metric was evaluated). This type of plot can be seen in the UI for any given run while it is executing, and the plot is updated live with the latest values to allow the user to keep track of the progress of their simulation.](images/metrics.png){ width="1000" }
 </figure>
 
 ## Artifacts
@@ -90,7 +89,6 @@ to see its whole lineage, including all artifacts and runs which were used to ge
 An event is a timestamped text record. Examples include exceptions, errors and other useful log messages.
 
 ## Alerts
-The metrics being collected during the lifetime of a run can have important implications, for example: is it even worth continuning
-running the simulation? Alerts automatically calculate averages of a specified metric over a specified window and frequency, and
-checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being
-triggered.
+The metrics being collected during the lifetime of a run can have important implications on the rest of the simulation. For example: if a given metric is not converging after a certain period of time,  is it even worth continuning running the simulation? Alerts automatically calculate averages of a specified metric over a given window and frequency, and checks if this value falls outside of the specified criteria. Users can choose to be notified by email in the event of an alert being triggered. This allows them to take action based on an alert, for example by stopping a run to change some input parameters before running again. This allows the user to save time and computational cost, by stopping runs early instead of allowing them to complete and return an unusable result.
+
+

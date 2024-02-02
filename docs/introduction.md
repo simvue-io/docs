@@ -76,7 +76,7 @@ This script should run for 10 seconds and will create a new run visible in the S
 
 ## Next steps
 
-Continue on to [Tracking & monitoring](/python-client/getting-started/) in order to learn about using Simvue
+Continue on to the [^^Tracking & Monitoring section^^](/tracking-monitoring/getting-started/) in order to learn about using Simvue
 in more detail.
 
 You can also see a step by step example of how to expand this script to use more of Simvue's functionality in the

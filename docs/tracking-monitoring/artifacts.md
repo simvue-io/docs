@@ -60,8 +60,7 @@ run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
 
 !!! warning
 
-    The Simvue client uses a Plotly conversion [function](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)
-    to convert Matplotlib figures to Plotly. This function doesn't support all plot types and has limitations (see [here](https://community.plotly.com/t/mpl-to-plotly-limitations/14686)).
+    The Simvue client uses a Plotly conversion function ([^^see documentation for the Plotly conversion function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)) to convert Matplotlib figures to Plotly. This function doesn't support all plot types and has limitations ([^^view the limitations of the Plotly conversion function^^](https://community.plotly.com/t/mpl-to-plotly-limitations/14686)).
 
 ### Directories
 
@@ -103,4 +102,12 @@ run.save_all(['file1', 'file2', 'directory1'], 'input', preserve_path=True)
 ```
 will save the files `file1` and `file2` in addition to the directory `directory1`.
 
+??? further-docs "Further Documentation"
 
+    - [^^The save() method^^](/reference/run/#save)
+
+    - [^^The save_directory() method^^](/reference/run/#save_directory)
+
+    - [^^The save_all() method^^](/reference/run/#save_all)
+    
+    - [^^Example of saving artifacts in the Tutorial^^](/tutorial/tracking-and-monitoring/#artifacts)

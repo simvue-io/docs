@@ -29,3 +29,8 @@ graph LR
   style C fill:#A7C7E7,stroke: #A7C7E7;
   style D fill:#A7C7E7,stroke: #A7C7E7;
 ```
+??? further-docs "Further Documentation"
+
+    - [^^The set_folder_details() method^^](/reference/run/#set_folder_details)
+    
+    - [^^Example of adding details to folders in the Tutorial^^](/tutorial/tracking-and-monitoring/#add-information-for-folders)

@@ -77,3 +77,10 @@ run.add_alert(name='error detector',
               pattern='error',
               notification='email')
 ```
+??? further-docs "Further Documentation"
+
+    - [^^The add_alert() method^^](/reference/run/#add_alert)
+
+    - [^^Example of creating a range based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-metrics)
+    
+    - [^^Example of creating an events based alert in the Tutorial^^](/tutorial/tracking-and-monitoring/#alerts-based-on-events)

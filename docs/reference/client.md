@@ -27,6 +27,14 @@ Returns details about a list of runs.
 | metadata | `Boolean`, optional | Return metadata |
 | format | `str`, optional | Output format, either `dict` (default) or `dataframe` |
 
+#### `get_metrics_names()`
+
+Returns names of all metrics associated with the specified run.
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| run | `str` | Run name |
+
 #### `get_metrics_summaries()`
 
 Returns summaries for the specified run and metric name. Currently average, min, max and last value are returned.
