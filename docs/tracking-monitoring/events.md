@@ -17,4 +17,4 @@ run.log_event(message, timestamp='2022-01-03 16:42:30.849617')
 
     - [^^The log_event() method^^](/reference/run/#log_event)
     
-    - [^^Example of logging events in the Tutorial^^](/tutorial/tracking-and-monitoring/#logging)
+    - [^^Example of logging events in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#logging)

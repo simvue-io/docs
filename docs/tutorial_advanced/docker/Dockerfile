@@ -11,7 +11,7 @@ USER ${USERNAME}
 RUN sudo apt-get install -y python3.9
 # Add Simvue (support_v2_server for now), Multiparser (from Gitlab for now)
 RUN python3.9 -m pip install git+https://github.com/simvue-io/client.git@support_v2_server
-#RUN pip install git+https://git.ccfe.ac.uk/kzarebsk/multiparser.git@main
+RUN python3.9 -m pip install git+https://git.ccfe.ac.uk/kzarebsk/multiparser.git@main
 
 # Some generic settings for building the image
 ENV HOME=/home/${USERNAME}

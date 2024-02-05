@@ -26,7 +26,7 @@ the run automatically be set to the `lost` state if there is an exception and no
 ## Interactive plots from artifacts
 If Matplotlib and Plotly plots are saved directly as artifacts (rather than saved as files first) they can be opened in the web UI as interactive plots. This makes use of `plotly.js` - [^^see here for documentation for plotly.js^^](https://plotly.com/javascript/).
 
-Here is a simple but complete example creating a Matplotlib plot ([^^based on an example from the Matplotlib documentation, seen here^^](https://matplotlib.org/stable/tutorials/introductory/pyplot.html)) and saving it as an artifact. Note the use of the `gcf()` method to get the current figure, as we need to 
+Here is a simple but complete example creating a Matplotlib plot ([^^based on an example from the Matplotlib documentation, seen here^^](https://matplotlib.org/stable/tutorial_basics/introductory/pyplot.html)) and saving it as an artifact. Note the use of the `gcf()` method to get the current figure, as we need to 
 pass a `matplotlib.figure.Figure` instance to Simvue.
 ```
 import numpy as np

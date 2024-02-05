@@ -32,4 +32,4 @@ events = client.get_events(run, filter='Exception')
 ??? further-docs "Further Documentation"
 
     - [^^The get_events() method^^](/reference/client#get_events)
-    - [^^Example of using the get_events() method in the Tutorial^^](/tutorial/analysis/#retrieving-events)
+    - [^^Example of using the get_events() method in the Tutorial^^](/tutorial_basic/analysis/#retrieving-events)

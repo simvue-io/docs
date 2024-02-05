@@ -89,6 +89,9 @@ def per_event(log_data):
   if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
     run.log_event(list(log_data.values())[0])
 ```
+!!! further-docs "Further Documentation"
+
+    For more information on how to log Events with Simvue, [^^the concept of Events is introduced here^^](/tracking-monitoring/events/), and [^^a detailed example can be viewed in the first tutorial.^^](/tutorial_basic/tracking-and-monitoring/#events)
 
 We then need to pass this function to our FileMonitor instance. Where we instantiate our `file_monitor` object:
 ```py
@@ -145,6 +148,10 @@ with simvue.Run() as run:
     notification='email'
     )
 ```
+!!! further-docs "Further Documentation"
+
+    For more information on how to create Alerts with Simvue, [^^information on how to define Alerts can be found here^^](/tracking-monitoring/alerts/), and [^^detailed examples of Alerts can be viewed in the first tutorial.^^](/tutorial_basic/tracking-and-monitoring/#alerts)
+
 Now that this alert is set up, it will send us an alert if a step has failed to converge, and so can act as a trigger for a user to manually come back and check how the simulation is doing. They can then determine if it is worth continuing with the simulation, or whether the job should be terminated to save computational time and cost. If we run our monitoring script, and then run our MOOSE script with `end_time = 50`, we should see a new run appear in the Simvue UI. After around 1 minute, the Alerts tab should show that a step has failed to converge:
 <figure markdown>
   ![An alert showing that one of the steps has failed to converge](images/moose_step_not_converged_alert.png){ width="1000" }
@@ -317,6 +324,7 @@ with multiparser.FileMonitor() as file_monitor:
   )
   file_monitor.run()
 ```
+
 Note that in our call to `.track()`, we specify `static = True`. This means that once the file has been read once by this call, it won't be read again. This is what we want, since this metadata at the top of the file will not change as the simulation proceeds.
 
 Now, let's run our script again to see if the metadata loads correctly. Running `python MOOSE/moose_monitoring.py` should now also start our MOOSE process automatically due to the step above. Looking in the Metadata tab of the run in the UI, we should now see all of the information from the header, and the metadata which Multiparser collects:

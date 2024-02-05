@@ -78,6 +78,9 @@ def per_metric(csv_data, sim_metadata):
     }
   )
 ```
+!!! further-docs "Further Documentation"
+
+    For more information on how to create Metrics with Simvue, [^^information on how to define Metrics can be found here^^](/tracking-monitoring/metrics/), and [^^detailed examples of Metrics can be viewed in the first tutorial.^^](/tutorial_basic/tracking-and-monitoring/#creating-metrics)
 
 We can then add our call to the `track()` method. We can use a globular expression here to search for any CSV files which match our naming convention, and set it to call our callback function when one is found:
 

@@ -33,16 +33,16 @@ nav:
     - Events: analysis/events.md
     - Artifacts: analysis/artifacts.md
   - Tutorial 1 - Basic Functionality:
-    - Introduction: tutorial/introduction.md
-    - Tracking & Monitoring: tutorial/tracking-and-monitoring.md
-    - Analysis: tutorial/analysis.md
-    - Conclusion: tutorial/conclusion.md
+    - Introduction: tutorial_basic/introduction.md
+    - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
+    - Analysis: tutorial_basic/analysis.md
+    - Conclusion: tutorial_basic/conclusion.md
   - Tutorial 2 - Using Multiparser:
-    - Introduction: tutorial_moose/introduction.md
-    - Defining The Problem: tutorial_moose/defining-the-problem.md
-    - Tracking The Console Log: tutorial_moose/tracking-the-log.md
-    - Tracking Results: tutorial_moose/tracking-results.md
-    - Conclusion: tutorial_moose/conclusion.md
+    - Introduction: tutorial_advanced/introduction.md
+    - Defining The Problem: tutorial_advanced/defining-the-problem.md
+    - Tracking The Console Log: tutorial_advanced/tracking-the-log.md
+    - Tracking Results: tutorial_advanced/tracking-results.md
+    - Conclusion: tutorial_advanced/conclusion.md
   - Reference:
     - The Run class: reference/run.md
     - The Client class: reference/client.md
