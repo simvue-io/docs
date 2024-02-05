@@ -10,7 +10,7 @@ Add the following block to your MOOSE input file:
   [temps]
     type = PointValueSampler
     variable = 'T'
-    points = '1 0.5 0.5  2 0.5 0.5  3 0.5 0.5  4 0.5 0.5  5 0.5 0.5'
+    points = '0 0.5 0.5  1 0.5 0.5  2 0.5 0.5  3 0.5 0.5  4 0.5 0.5  5 0.5 0.5  6 0.5 0.5'
     sort_by = 'x'
   []
 []
@@ -37,13 +37,24 @@ And finally we will change the end time for the simulation to 20 seconds, so tha
 If we run this simulation now, we should see a number of CSV files being created as the simulation proceeds, with names such as `simvue_thermal_temps_0001.csv`. These files each contain data similar to the following:
 ```
 T,id,x,y,z
-363.08473814564,0,1,0.5,0.5
-131.60241338385,1,2,0.5,0.5
-47.071880853614,2,3,0.5,0.5
-15.103433376863,3,4,0.5,0.5
-8.4974598487879,3,5,0.5,0.5
+1000.0000000000,0,0,0.5,0.5
+363.08473814564,1,1,0.5,0.5
+131.60241338385,2,2,0.5,0.5
+47.071880853614,3,3,0.5,0.5
+15.103433376863,4,4,0.5,0.5
+8.4974598487879,5,5,0.5,0.5
+0.0000000000000,6,6,0.5,0.5
 ```
+!!! docker "Run in Docker Container"
 
+    To run this updated MOOSE script in the Docker container:
+    ```
+    app/moose_tutorial-opt -i tutorial.step_5/simvue_thermal.i
+    ```
+    View an example of the results being produced by doing:
+    ```
+    cat tutorial/step-5/results/simvue_thermal_temps_0001.csv
+    ```
 ## Parsing values and adding Metrics
 To be able to extract the data from these CSVs for adding to the Simvue run, we will again need to use Multiparser. Since all of the data is written to the file at once when it is created, we can use the `track()` method, similarly to how we used it for the Metadata above. 
 
@@ -104,6 +115,12 @@ def per_metric(csv_data, sim_metadata):
 
 If we now run our Python script, we should see that the run UI shows all of the metrics updating live again, but with the step parameter correctly corresponding to the step in the simulation which the temperature was measured at. 
 
+!!! docker "Run in Docker Container"
+    If running within the Docker container, use the following command to see our results being added as metrics:
+    ```
+    python3.9 tutorial/step_5/moose_monitoring.py
+    ```
+
 We can also now plot all of these metrics on the same graph to compare them - on the left hand side of the Metrics tab, click on the 'View' dropdown and select 'Single'. you can then click the three dots on the right hand side, and select 'Edit'. This should bring up a popup window which allows you to configure a custom graph. Go to data and select each of our metrics, and then click off of the popup to see the graph:
 <figure markdown>
   ![The Simvue run UI, showing metrics for the temperature at various points along the bar, with corrected steps, all on the same graph.](images/moose_metrics_one_graph.png){ width="1000" }
@@ -147,8 +164,13 @@ run.add_alert(
   window=1,
   )
 ```
+!!! docker Run in Docker Container
+    See these updated metrics by running the following:
+    ```
+    python3.9 tutorial/step_6/moose_monitoring.py
+    ```
+If we run our script, we should see now see in the run UI that the temperatures at each point no longer converge, but instead begin to increase linearly as the temperature at the end of the bar increases linearly. We should get an alert which is triggered after a few minutes of the simulation running, which can be viewed in the Alerts tab.
 
-If we run our script, we should see 
 ## Monitoring Alerts using the Client
 !!! note
     The rest of the things in this section use Client methods which are still in a merge request
@@ -203,7 +225,14 @@ while time_elapsed < args.max_time:
 ## Using Firing Alerts to Terminate a Run
 So our new script which we created above will periodically check whether there are any firing alerts for our run, and write the names of any firing alerts to a CSV file. We will want this script to run whenever we are running a MOOSE simulation, and therefore can add it as another process for Simvue to handle. In `moose_multiparser.py`, we can add a new process under where we defined our alert:
 ```py
-run.add_process('alert_monitor', "python3", "MOOSE/moose_analysis.py", run_name, "10", "1000")
+run.add_process(
+    identifier='alert_monitor', 
+    executable="python3.9", 
+    script="MOOSE/moose_alerter.py", 
+    run_name=run_name,
+    time_interval="10", 
+    max_time="1000"
+  )
 ```
 
 We can then add a new call to `tail()` within our file monitor, to check the latest additions to the CSV file created as the simulation proceeds:
@@ -225,4 +254,11 @@ def per_alert(data, metadata):
     trigger.set()
 ```
 If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 35 seconds inside the simulation (70 steps). This is opposed to waiting until 100 seconds (200 steps) when our simulation would normally have finished, cutting our computation time by over half.
+
+!!! docker "Run in Docker Container"
+
+    Since our alerting script has also been added as a Simvue process, we can still run our whole simulation with just one command:
+    ```
+    python3.9 tutorial/step_7/moose_monitoring.py
+    ```
 

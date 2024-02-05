@@ -5,7 +5,7 @@ There are two options for following along with this tutorial. The recommended op
 
 ## Option 1: Setup using Docker container
 When running inside the provided docker container, each step in the tutorial has a corresponding file stored in the container. To run these, look out for boxes in each step which look like this:
-!!! docker "Run on Docker Container"
+!!! docker "Run in Docker Container"
     The commands to run on the docker container will be inside boxes like this.
 
 ### Install Docker
@@ -21,7 +21,7 @@ docker pull wk9874/simvue-moose
 ```
 This may take some time to download. Once complete, if you run `docker images`, you should see an image with the name `wk9874/simvue-moose` listed.
 
-## Run Docker container
+### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
 ```
 xhost +local:docker
@@ -34,6 +34,14 @@ If this is running correctly, you should see your command prompt change to somet
 ```
 dev:~/simue-moose$
 ```
+### Update Simvue Config File
+Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
+
+!!! note
+    If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
+
+!!! warning
+    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `support_v2_server` branch.
 ## Option 2: Custom Setup
 ### Create a virtual environment
 
@@ -55,8 +63,7 @@ pip install multiparser
 
 The next step is to specify the URL of the Simvue server and provide an access token used to authenticate to the server.
 
-Login to the web UI, go to the **Runs** page and click **Create new run**. Create a file called `simvue.ini` containing
-the contents as provided.
+Login to the web UI, go to the **Runs** page and click **Create new run**. Create a file called `simvue.ini` containing the contents as provided.
 The file should look something like:
 ```
 [server]
@@ -64,6 +71,8 @@ url = https://app.simvue.io
 token = eyJ0eXAi...
 ```
 
+!!! warning
+    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `support_v2_server` branch.
 ### Install MOOSE
 Next you will need to setup MOOSE on your computer. [^^See the installation instructions here^^](https://mooseframework.inl.gov/getting_started/installation/index.html), using the link corresponding to your operating system. 
 

@@ -125,7 +125,7 @@ To check that the input file is configured correctly, run the file and check the
     nx = 20
     ny = 20
     nz = 20
-    xmax = 5
+    xmax = 6
     ymax = 1
     zmax = 1
   []
@@ -191,16 +191,16 @@ This should be in your `simvue_thermal.i` file. Next, locate where your MOOSE ap
 /path/to/MOOSE/application/file -i /path/to/simvue_thermal.i --color off
 ```
 
-!!! docker "Run on Docker Container"
-    If you are doing this tutorial on the provided Docker container, you can run this command:
+!!! docker "Run in Docker Container"
+    If you are doing this tutorial in the provided Docker container, you can run this command:
     ```
     app/moose_tutorial-opt -i tutorial/step_1/simvue_thermal.i --color off
     ```
 
-You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files: `simvue_thermal_exodus.e` and `simvue_thermal_console.txt`. You can open the Exodus file in your CAD software. 
-!!! docker "Run on Docker Container"
+You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files in the `results` directory: `simvue_thermal.e` and `simvue_thermal.txt`. You can open the Exodus file in your CAD software. 
+!!! docker "Run in Docker Container"
     ```
-    paraview tutorial/step_1/simvue_thermal_exodus.e
+    paraview tutorial/step_1/results/simvue_thermal.e
     ```
 
 Once Paraview is opened, follow these steps to see the heat diffuse across the bar:
