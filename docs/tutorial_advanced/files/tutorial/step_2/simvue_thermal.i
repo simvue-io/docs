@@ -56,7 +56,7 @@
     solve_type = NEWTON
   []
   [Outputs]
-    file_base = ./results/simvue_thermal
+    file_base = ./tutorial/step_2/results/simvue_thermal
     [exodus]
       type = Exodus
     []

@@ -7,8 +7,10 @@ import os
 import re
 import multiprocessing
 
-if os.path.exists('./MOOSE/results'):
-    shutil.rmtree('./MOOSE/results')
+script_dir = os.path.dirname(__file__)
+
+if os.path.exists(os.path.join(script_dir, "results")):
+    shutil.rmtree(os.path.join(script_dir, "results"))
 
 trigger = multiprocessing.Event()
 
@@ -37,19 +39,10 @@ with simvue.Run() as run:
     )
     run.add_process(
         identifier='thermal_diffusion_simulation',
-        executable='/path/to/MOOSE/application/file',
-        i="tutorial/step_3/simvue_themal.i",
+        executable='app/moose_tutorial-opt',
+        i="tutorial/step_6/simvue_thermal.i",
         color="off",
         )
-    run.add_process(
-        identifier='alert_monitor', 
-        executable="python3.9", 
-        script="MOOSE/moose_alerter.py", 
-        run_name=run_name,
-        time_interval="10", 
-        max_time="1000"
-        )
-
     run.add_alert(
         name='step_not_converged',
         source='events',
@@ -57,14 +50,28 @@ with simvue.Run() as run:
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
-    def per_event(log_data):
+    run.add_alert(
+        name='temperature_exceeds_maximum',
+        source='metrics',
+        metric='temp_at_x.3',
+        rule='is above',
+        threshold=600,
+        frequency=1,
+        window=1,
+        )
+    def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
-                run.save("MOOSE/results/simvue_thermal.e", "output")
+                run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")
+        elif "finished" in log_data.keys():
+            time.sleep(1) # To allow other processes to complete
+            run.update_tags(["completed",])
+            run.close()
+            trigger.set()
     
     def per_metric(csv_data, sim_metadata):
         step_num = sim_metadata['file_name'].split('_')[-1].split('.')[0]
@@ -75,33 +82,25 @@ with simvue.Run() as run:
             step = int(step_num),
             timestamp = sim_metadata['timestamp']
         )
-    def per_alert(data, metadata):
-        if 'temperature_steady_state' in list(data['firing_alerts']):
-            run.update_tags(['temperature_exceeds_maximum',])
-            run.kill_all_processes()
-            trigger.set()       
+                
     with multiparser.FileMonitor(
         per_thread_callback=per_event, 
         termination_trigger=trigger, 
     ) as file_monitor:
         file_monitor.tail(
-            path_glob_exprs = "MOOSE/results/simvue_thermal.txt", 
-            tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!"], 
-            labels = ["time_step", "converged", "non_converged"]
+            path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal.txt"), 
+            tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!", "Finished Executing"], 
+            labels = ["time_step", "converged", "non_converged", "finished"]
         )
         file_monitor.track(
-            path_glob_exprs = "MOOSE/results/simvue_thermal.txt", 
+            path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal.txt"), 
             callback = lambda header_data, metadata: run.update_metadata({**header_data, **metadata}), 
             parser_func = moose_header_parser, 
             static = True
         )
         file_monitor.track(
-            path_glob_exprs = "MOOSE/results/simvue_thermal_temps_*.csv", 
+            path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal_temps_*.csv"), 
             callback = per_metric,
             static=True
         )
-        file_monitor.tail(
-            path_glob_exprs = "MOOSE/results/alert_status.csv", 
-            callback = per_alert,
-  )
         file_monitor.run()

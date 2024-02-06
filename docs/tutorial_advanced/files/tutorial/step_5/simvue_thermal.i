@@ -32,14 +32,6 @@
       prop_values = '0.98'
     []
   []
-  [VectorPostprocessors]
-    [temps]
-      type = PointValueSampler
-      variable = 'T'
-      points = '0 0.5 0.5  1 0.5 0.5  2 0.5 0.5  3 0.5 0.5  4 0.5 0.5  5 0.5 0.5  6 0.5 0.5'
-      sort_by = 'x'
-    []
-  []
   [BCs]
     [hot]
       type = DirichletBC
@@ -59,21 +51,18 @@
   []
   [Executioner]
     type = Transient
-    end_time = 20
+    end_time = 50
     dt = 1
     solve_type = NEWTON
   []
   [Outputs]
-    file_base = ./results/simvue_thermal
+    file_base = ./tutorial/step_5/results/simvue_thermal
     [exodus]
       type = Exodus
     []
     [console]
       type = Console
       output_file = true
-    []
-    [csv]
-      type = CSV
     []
   []
   

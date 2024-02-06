@@ -2,6 +2,7 @@ import simvue
 import argparse
 import csv
 import time
+import os
 
 parser = argparse.ArgumentParser(description='Monitor alerts from a Simvue run.')
 parser.add_argument(
@@ -21,7 +22,9 @@ parser.add_argument(
   )
 args = parser.parse_args()
 
-with open('MOOSE/results/alert_status.csv', 'w', newline='') as csvfile: 
+script_dir = os.path.dirname(__file__)
+
+with open(os.path.join(script_dir, 'results', 'alert_status.csv'), 'w', newline='') as csvfile: 
     csvwriter = csv.writer(csvfile) 
     csvwriter.writerow(['time', 'firing_alerts'])
 
@@ -31,7 +34,7 @@ run_id = client.get_run_id_from_name(args.run_name)
 
 while time_elapsed < args.max_time:
     alerts = client.get_alerts(run_id)
-    with open('MOOSE/results/alert_status.csv', 'a', newline='') as csvfile: 
+    with open(os.path.join(script_dir, 'results', 'alert_status.csv'), 'a', newline='') as csvfile: 
         csvwriter = csv.writer(csvfile) 
         csvwriter.writerow([time_elapsed, alerts])
     

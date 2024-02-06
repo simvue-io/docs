@@ -49,11 +49,11 @@ T,id,x,y,z
 
     To run this updated MOOSE script in the Docker container:
     ```
-    app/moose_tutorial-opt -i tutorial.step_5/simvue_thermal.i
+    app/moose_tutorial-opt -i tutorial/step_6/simvue_thermal.i
     ```
     View an example of the results being produced by doing:
     ```
-    cat tutorial/step-5/results/simvue_thermal_temps_0001.csv
+    cat tutorial/step-6/results/simvue_thermal_temps_0001.csv
     ```
 ## Parsing values and adding Metrics
 To be able to extract the data from these CSVs for adding to the Simvue run, we will again need to use Multiparser. Since all of the data is written to the file at once when it is created, we can use the `track()` method, similarly to how we used it for the Metadata above. 
@@ -121,7 +121,7 @@ If we now run our Python script, we should see that the run UI shows all of the 
 !!! docker "Run in Docker Container"
     If running within the Docker container, use the following command to see our results being added as metrics:
     ```
-    python3.9 tutorial/step_5/moose_monitoring.py
+    python tutorial/step_6/moose_monitoring.py
     ```
 
 We can also now plot all of these metrics on the same graph to compare them - on the left hand side of the Metrics tab, click on the 'View' dropdown and select 'Single'. you can then click the three dots on the right hand side, and select 'Edit'. This should bring up a popup window which allows you to configure a custom graph. Go to data and select each of our metrics, and then click off of the popup to see the graph:
@@ -170,13 +170,11 @@ run.add_alert(
 !!! docker Run in Docker Container
     See these updated metrics by running the following:
     ```
-    python3.9 tutorial/step_6/moose_monitoring.py
+    python tutorial/step_7/moose_monitoring.py
     ```
 If we run our script, we should see now see in the run UI that the temperatures at each point no longer converge, but instead begin to increase linearly as the temperature at the end of the bar increases linearly. We should get an alert which is triggered after a few minutes of the simulation running, which can be viewed in the Alerts tab.
 
 ## Monitoring Alerts using the Client
-!!! note
-    The rest of the things in this section use Client methods which are still in a merge request
 
 The above alert will trigger when the temperature at the centre of the bar has been above the given value for more than 1 minute. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To monitor the status of this alert, we will use the `Client` class from the Simvue client. This class allows you to retrieve a number of different aspects of ongoing or past runs, including metrics, events, artifacts and alerts.
 
@@ -230,7 +228,7 @@ So our new script which we created above will periodically check whether there a
 ```py
 run.add_process(
     identifier='alert_monitor', 
-    executable="python3.9", 
+    executable="python", 
     script="MOOSE/moose_alerter.py", 
     run_name=run_name,
     time_interval="10", 
@@ -262,6 +260,6 @@ If we run our `moose_multiparser.py` script now, we should see that the simulati
 
     Since our alerting script has also been added as a Simvue process, we can still run our whole simulation with just one command:
     ```
-    python3.9 tutorial/step_7/moose_monitoring.py
+    python tutorial/step_8/moose_monitoring.py
     ```
 

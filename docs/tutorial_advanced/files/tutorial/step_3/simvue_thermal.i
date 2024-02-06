@@ -51,12 +51,12 @@
   []
   [Executioner]
     type = Transient
-    end_time = 50
+    end_time = 10
     dt = 1
     solve_type = NEWTON
   []
   [Outputs]
-    file_base = ./results/simvue_thermal
+    file_base = ./tutorial/step_3/results/simvue_thermal
     [exodus]
       type = Exodus
     []

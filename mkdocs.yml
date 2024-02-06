@@ -37,7 +37,7 @@ nav:
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
     - Analysis: tutorial_basic/analysis.md
     - Conclusion: tutorial_basic/conclusion.md
-  - Tutorial 2 - Using Multiparser:
+  - Tutorial 2 - Advanced Functionality:
     - Introduction: tutorial_advanced/introduction.md
     - Defining The Problem: tutorial_advanced/defining-the-problem.md
     - Tracking The Console Log: tutorial_advanced/tracking-the-log.md

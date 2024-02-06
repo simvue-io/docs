@@ -14,7 +14,7 @@ By the end of this tutorial, you will be able to:
 
 There are two options for following along with this tutorial. The recommended option is to use the provided Docker container, which has MOOSE, Paraview, and Simvue pre installed. The scripts which we produce after each step are also provided in the container so that you can run them more easily. You could alternatively install each component individually, and brief instructions for this are also listed below.
 
-## Option 1: Setup using Docker container
+## Option 1: Setup using Docker container **(Recommended)**
 When running inside the provided docker container, each step in the tutorial has a corresponding file stored in the container. To run these, look out for boxes in each step which look like this:
 !!! docker "Run in Docker Container"
     The commands to run on the docker container will be inside boxes like this.
