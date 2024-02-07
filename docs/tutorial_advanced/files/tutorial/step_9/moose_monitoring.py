@@ -40,15 +40,33 @@ with simvue.Run() as run:
     run.add_process(
         identifier='thermal_diffusion_simulation',
         executable='app/moose_tutorial-opt',
-        i="tutorial/step_6/simvue_thermal.i",
+        i="tutorial/step_9/simvue_thermal.i",
         color="off",
         )
+    run.add_process(
+        identifier='alert_monitor', 
+        executable="python", 
+        script="tutorial/step_9/moose_alerter.py", 
+        run_name=run_name,
+        time_interval="10", 
+        max_time="1000"
+        )
+
     run.add_alert(
         name='step_not_converged',
         source='events',
         frequency=1,
         pattern=' Solve Did NOT Converge!',
         notification='email'
+        )
+    run.add_alert(
+        name='temperature_exceeds_maximum',
+        source='metrics',
+        metric='temp_at_x.3',
+        rule='is above',
+        threshold=600,
+        frequency=1,
+        window=1,
         )
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
@@ -65,7 +83,23 @@ with simvue.Run() as run:
             run.update_tags(["completed",])
             run.close()
             trigger.set()
-                
+    
+    def per_metric(csv_data, sim_metadata):
+        step_num = sim_metadata['file_name'].split('_')[-1].split('.')[0]
+        run.log_metrics(
+            {
+            f"temp_at_x.{csv_data['x']}": csv_data['T']
+            },
+            step = int(step_num),
+            timestamp = sim_metadata['timestamp']
+        )
+    def per_alert(data, metadata):
+        if 'temperature_steady_state' in list(data['firing_alerts']):
+            run.update_tags(['temperature_exceeds_maximum',])
+            run.kill_all_processes()
+            run.set_status('failed')
+            run.close()
+            trigger.set()       
     with multiparser.FileMonitor(
         per_thread_callback=per_event, 
         termination_trigger=trigger, 
@@ -81,4 +115,13 @@ with simvue.Run() as run:
             parser_func = moose_header_parser, 
             static = True
         )
+        file_monitor.track(
+            path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal_temps_*.csv"), 
+            callback = per_metric,
+            static=True
+        )
+        file_monitor.tail(
+            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"), 
+            callback = per_alert,
+  )
         file_monitor.run()

@@ -37,23 +37,23 @@ And finally we will change the end time for the simulation to 20 seconds, so tha
 If we run this simulation now, we should see a number of CSV files being created as the simulation proceeds, with names such as `simvue_thermal_temps_0001.csv`. These files each contain data similar to the following:
 ```
 T,id,x,y,z
-1000.0000000000,0,0,0.5,0.5
-363.08473814564,1,1,0.5,0.5
-131.60241338385,2,2,0.5,0.5
-47.071880853614,3,3,0.5,0.5
-15.103433376863,4,4,0.5,0.5
-8.4974598487879,5,5,0.5,0.5
-0.0000000000000,6,6,0.5,0.5
+1000,0,0,0.5,0.5
+366.34464934153,1,1,0.5,0.5
+132.94639304264,2,2,0.5,0.5
+47.622473361857,3,3,0.5,0.5
+17.1837001014,4,4,0.5,0.5
+5.5129057661661,5,5,0.5,0.5
+0,6,6,0.5,0.5
 ```
 !!! docker "Run in Docker Container"
 
     To run this updated MOOSE script in the Docker container:
     ```
-    app/moose_tutorial-opt -i tutorial/step_6/simvue_thermal.i
+    app/moose_tutorial-opt -i tutorial/step_7/simvue_thermal.i
     ```
     View an example of the results being produced by doing:
     ```
-    cat tutorial/step-6/results/simvue_thermal_temps_0001.csv
+    cat tutorial/step_7/results/simvue_thermal_temps_0001.csv
     ```
 ## Parsing values and adding Metrics
 To be able to extract the data from these CSVs for adding to the Simvue run, we will again need to use Multiparser. Since all of the data is written to the file at once when it is created, we can use the `track()` method, similarly to how we used it for the Metadata above. 
@@ -121,7 +121,7 @@ If we now run our Python script, we should see that the run UI shows all of the 
 !!! docker "Run in Docker Container"
     If running within the Docker container, use the following command to see our results being added as metrics:
     ```
-    python tutorial/step_6/moose_monitoring.py
+    python tutorial/step_7/moose_monitoring.py
     ```
 
 We can also now plot all of these metrics on the same graph to compare them - on the left hand side of the Metrics tab, click on the 'View' dropdown and select 'Single'. you can then click the three dots on the right hand side, and select 'Edit'. This should bring up a popup window which allows you to configure a custom graph. Go to data and select each of our metrics, and then click off of the popup to see the graph:
@@ -170,7 +170,7 @@ run.add_alert(
 !!! docker Run in Docker Container
     See these updated metrics by running the following:
     ```
-    python tutorial/step_7/moose_monitoring.py
+    python tutorial/step_8/moose_monitoring.py
     ```
 If we run our script, we should see now see in the run UI that the temperatures at each point no longer converge, but instead begin to increase linearly as the temperature at the end of the bar increases linearly. We should get an alert which is triggered after a few minutes of the simulation running, which can be viewed in the Alerts tab.
 
@@ -185,17 +185,17 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Monitor alerts from a Simvue run.')
 parser.add_argument(
-  'run_name', 
+  '--run_name', 
   type=str,
   help='The name of the run to monitor alerts for.'
   )
 parser.add_argument(
-  'time_interval', 
+  '--time_interval', 
   type=int,
   help='The interval between queries to the alert status, in seconds.'
   )
 parser.add_argument(
-  'max_time', 
+  '--max_time', 
   type=int,
   help='The maximum time which this script will run for.'
   )
@@ -246,12 +246,14 @@ with multiparser.FileMonitor() as file_monitor:
   )
   file_monitor.run()
 ```
-We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates it is in (or near) a steady temperature state:
+We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates it is in (or near) a steady temperature state, and set the status as failed:
 ```py
 def per_alert(data, metadata):
   if 'temperature_steady_state' in list(data['firing_alerts']):
     run.update_tags(['temperature_exceeds_maximum',])
     run.kill_all_processes()
+    run.set_status('failed')
+    run.close()
     trigger.set()
 ```
 If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 35 seconds inside the simulation (70 steps). This is opposed to waiting until 100 seconds (200 steps) when our simulation would normally have finished, cutting our computation time by over half.
@@ -260,6 +262,6 @@ If we run our `moose_multiparser.py` script now, we should see that the simulati
 
     Since our alerting script has also been added as a Simvue process, we can still run our whole simulation with just one command:
     ```
-    python tutorial/step_8/moose_monitoring.py
+    python tutorial/step_9/moose_monitoring.py
     ```
 

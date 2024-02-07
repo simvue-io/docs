@@ -43,15 +43,6 @@ with simvue.Run() as run:
         i="tutorial/step_8/simvue_thermal.i",
         color="off",
         )
-    run.add_process(
-        identifier='alert_monitor', 
-        executable="python", 
-        script="tutorial/step_8/moose_alerter.py", 
-        run_name=run_name,
-        time_interval="10", 
-        max_time="1000"
-        )
-
     run.add_alert(
         name='step_not_converged',
         source='events',
@@ -59,12 +50,23 @@ with simvue.Run() as run:
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
+    run.add_alert(
+        name='temperature_exceeds_maximum',
+        source='metrics',
+        metric='temp_at_x.3',
+        rule='is above',
+        threshold=600,
+        frequency=1,
+        window=1,
+        )
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
                 run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
+                run.set_status('failed')
+                run.close()
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")
         elif "finished" in log_data.keys():
@@ -82,11 +84,7 @@ with simvue.Run() as run:
             step = int(step_num),
             timestamp = sim_metadata['timestamp']
         )
-    def per_alert(data, metadata):
-        if 'temperature_steady_state' in list(data['firing_alerts']):
-            run.update_tags(['temperature_exceeds_maximum',])
-            run.kill_all_processes()
-            trigger.set()       
+                
     with multiparser.FileMonitor(
         per_thread_callback=per_event, 
         termination_trigger=trigger, 
@@ -107,8 +105,4 @@ with simvue.Run() as run:
             callback = per_metric,
             static=True
         )
-        file_monitor.tail(
-            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"), 
-            callback = per_alert,
-  )
         file_monitor.run()

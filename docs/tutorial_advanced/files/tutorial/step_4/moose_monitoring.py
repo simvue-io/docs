@@ -21,12 +21,6 @@ with simvue.Run() as run:
         description="A simulation to model the diffusion of heat across a metal bar",
         folder='/moose'
     )
-    run.add_process(
-        identifier='thermal_diffusion_simulation',
-        executable='app/moose_tutorial-opt',
-        i="tutorial/step_4/simvue_thermal.i",
-        color="off",
-        )
     run.add_alert(
         name='step_not_converged',
         source='events',
@@ -37,11 +31,6 @@ with simvue.Run() as run:
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
-            if "non_converged" in log_data.keys():
-                run.kill_all_processes()
-                run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
-                trigger.set()
-                print("Simulation Terminated due to Non Convergence!")
         elif "finished" in log_data.keys():
             time.sleep(1) # To allow other processes to complete
             run.update_tags(["completed",])

@@ -1,5 +1,5 @@
 # Introduction
-Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focusses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems, however the techniques covered are applicable to any software which produces output files which you want to keep trackof. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use Simvue to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial_basic/introduction).
+Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focusses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems. However while focussed on MOOSE, the techniques covered are applicable to any software which produces output files which you want to keep track of. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use Simvue to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial_basic/introduction).
 
 By the end of this tutorial, you will be able to:
 
@@ -20,7 +20,7 @@ When running inside the provided docker container, each step in the tutorial has
     The commands to run on the docker container will be inside boxes like this.
 
 ### Install Docker
-You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. (Full instructions for installing Docker can be found here)[https://docs.docker.com/engine/install/]. If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
+You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. [^^Full instructions for installing Docker can be found here^^](https://docs.docker.com/engine/install/). If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
 ```
 sudo apt-get update && sudo apt-get install docker.io
 ```
@@ -43,7 +43,7 @@ docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
-dev:~/simue-moose$
+dev:~/moose-training-workshop$
 ```
 ### Update Simvue Config File
 Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.

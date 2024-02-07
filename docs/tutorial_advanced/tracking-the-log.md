@@ -1,5 +1,11 @@
 # Tracking the Console Log with Simvue
 As the simulation which we ran in the previous step was progressing, you should have seen a series of messages being printed to the log. These have also been stored in a log file, called `simvue_thermal.txt`. If we look at the most recent lines in this file by running `tail simvue_thermal.txt -n 100` in the terminal, we should see something like this:
+!!! docker "Run in Docker Container"
+    To view the log file produced by the previous run in the Docker container:
+    ```
+    tail tutorial/step_1/results/simvue_thermal.txt -n 100
+    ```
+  
 ```
 ...
 Time Step 10, time = 10, dt = 1
@@ -26,7 +32,7 @@ To do this, we will need to install the modules `simvue` and `multiparser`, eith
 import simvue
 import multiparser
 ```
-The next thing which we need to do is initialize a Simvue run. To do this, we first need to import the Run() object from the simvue module, and then we call the run.init() method to set up the run:
+The next thing which we need to do is initialize a Simvue run. To do this, we first need to import the `Run()` object from the simvue module, and then we call the `run.init()` method to set up the run:
 ```py
 import time
 import shutil
@@ -57,7 +63,7 @@ with multiparser.FileMonitor() as file_monitor:
 We then need to define which way the file monitor should keep track of the files. There are two main options:
 
 - `FileMonitor.track()`: The contents of the whole file are read at once. This should be used for cases where the full output is written in one go, when the file is created.
-- `FileMonitor.tail()`: The initial contents of the file are read, and then any additional lines added after this point are read on a line by line bases. This is useful for live updating files, such as log files, where new lines are being appended to the end of the file during execution of the program.
+- `FileMonitor.tail()`: The initial contents of the file are read, and then any additional lines added after this point are read on a line by line basis. This is useful for live updating files, such as log files, where new lines are being appended to the end of the file during execution of the program.
 
 For our console output file, new lines are being constantly appended to the file as the simulation progresses, and we want an event to be logged as soon as one of these lines is written. Therefore we will chose the `tail()` method of file tracking. To allow this function to start tracking our file, we need to provide it with three main arguments:
 
@@ -65,7 +71,7 @@ For our console output file, new lines are being constantly appended to the file
 - `tracked_values`: This is a list of values to look out for in the tracked file. These can be provided as literal strings, or regular expressions. When one of these values is seen in the file, a callback to a user defined function is triggered (in our case to add an event to Simvue, which we will see later).
 - `labels`: Labels to assign to each of the tracked values. If one of the tracked values above is found in the file, the callback function will be passed a dictionary of key value pairs, where the key is the label given here, and the value is the value from the file which is matching the tracked value.
 
-If we [take a look at the console output](#tracking-the-console-log-with-simvue), we can see that most of the log is taken up by values of the error function at each step, which makes the log difficult to read and which aren't particularly informative for the user. The more useful information contained within the log is which step the simulation is on, and whether that step did or did not converge. So we can set the FileMonitor to look out for these phrases: 
+If we [^^take a look at the console output^^](#tracking-the-console-log-with-simvue), we can see that most of the log is taken up by values of the error function at each step, which makes the log difficult to read and which aren't particularly informative for the user. The more useful information contained within the log is which step the simulation is on, and whether that step did or did not converge. So we can set the FileMonitor to look out for these phrases: 
 
 - For the time step, we can use a simple regular expression which matches the phrase 'Time Step' and then the rest of the characters on that line as follows: `r"Time Step (.*)"`. We must compile this expression using `re.compile()` before passing to Multiparser. 
 - For whether the solve converged at that step, we can look out for the literal phrases `" Solve Converged!"` and `" Solve Did NOT Converge!"` (note the space at the front). 
@@ -101,14 +107,15 @@ with multiparser.FileMonitor(
 ```
 
 ### Testing our Events Log
-Now we can test whether our code is working! We can start our file monitoring script by running `python MOOSE/moose_monitoring.py &` to start the monitoring script in the background, and we can run our MOOSE simulation by running `/path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off`.
+Now we can test whether our code is working! We can start our file monitoring script by running `python MOOSE/moose_monitoring.py &` to run it in the background, and we can run our MOOSE simulation by running `/path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off`.
 
 !!! docker "Run in Docker Container"
     If running this tutorial inside the Docker Container, you can run the following commands:
     ```
     python tutorial/step_2/moose_monitoring.py &
-    
-    app/moose_tutorial-opt tutorial/step_2/simvue_thermal.i --color off
+    ```
+    ```
+    app/moose_tutorial-opt -i tutorial/step_2/simvue_thermal.i --color off
     ```
 
 If you then log into the Simvue UI, you should see that a new run has been created in the `/moose` folder, with the expected `thermal-diffusion-monitoring` name. If you open this run and go to the Events tab, you should see that the Events log is updating live as the simulation progresses:
@@ -120,10 +127,14 @@ If you then log into the Simvue UI, you should see that a new run has been creat
 ## Completing a Simulation
 With the simulation which we have ran above, the MOOSE simulation completes after around 15 seconds. However if we keep checking our Simvue UI, we will see that our run does not stop when our simulation does, but instead remains waiting for more data to be added. This is because our monitoring script and simulation script are separate, and they are not linked to each other. 
 
-Firstly, let's manually terminate our monitoring script from before. On Linux systems, perform the following commands:
+Firstly, let's manually terminate our monitoring script from before. On Linux systems, type the command `ps -a` to see all running processes - there should be some Python processes which are caused by the monitoring script. You can kill these with `kill <id>`, where `id` is the PID of the process to stop. Do this for all relevant processes, or use `pkill -9 python` to stop all Python processes (be careful if you have other Python scripts running on your system at the time!)
 
-1. Type `ps -a` to get a list of all running processes and their IDs
-2. Type `kill <id>`, where 'id' is the ID of each process which is called 'Python' in the list above
+!!! docker "Run in Docker Container
+
+    To stop the moose monitoring script running in the background:
+    ```
+    pkill -9 python
+    ```
 
 Later in this tutorial we will see how we can add the MOOSE simulation as a Process to Simvue to avoid this issue, but for now we can use the logged events to end our run and our monitoring script if we detect that our simulation is complete.
 
@@ -192,8 +203,9 @@ If we now run our monitoring script and our MOOSE simulation, they should behave
     To run this in the Docker container:
     ```
     python tutorial/step_3/moose_monitoring.py &
-    
-    app/moose_tutorial-opt tutorial/step_3/simvue_thermal.i --color off
+    ```
+    ```
+    app/moose_tutorial-opt -i tutorial/step_3/simvue_thermal.i --color off
     ```
     You can check the running processes with `ps -a`, you should see that `moose_monitoring.py` is Done and there are no running Python processes left.
 
@@ -201,18 +213,18 @@ If we now run our monitoring script and our MOOSE simulation, they should behave
 ## Adding Alerts
 With the MOOSE script which we ran above, all of the steps converged to a result successfully. However if we allowed the simulation to continue for a longer time, then as the system reached a steady state where the temperature gradient was uniform across the bar, the steps would begin to fail to converge. When this happens, MOOSE will incrementally decrease the time delta which is used betrween steps, to attempt to find a converging solution. It will continue to do this until it either finds a converging solution, or the time delta is below some minimum specified within MOOSE. This process can continue for a very long time, and even if it does eventually find a time delta with a converging solution, the simulation is not giving us any further useful information (since the system is pretty much in a steady state already). So instead of waiting for MOOSE to do this process, we may want to trigger an alert as soon as there is a non converged step, and stop execution of the MOOSE simulation.
 
-As an example, take your MOOSE script, and change the details in the Executioner block to have `end_time = 50`. If you were to run the simulation now, you would see that you get non convergence at around step 40. Waiting for the simulation to fully complete will take around 6 minutes on a standard office laptop, but most of this time was taken up by the code reducing the time step and retrying.
+As an example, take your MOOSE script, and change the details in the Executioner block to have `end_time = 60`. If you were to run the simulation now, you would see that you get non convergence at around step 50. Waiting for the simulation to fully complete will take around 6 minutes on a standard office laptop, but most of this time was taken up by the code reducing the time step and retrying.
 
 !!! docker "Run in Docker Container"
     If you would like to see what the MOOSE script does when failing to converge, you can run:
     ```
-    app/moose_tutorial-opt tutorial/step_4/simvue_thermal.i
+    app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i
     ```
     And wait for a few minutes until the problem begins approaching a steady state. Once it fails to converge, you can see the results with:
     ```
     paraview tutorial/step_4/results/simvue_thermal.e
     ```
-    And you will see that for the last 15-20 steps, the problem has already been in a roughly steady state, with heat uniformly distributed across the bar.
+    And you will see that for approximately the last 20 steps, the problem has already been in a roughly steady state, with heat uniformly distributed across the bar.
 
 ### Adding an Alert
 
@@ -235,13 +247,30 @@ with simvue.Run() as run:
 
     For more information on how to create Alerts with Simvue, [^^information on how to define Alerts can be found here^^](/tracking-monitoring/alerts/), and [^^detailed examples of Alerts can be viewed in the first tutorial.^^](/tutorial_basic/tracking-and-monitoring/#alerts)
 
-Now that this alert is set up, it will send us an alert if a step has failed to converge, and so can act as a trigger for a user to manually come back and check how the simulation is doing. They can then determine if it is worth continuing with the simulation, or whether the job should be terminated to save computational time and cost. If we run our monitoring script, and then run our MOOSE script with `end_time = 50`, we should see a new run appear in the Simvue UI. After around 1 minute, the Alerts tab should show that a step has failed to converge:
+Now that this alert is set up, it will send us an alert if a step has failed to converge, and so can act as a trigger for a user to manually come back and check how the simulation is doing. They can then determine if it is worth continuing with the simulation, or whether the job should be terminated to save computational time and cost. If we run our monitoring script, and then run our MOOSE script with `end_time = 60`, we should see a new run appear in the Simvue UI. After around 2 minutes, the Alerts tab should show that a step has failed to converge:
 <figure markdown>
   ![An alert showing that one of the steps has failed to converge](images/moose_step_not_converged_alert.png){ width="1000" }
 </figure>
 
-You should also receive an email, since you set that as your notification policy above. Note that this only took around one minute, whereas waiting for the MOOSE simulation to fully complete would take around 6 minutes. However in both situations the result is the same, with an almost perfectly linear distribution of heat across the length of the bar.
+!!! docker "Run in Docker Container"
+    To run this in the Docker container:
+    ```
+    python tutorial/step_4/moose_monitoring.py &
+    ```
+    ```
+    app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i --color off
+    ```
 
+You should also receive an email, since you set that as your notification policy above. Note that this only took around 2 minutes, whereas waiting for the MOOSE simulation to fully complete would take around 6 minutes. However in both situations the result is the same, with an almost perfectly linear distribution of heat across the length of the bar.
+
+However when this alert fires, it will still require manual intervention to stop the MOOSE simulation, and then also stop the background processes which are caused by the monitoring script.
+
+!!! docker "Run in Docker Container"
+    To stop execution of the MOOSE script after the alert has fired, press `Ctrl+C` on the command line and you should stop seeing any logs being printed to the console. Remember the monitoring script will still be running in the background, so also do:
+    ```
+    pkill -9 python
+    ```
+    
 ### Creating Simvue Processes
 When we reach this steady state, it would be good if Simvue could automatically abort the MOOSE simulation without any human intervention. To allow this to happen, we must define our MOOSE simulation as a Process in Simvue. This means that Simvue is able to automatically kick off the execution of this script, and can terminate it if things go wrong.
 
@@ -279,17 +308,21 @@ def per_event(log_data, metadata):
         run.kill_all_processes()
 ``` 
 
-In this situation we could also upload the Exodus file as an output artifact for storage on the Simvue server. To do this, we use the `save()` method of the run class, passing in the path to the file:
+In this situation we could also upload the Exodus file as an output artifact for storage on the Simvue server. To do this, we use the `save()` method of the run class, passing in the path to the file. We may also want to set the status of the run to be 'failed':
 ```py
 def per_event(log_data, metadata):
     ...
     if "non_converged" in log_data.keys():
         run.kill_all_processes()
         run.save("MOOSE/results/simvue_thermal.e", "output")
+        run.set_status('failed')
 ```
+!!! further-docs "Further Documentation"
+
+    For further documentation for how to save files as Artifacts, [^^see the introduction to Artifacts here^^](/tracking-monitoring/artifacts/), and [^^see a detailed example of saving files and other objects as Artifacts here^^](/tutorial_basic/tracking-and-monitoring/#artifacts).
 
 ### Terminating Monitoring
-As we did previously when our MOOSE simulation completed without issue, if we are terminating the MOOSE simulation, we will also want to terminate our file monitoring processes. We can again set our termination trigger when our MOOSE simulation is terminated:
+[^^As we did previously when our MOOSE simulation completed without issue^^](#terminating-multiparser-threads), if we are terminating the MOOSE simulation, we will also want to terminate our file monitoring processes. We can again set our termination trigger when our MOOSE simulation is terminated:
 ```py
 def per_event(log_data, metadata):
   if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
@@ -297,6 +330,8 @@ def per_event(log_data, metadata):
     if "non_converged" in log_data.keys():
         run.kill_all_processes()
         run.save("MOOSE/results/simvue_thermal.e", "output")
+        run.set_status('failed')
+        run.close()
         trigger.set()
         print("Simulation Terminated due to Non Convergence!")
 ```
@@ -305,8 +340,11 @@ Now if we run our script again, we should see that after a few minutes of runnin
 !!! docker Run in Docker Container
     To run this in the Docker container, we now only need to run the monitoring script:
     ```
-    python tutorial/step_4/moose_monitoring.py
+    python tutorial/step_5/moose_monitoring.py
     ```
+    Note that you should not expect to see the MOOSE log being printed to the console anymore, as this is now stored in a file instead.
+
+    After a few minutes, you will also see that the MOOSE simulation and monitoring script correctly terminate after the first non convergence.
 
 ## Adding Metadata
 To allow us to keep track of how a particular run has been performed, we may want to add metadata to the Simvue run. As an example, in the console log, important information about the MOOSE environment and simulation parameters are included at the very top. This can be seen by running `head results/simvue_thermal.txt -n 40`:
@@ -372,7 +410,7 @@ Finally, we must return a pair of arguments: the first argument is a dictionary 
 ```
 
 ### Obtaining Metadata
-Where we instantiate our `file_monitor` object, we can tell the file monitor to track the console file again, but using the custom parser. We can also set different callbacks for each file we are tracking - so we remove `per_thread_callback` from the function arguments, and instead define it in each call to `tail()` and `track()`. 
+Where we instantiate our `file_monitor` object, we can tell the file monitor to track the console file again, but using the custom parser. We can also set different callbacks for each file we are tracking - so we remove `per_thread_callback` from the initialization, and instead define it in each call to `tail()` and `track()`. 
 
 To add metadata to a Simvue run, we simply need to pass our dictionary of metadata to the `run.update_metadata()` method. In our case we will do this using a lambda function, where we combine the `header_data` produced by our custom parser, and `metadata` produced by the default parser, into a single dictionary and pass it to the method:
 ```py
@@ -402,5 +440,5 @@ Now, let's run our script again to see if the metadata loads correctly. Running 
 !!! docker "Run in Docker Container"
     To run this in the provided Docker container, enter this command:
     ```
-    python tutorial/step_5/moose_monitoring.py
+    python tutorial/step_6/moose_monitoring.py
     ```

@@ -32,14 +32,6 @@
       prop_values = '0.98'
     []
   []
-  [VectorPostprocessors]
-    [temps]
-      type = PointValueSampler
-      variable = 'T'
-      points = '0 0.5 0.5  1 0.5 0.5  2 0.5 0.5  3 0.5 0.5  4 0.5 0.5  5 0.5 0.5  6 0.5 0.5'
-      sort_by = 'x'
-    []
-  []
   [BCs]
     [hot]
       type = DirichletBC
@@ -59,7 +51,7 @@
   []
   [Executioner]
     type = Transient
-    end_time = 20
+    end_time = 60
     dt = 1
     solve_type = NEWTON
   []
@@ -71,9 +63,6 @@
     [console]
       type = Console
       output_file = true
-    []
-    [csv]
-      type = CSV
     []
   []
   

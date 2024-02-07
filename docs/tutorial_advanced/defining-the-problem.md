@@ -8,12 +8,12 @@ $$
 Where $\alpha$ is the thermal diffusivity of the material.
 
 ## Creating the MOOSE input file
-MOOSE uses a custom input file to define and run a simulation. While this is not a tutorial on how to use MOOSE, we will provide a brief description of how we setup the problem stated above in MOOSE. If you are completely new to MOOSE, [^^you can find tutorials on how to use MOOSE here^^](https://mooseframework.inl.gov/getting_started/examples_and_tutorials/index.html). If you are experienced at MOOSE and have your own MOOSE files which you are trying to use you may not need to read through the following steps, but pay attention to the [outputs block](#specify-outputs). See the full file we will be using in the [final step of this section](#run-the-simulation).
+MOOSE uses a custom input file to define and run a simulation. While this is not a tutorial on how to use MOOSE, we will provide a brief description of how we setup the problem stated above in MOOSE. If you are completely new to MOOSE, [^^you can find tutorials on how to use MOOSE here^^](https://mooseframework.inl.gov/getting_started/examples_and_tutorials/index.html). If you are experienced at MOOSE and have your own MOOSE files which you are trying to use you may not need to read through the following steps, but pay attention to the [^^outputs block^^](#specify-outputs). See the full file we will be using in the [^^final step of this section^^](#run-the-simulation).
 
 Create a file called `simvue_thermal.i`, and follow the following steps:
 
 ### Create the mesh
-Firstly, we need to create a mesh which will represent our sheet of metal. Say that we want to make a 3D rod which has a square cross section, and has dimensions 6m x 1m x 1m. To do this, we will use the `GeneratedMesh` to create a uniform rectangular mesh, with the following properties:
+Firstly, we need to create a mesh which will represent our sheet of metal. Say that we want to make a 3D rod which has a square cross section, and has dimensions 6m x 1m x 1m. To do this, we will use the `GeneratedMeshGenerator` to create a uniform rectangular mesh, with the following properties:
 ```
 [Mesh]
   [generated]
@@ -37,7 +37,7 @@ Next we need to define the variable which we wish to study, and the Kernels in t
   []
 []
 ```
-We can then add the Kernel which represents our time derivative $\frac{\partial T}{\partial t}$, for which we choose [the ADTimeDerivative kernel](https://mooseframework.inl.gov/source/kernels/ADTimeDerivative.html):
+We can then add the Kernel which represents our time derivative $\frac{\partial T}{\partial t}$, for which we choose [^^the ADTimeDerivative kernel^^](https://mooseframework.inl.gov/source/kernels/ADTimeDerivative.html):
 ```
 [Kernels]
   [time-derivative]
@@ -45,7 +45,7 @@ We can then add the Kernel which represents our time derivative $\frac{\partial 
     variable = T
   []
 ```
-Next, we add a kernel which can solve the diffusivity term, $\alpha \nabla^2 T$. For this we use [the ADMatDiffusion kernel](https://mooseframework.inl.gov/source/kernels/ADMatDiffusion.html), which accepts the diffusivity parameter $\alpha$ as a material property.
+Next, we add a kernel which can solve the diffusivity term, $\alpha \nabla^2 T$. For this we use [^^the ADMatDiffusion kernel^^](https://mooseframework.inl.gov/source/kernels/ADMatDiffusion.html), which accepts the diffusivity parameter $\alpha$ as a material property.
 ```
 [Kernels]
   [time-derivative]
@@ -197,8 +197,9 @@ This should be in your `simvue_thermal.i` file. Next, locate where your MOOSE ap
     app/moose_tutorial-opt -i tutorial/step_1/simvue_thermal.i --color off
     ```
 
-You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files in the `results` directory: `simvue_thermal.e` and `simvue_thermal.txt`. You can open the Exodus file in your CAD software. 
+You should see some debug being printed to the console, and the simulation should finish in a few seconds. It should produce two output files in the `results` directory: `simvue_thermal.e` and `simvue_thermal.txt`. You can open the Exodus file in your CAD software - we will use Paraview.
 !!! docker "Run in Docker Container"
+    To open the solution in Paraview:
     ```
     paraview tutorial/step_1/results/simvue_thermal.e
     ```

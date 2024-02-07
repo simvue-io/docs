@@ -50,12 +50,15 @@ with simvue.Run() as run:
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
+
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
                 run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
+                run.set_status('failed')
+                run.close()
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")
         elif "finished" in log_data.keys():

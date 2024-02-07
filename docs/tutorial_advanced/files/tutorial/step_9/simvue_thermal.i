@@ -42,10 +42,10 @@
   []
   [BCs]
     [hot]
-      type = DirichletBC
+      type = ADFunctionDirichletBC
       variable = T
       boundary = left
-      value = 1000
+      function = 50*t
     []
     [cold]
       type = DirichletBC
@@ -59,12 +59,12 @@
   []
   [Executioner]
     type = Transient
-    end_time = 20
-    dt = 1
+    end_time = 100
+    dt = 0.5
     solve_type = NEWTON
   []
   [Outputs]
-    file_base = ./tutorial/step_7/results/simvue_thermal
+    file_base = ./tutorial/step_9/results/simvue_thermal
     [exodus]
       type = Exodus
     []
