@@ -1,6 +1,7 @@
 import simvue
 import multiparser
 import multiparser.parsing.file as mp_file_parser
+import multiparser.parsing.tail as mp_tail_parser
 import time
 import shutil
 import os
@@ -94,18 +95,19 @@ with simvue.Run() as run:
             timestamp = sim_metadata['timestamp']
         )
     def per_alert(data, metadata):
-        if 'temperature_steady_state' in list(data['firing_alerts']):
+        if data['temperature_exceeds_maximum'] == 'Firing':
             run.update_tags(['temperature_exceeds_maximum',])
             run.kill_all_processes()
             run.set_status('failed')
             run.close()
-            trigger.set()       
+            trigger.set()      
+
     with multiparser.FileMonitor(
-        per_thread_callback=per_event, 
         termination_trigger=trigger, 
     ) as file_monitor:
         file_monitor.tail(
             path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal.txt"), 
+            callback=per_event,
             tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!", "Finished Executing"], 
             labels = ["time_step", "converged", "non_converged", "finished"]
         )
@@ -121,7 +123,8 @@ with simvue.Run() as run:
             static=True
         )
         file_monitor.tail(
-            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"), 
+            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"),
+            parser_func=mp_tail_parser.record_csv,
             callback = per_alert,
   )
         file_monitor.run()

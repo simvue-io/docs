@@ -78,11 +78,11 @@ with simvue.Run() as run:
         )
                 
     with multiparser.FileMonitor(
-        per_thread_callback=per_event, 
         termination_trigger=trigger, 
     ) as file_monitor:
         file_monitor.tail(
             path_glob_exprs = os.path.join(script_dir, "results", "simvue_thermal.txt"), 
+            callback=per_event,
             tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!", "Finished Executing"], 
             labels = ["time_step", "converged", "non_converged", "finished"]
         )

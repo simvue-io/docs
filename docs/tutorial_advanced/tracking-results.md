@@ -201,11 +201,11 @@ parser.add_argument(
   )
 args = parser.parse_args()
 ```
-We then want the script to create a new CSV file, which contains the time interval at which the alert was queried, and the names of any alerts which were firing at that time. Import the `csv` module at the top of the script, and then do:
+We then want the script to create a new CSV file, which contains the time interval at which the alert was queried, and the status of our alerts at that time. Import the `csv` module at the top of the script, and then do:
 ```py
 with open('MOOSE/results/alert_status.csv', 'w', newline='') as csvfile: 
     csvwriter = csv.writer(csvfile) 
-    csvwriter.writerow(['time', 'firing_alerts'])
+    csvwriter.writerow(['time', 'step_not_converged', 'temperature_exceeds_maximum'])
 ```
 We then want to create a loop which performs the check for firing alerts, appends a line to the CSV file, and then waits for the given time interval. The methods which we will need from the Client class are `get_run_id_from_name()` and `get_alerts()`, which returns a list of the names of firing alerts:
 ```py
@@ -217,7 +217,13 @@ while time_elapsed < args.max_time:
     alerts = client.get_alerts(run_id)
     with open('MOOSE/results/alert_status.csv', 'a', newline='') as csvfile: 
         csvwriter = csv.writer(csvfile) 
-        csvwriter.writerow([time_elapsed, alerts])
+        csvwriter.writerow(
+            [
+                time_elapsed, 
+                ('Firing' if 'step_not_converged' in alerts else 'Normal'), 
+                ('Firing' if 'temperature_exceeds_maximum' in alerts else 'Normal')
+            ]
+          )
     
     time.sleep(args.time_interval)
     time_elapsed += args.time_interval
@@ -246,10 +252,23 @@ with multiparser.FileMonitor() as file_monitor:
   )
   file_monitor.run()
 ```
+Typically when using `tail()`, we need to tell the method which values we want to keep track of from the file. However in our case, we would instead want each line of the CSV file to be converted to a dictionary, which we will then use to look for certain values within the callback function. In this case, we can use one of the custom parsers built into Multiparser. If we import the tail parsers, we can then select the `record_csv` function to parse the lines in the file:
+```py
+import multiparser.parsing.tail as mp_tail_parser
+...
+with multiparser.FileMonitor() as file_monitor:
+  ...
+  file_monitor.tail(
+    path_glob_exprs = "MOOSE/results/alert_status.csv", 
+    parser_func = mp_tail_parser.record_csv,
+    callback = per_alert,
+  )
+  file_monitor.run()
+```
 We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates it is in (or near) a steady temperature state, and set the status as failed:
 ```py
 def per_alert(data, metadata):
-  if 'temperature_steady_state' in list(data['firing_alerts']):
+  if data['temperature_exceeds_maximum'] == 'Firing':
     run.update_tags(['temperature_exceeds_maximum',])
     run.kill_all_processes()
     run.set_status('failed')

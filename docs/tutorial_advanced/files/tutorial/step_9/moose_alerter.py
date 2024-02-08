@@ -26,7 +26,7 @@ script_dir = os.path.dirname(__file__)
 
 with open(os.path.join(script_dir, 'results', 'alert_status.csv'), 'w', newline='') as csvfile: 
     csvwriter = csv.writer(csvfile) 
-    csvwriter.writerow(['time', 'firing_alerts'])
+    csvwriter.writerow(['time', 'step_not_converged', 'temperature_exceeds_maximum'])
 
 time_elapsed = 0
 client = simvue.Client()
@@ -36,7 +36,13 @@ while time_elapsed < args.max_time:
     alerts = client.get_alerts(run_id)
     with open(os.path.join(script_dir, 'results', 'alert_status.csv'), 'a', newline='') as csvfile: 
         csvwriter = csv.writer(csvfile) 
-        csvwriter.writerow([time_elapsed, alerts])
+        csvwriter.writerow(
+            [
+                time_elapsed, 
+                ('Firing' if 'step_not_converged' in alerts else 'Normal'), 
+                ('Firing' if 'temperature_exceeds_maximum' in alerts else 'Normal')
+            ]
+          )
     
     time.sleep(args.time_interval)
     time_elapsed += args.time_interval
