@@ -42,8 +42,11 @@ RUN rm -r tutorial
 COPY --chown=${USERNAME} docker/Makefile app/Makefile
 WORKDIR ${HOME}/moose-training-workshop/app
 RUN make clobber
+RUN cp -r ${HOME}/moose-training-workshop ${HOME}/simvue-moose
+WORKDIR ${HOME}/simvue-moose/app
+RUN rm -r ${HOME}/moose-training-workshop
 RUN make 
-WORKDIR ${HOME}/moose-training-workshop
+WORKDIR ${HOME}/simvue-moose
 
-# Copy tutorial files
+# Copy tutorial and example files
 COPY --chown=${USERNAME} files .

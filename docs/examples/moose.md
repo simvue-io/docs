@@ -40,7 +40,7 @@ docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
-dev:~/moose-training-workshop$
+dev:~/simvue-moose$
 ```
 ### Update Simvue Config File
 Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
@@ -56,7 +56,7 @@ To be able to use Simvue with a program not written in Python such as MOOSE, we 
 
 !!! further-docs "Further Documentation"
 
-    The method of tracking log and results files using Simvue which is demonstrated here is introducted in more detail in the second tutorial - [see here for a step by step guide on using Simvue with MOOSE](/tutorial_advanced/introduction)
+    The method of tracking log and results files using Simvue which is demonstrated here is introducted in more detail in the second tutorial - [^^see here for a step by step guide on using Simvue with MOOSE^^](/tutorial_advanced/introduction)
 
 Firstly we will create our MOOSE input file, which in our case uses the mesh for a coffee cup stored in the file `cup.e`, and defines the heat conduction kernels and functions to use to simulate the flow of heat through the cup. We define the boundary conditions for the system, eg the background temperature and the maximum temperature inside the mug, as well as some properties about the material such as the thermal conductivity and heat capacity. The log is sent to a file for storage, and results of the minimum, maximum and average temperature of the handle are stored in a CSV file after each time step.
 

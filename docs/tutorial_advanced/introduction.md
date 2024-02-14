@@ -43,7 +43,7 @@ docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
-dev:~/moose-training-workshop$
+dev:~/simvue-moose$$
 ```
 ### Update Simvue Config File
 Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
