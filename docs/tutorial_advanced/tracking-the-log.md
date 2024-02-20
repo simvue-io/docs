@@ -129,7 +129,7 @@ With the simulation which we have ran above, the MOOSE simulation completes afte
 
 Firstly, let's manually terminate our monitoring script from before. On Linux systems, type the command `ps -a` to see all running processes - there should be some Python processes which are caused by the monitoring script. You can kill these with `kill <id>`, where `id` is the PID of the process to stop. Do this for all relevant processes, or use `pkill -9 python` to stop all Python processes (be careful if you have other Python scripts running on your system at the time!)
 
-!!! docker "Run in Docker Container
+!!! docker "Run in Docker Container"
 
     To stop the moose monitoring script running in the background:
     ```
@@ -220,11 +220,11 @@ As an example, take your MOOSE script, and change the details in the Executioner
     ```
     app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i
     ```
-    And wait for a few minutes until the problem begins approaching a steady state. Once it fails to converge, you can see the results with:
+    And wait for a few minutes until the problem begins approaching a steady state. Once it fails to converge, you will see red `Solve Did NOT Converge!` messages in the log. You can then stop the simulation manually by pressing `Ctrl C`, and you can see the results with:
     ```
     paraview tutorial/step_4/results/simvue_thermal.e
     ```
-    And you will see that for approximately the last 20 steps, the problem has already been in a roughly steady state, with heat uniformly distributed across the bar.
+    Again, [^^set up Paraview as detailed at the bottom of the previous section^^](/tutorial_advanced/defining-the-problem#run-the-simulation). You will see that for approximately the last 20 steps, the problem has already been in a roughly steady state, with heat uniformly distributed across the bar.
 
 ### Adding an Alert
 

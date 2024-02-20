@@ -29,11 +29,15 @@ sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
 ### Pull Docker image
-Next we need to obtain the tutorial materials from Docker Hub:
+Next we need to obtain the tutorial materials from the internal UKAEA Gitlab Registry. Firstly, log into the Gitlab registry with your UKAEA credentials:
 ```
-docker pull wk9874/simvue-moose
+sudo docker login git.ccfe.ac.uk:4567
 ```
-This may take some time to download. Once complete, if you run `docker images`, you should see an image with the name `wk9874/simvue-moose` listed.
+Then we need to pull the container, which is currently stored in the Multiparser repository's registry:
+```
+sudo docker pull git.ccfe.ac.uk:4567/kzarebsk/multiparser:latest
+```
+This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `git.ccfe.ac.uk:4567/kzarebsk/multiparser` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
@@ -42,11 +46,11 @@ xhost +local:docker
 ```
 Then you can run the container:
 ```
-docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it wk9874/simvue-moose:latest
+sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it git.ccfe.ac.uk:4567/kzarebsk/multiparser
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
-dev:~/simvue-moose$$
+dev:~/simvue-moose$
 ```
 ### Update Simvue Config File
 Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
@@ -55,7 +59,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 !!! warning
-    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `support_v2_server` branch.
+    Currently this tutorial will only work on the Dev02 Simvue server as it relies on methods implemented in the `support_v2_server` branch.
 ## Option 2: Custom Setup
 ### Create a virtual environment
 

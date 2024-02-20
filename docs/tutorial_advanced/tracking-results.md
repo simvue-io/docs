@@ -275,7 +275,7 @@ def per_alert(data, metadata):
     run.close()
     trigger.set()
 ```
-If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 35 seconds inside the simulation (70 steps). This is opposed to waiting until 100 seconds (200 steps) when our simulation would normally have finished, cutting our computation time by over half.
+If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 100 steps of the simulation. This is opposed to waiting for all 200 steps to complete when our simulation would normally have finished, cutting our computation time by half.
 
 !!! docker "Run in Docker Container"
 

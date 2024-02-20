@@ -23,11 +23,15 @@ sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
 ### Pull Docker image
-Next we need to obtain the tutorial materials from Docker Hub:
+Next we need to obtain the tutorial materials from the internal UKAEA Gitlab Registry. Firstly, log into the Gitlab registry with your UKAEA credentials:
 ```
-docker pull wk9874/simvue-moose
+sudo docker login git.ccfe.ac.uk:4567
 ```
-This may take some time to download. Once complete, if you run `docker images`, you should see an image with the name `wk9874/simvue-moose` listed.
+Then we need to pull the container, which is currently stored in the Multiparser repository's registry:
+```
+sudo docker pull git.ccfe.ac.uk:4567/kzarebsk/multiparser:latest
+```
+This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `git.ccfe.ac.uk:4567/kzarebsk/multiparser` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
@@ -36,7 +40,7 @@ xhost +local:docker
 ```
 Then you can run the container:
 ```
-docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it wk9874/simvue-moose:latest
+sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it git.ccfe.ac.uk:4567/kzarebsk/multiparser
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
@@ -49,7 +53,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 !!! warning
-    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `support_v2_server` branch.
+    Currently this tutorial will only work on the Dev02 Simvue server as it relies on methods implemented in the `support_v2_server` branch.
 
 ## Using Simvue with MOOSE
 To be able to use Simvue with a program not written in Python such as MOOSE, we can instead parse log and results files produced by the simulation for useful information, and use Simvue to store and track this information. 
@@ -381,8 +385,8 @@ These simulations will take around 10 minutes to complete - look out for the mes
 ## Results
 Once our simulations have completed, you can view the results using Paraview. To do this, for example for the Ceramic mug, you can run `paraview example/results/ceramic/mug_thermal.e`. Then to view the results, do the following steps:
 
-- In the Properties panel in the left hand side, in the Variables tab, tick the box next to $temperature$. Press Apply
-- In the second bar of icons at the top of the window, click the 'vtkBlockColours' dropdown and change this to $temperature$
+- In the Properties panel in the left hand side, in the Variables tab, tick the box next to `temperature`. Press Apply
+- In the second bar of icons at the top of the window, click the 'vtkBlockColours' dropdown and change this to `temperature`
 - Next to this dropdown, find the button with an arrow and the letter 't'. Click this to rescale the data range over all timestamps
 - Press the green play button in the top bar of the window
 
