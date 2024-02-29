@@ -134,6 +134,8 @@ Save a file.
 | `category` | `Enum[code, input, output]` | Type of file | 
 | `filetype` | `str`, optional | MIME type | 
 | `preserve_path` | `Boolean`, optional | Preserve path of file |
+| `name` | `str`, optional | Name of artifact, required for saving Python objects |
+| `allow_pickle` | `Boolean`, optional | Allow use of pickle to serialize Python object |
 
 #### `save_directory()`
 
