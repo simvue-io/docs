@@ -2,13 +2,16 @@
 For the purposes of this example, we will consider a very simple problem. Let us consider a simplified heat diffusion problem, where we have a long rod of metal which is initially held at different temperatures at both ends. We will then allow the heat to diffuse from one side of the material to the other over time, and are looking for the amount of time which it takes to reach a steady state. This is governed by the heat equation:
 
 $$
-\frac{\partial T}{\partial t} = \alpha \nabla^2 T
+\frac{\partial T}{\partial t} = \alpha \nabla^2 T,
 $$
 
-Where $\alpha$ is the thermal diffusivity of the material.
+where $\alpha$ is the thermal diffusivity of the material.
 
 ## Creating the MOOSE input file
 MOOSE uses a custom input file to define and run a simulation. While this is not a tutorial on how to use MOOSE, we will provide a brief description of how we setup the problem stated above in MOOSE. If you are completely new to MOOSE, [^^you can find tutorials on how to use MOOSE here^^](https://mooseframework.inl.gov/getting_started/examples_and_tutorials/index.html). If you are experienced at MOOSE and have your own MOOSE files which you are trying to use you may not need to read through the following steps, but pay attention to the [^^outputs block^^](#specify-outputs). See the full file we will be using in the [^^final step of this section^^](#run-the-simulation).
+
+!!!docker "Run in Docker Container"
+    Note: if you are running inside the Docker container, all input files and python Files for running Simvue are provided for you within the container. You do not need to write any of these files yourself!
 
 Create a file called `simvue_thermal.i`, and follow the following steps:
 
@@ -30,14 +33,14 @@ Firstly, we need to create a mesh which will represent our sheet of metal. Say t
 ```
 
 ### Define variables and kernels
-Next we need to define the variable which we wish to study, and the Kernels in the problem. The Kernels essentially represent each of the terms in the partial differential equation which we are solving, and use solvers which are built into MOOSE. We define our variable as the temperature, $T$:
+Next we need to define the variable which we wish to study, and the kernels in the problem. The kernels essentially represent each of the terms in the partial differential equation which we are solving, and use solvers which are built into MOOSE. We define our variable as the temperature, $T$:
 ```
 [Variables]
   [T]
   []
 []
 ```
-We can then add the Kernel which represents our time derivative $\frac{\partial T}{\partial t}$, for which we choose [^^the ADTimeDerivative kernel^^](https://mooseframework.inl.gov/source/kernels/ADTimeDerivative.html):
+We can then add the kernel which represents our time derivative $\frac{\partial T}{\partial t}$, for which we choose [^^the ADTimeDerivative kernel^^](https://mooseframework.inl.gov/source/kernels/ADTimeDerivative.html):
 ```
 [Kernels]
   [time-derivative]
@@ -87,7 +90,7 @@ Next we must define our boundary conditions, which define the initial state that
 ```
 
 ### Specify Problem and Executioner
-Next we define the type of problem which we are solving, which in our case is just a standard Finite Element problem, and we can define the executioner for this MOOSE file. This tells the solver whether the problem is static or transient. If it is transient, it defines how long the simulation runs for, and in which time steps. In our case, let us define this as a transient problem for 10 seconds, with time steps every 0.1 seconds:
+Next we define the type of problem which we are solving, which in our case is just a standard Finite Element problem, and we can define the executioner for this MOOSE file. This tells the solver whether the problem is static or transient. If it is transient it defines how long the simulation runs for and in which time steps. In our case, let us define this as a transient problem for 10 seconds, with time steps every 0.1 seconds:
 ```
 [Problem]
   type = FEProblem
@@ -101,7 +104,7 @@ Next we define the type of problem which we are solving, which in our case is ju
 ```
 
 ### Specify Outputs
-Finally, we need to specify the types of outputs which we want our simulation to create. This is important, since we are going to use the Simvue Multiparser to track our simulation, which reads from any provided file to find useful Metrics and Events. Initially, lets say that we want to create an Exodus file (which can be viewed in CAD software like Paraview), and we want to direct the console output to a file:
+Finally, we need to specify the types of outputs which we want our simulation to create. This is important, since we are going to use Multiparser to track our simulation, which reads from any provided file to find useful Metrics and Events. Initially, lets say that we want to create an Exodus file (which can be viewed in CAD software like Paraview), and we want to direct the console output to a file:
 ```
 [Outputs]
   file_base = ./results/

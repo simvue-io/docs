@@ -1,8 +1,9 @@
 # Introduction
-Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focusses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems. However while focussed on MOOSE, the techniques covered are applicable to any software which produces output files which you want to keep track of. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use Simvue to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial_basic/introduction).
 
 !!! warning
     This tutorial can currently only be used by internal UKAEA clients.
+    
+Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focuses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems. However while focussed on MOOSE, the techniques covered are applicable to any software which produces output files which you want to keep track of. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use Simvue to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial_basic/introduction).
 
 By the end of this tutorial, you will be able to:
 

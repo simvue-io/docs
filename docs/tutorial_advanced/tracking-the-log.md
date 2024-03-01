@@ -27,7 +27,7 @@ For each time step, MOOSE is attempting to minimise the error function as far as
 The console log contains a lot of information, including the values of the error function in every iteration, which makes it quite difficult for the user to read at a glance. Lets say that we wanted to add a trimmed down version of this log to the Events log of a Simvue run, so that we can monitor it effectively.
 
 ### Initializing the Simvue Run
-To do this, we will need to install the modules `simvue` and `multiparser`, either with a virtual environment manager such as Poetry, or by doing `pip install <module name>`. We then create a python file called `moose_monitoring.py`, and import those modules:
+To do this, ensure that you have both the `simvue` and `multiparser` modules installed. We then create a python file called `moose_monitoring.py`, and import those modules:
 ```py
 import simvue
 import multiparser
@@ -50,10 +50,10 @@ with simvue.Run() as run:
     folder='/moose'
     )
 ```
-In the case above, we have specified a name for the run (with a timestamp), and that the run should be placed in a folder called `/moose` so that we can group all of our runs together. We also remove any existing results from previous runs, so that logs and results from previous runs aren't automatically added to new ones.
+In the case above, we have specified a name for the run (with a timestamp), and that the run should be placed in a folder called `/moose` so that we can group all of our runs together. We also remove any existing results from previous simulations, so that logs and results from previous simulations aren't automatically added to new Simvue runs.
 
 ### Initializing the File Monitor
-Next, we can create our File Monitor object, which is the class which will track our output file for us. For now we won't pass in any arguments to the file monitor, as we will add these later. 
+Next we can create our `FileMonitor` object, which is the class which will track our output file for us. For now we won't pass in any arguments to the file monitor, as we will add these later. 
 ```py
 with multiparser.FileMonitor() as file_monitor:
   pass
@@ -71,9 +71,9 @@ For our console output file, new lines are being constantly appended to the file
 - `tracked_values`: This is a list of values to look out for in the tracked file. These can be provided as literal strings, or regular expressions. When one of these values is seen in the file, a callback to a user defined function is triggered (in our case to add an event to Simvue, which we will see later).
 - `labels`: Labels to assign to each of the tracked values. If one of the tracked values above is found in the file, the callback function will be passed a dictionary of key value pairs, where the key is the label given here, and the value is the value from the file which is matching the tracked value.
 
-If we [^^take a look at the console output^^](#tracking-the-console-log-with-simvue), we can see that most of the log is taken up by values of the error function at each step, which makes the log difficult to read and which aren't particularly informative for the user. The more useful information contained within the log is which step the simulation is on, and whether that step did or did not converge. So we can set the FileMonitor to look out for these phrases: 
+If we [^^take a look at the console output^^](#tracking-the-console-log-with-simvue), we can see that most of the log is taken up by values of the error function at each step, which aren't particularly informative for the user and make the log difficult to read. The more useful information contained within the log is which step the simulation is on, and whether that step did or did not converge. So we can set the FileMonitor to look out for these phrases: 
 
-- For the time step, we can use a simple regular expression which matches the phrase 'Time Step' and then the rest of the characters on that line as follows: `r"Time Step (.*)"`. We must compile this expression using `re.compile()` before passing to Multiparser. 
+- For the time step, we can use a simple regular expression which matches the phrase 'Time Step' and then the rest of the characters on that line as follows: `r"Time Step.*"`. We must compile this expression using `re.compile()` before passing to Multiparser. 
 - For whether the solve converged at that step, we can look out for the literal phrases `" Solve Converged!"` and `" Solve Did NOT Converge!"` (note the space at the front). 
 
 So we pass these in as the `tracked_values`, along with some appropriate labels. We then run the `file_monitor`, so that when this Python script is executed it begins tracking our file:
@@ -81,7 +81,7 @@ So we pass these in as the `tracked_values`, along with some appropriate labels.
 with multiparser.FileMonitor() as file_monitor:
   file_monitor.tail(
     path_glob_exprs = "MOOSE/results/simvue_thermal.txt", 
-    tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!"], 
+    tracked_values = [re.compile(r"Time Step.*"), " Solve Converged!", " Solve Did NOT Converge!"], 
     labels = ["time_step", "converged", "non_converged"]
   )
   file_monitor.run()
@@ -89,7 +89,9 @@ with multiparser.FileMonitor() as file_monitor:
 
 ### Adding a Callback Function
 
-This code will now recognise when it sees one of our tracked phrases in the MOOSE log, and can trigger a callback function when this happens. We next need to define what we want that callback function to do. In our case, we simply want it to add the seen phrase to the Simvue Events log, which we can do using the `run.log_event()` method. Above where we have instantiated the File Monitor, create a new function called `per_event`, which accepts the dictionary of data which will be returned from the file monitor, along with a dictionary of metadata from the file:
+This code will now recognise when it sees one of our tracked phrases in the MOOSE log, and can trigger a callback function when this happens. We next need to define what we want that callback function to do. In our case, we simply want it to add the seen phrase to the Simvue Events log, which we can do using the `run.log_event()` method. 
+
+Above where we have instantiated the File Monitor, create a new function called `per_event`. This accepts the dictionary of data which will be returned from the file monitor, along with a dictionary of metadata from the file:
 ```py
 def per_event(log_data, metadata):
   if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
@@ -107,7 +109,14 @@ with multiparser.FileMonitor(
 ```
 
 ### Testing our Events Log
-Now we can test whether our code is working! We can start our file monitoring script by running `python MOOSE/moose_monitoring.py &` to run it in the background, and we can run our MOOSE simulation by running `/path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off`.
+Now we can test whether our code is working! We can start our file monitoring script by running:
+```
+python MOOSE/moose_monitoring.py &
+```
+This will run our monitoring script in the background. We can then run our MOOSE simulation:
+```
+/path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off`
+```
 
 !!! docker "Run in Docker Container"
     If running this tutorial inside the Docker Container, you can run the following commands:
@@ -154,7 +163,7 @@ To do this, we will look out for the phrase 'Finished Executing' in our MOOSE lo
     ) as file_monitor:
       file_monitor.tail(
         path_glob_exprs = "MOOSE/results/simvue_thermal.txt", 
-        tracked_values = [re.compile(r"Time Step (.*)"), " Solve Converged!", " Solve Did NOT Converge!", "Finished Executing"], 
+        tracked_values = [re.compile(r"Time Step.*"), " Solve Converged!", " Solve Did NOT Converge!", "Finished Executing"], 
         labels = ["time_step", "converged", "non_converged", "finished"]
       )
       file_monitor.run()
@@ -211,9 +220,9 @@ If we now run our monitoring script and our MOOSE simulation, they should behave
 
 
 ## Adding Alerts
-With the MOOSE script which we ran above, all of the steps converged to a result successfully. However if we allowed the simulation to continue for a longer time, then as the system reached a steady state where the temperature gradient was uniform across the bar, the steps would begin to fail to converge. When this happens, MOOSE will incrementally decrease the time delta which is used betrween steps, to attempt to find a converging solution. It will continue to do this until it either finds a converging solution, or the time delta is below some minimum specified within MOOSE. This process can continue for a very long time, and even if it does eventually find a time delta with a converging solution, the simulation is not giving us any further useful information (since the system is pretty much in a steady state already). So instead of waiting for MOOSE to do this process, we may want to trigger an alert as soon as there is a non converged step, and stop execution of the MOOSE simulation.
+With the MOOSE script which we ran above, all of the steps converged to a result successfully. However if we allowed the simulation to continue for a longer time, then as the system reached a steady state where the temperature gradient was uniform across the bar, the steps would begin to fail to converge. When this happens, MOOSE will decrement the time delta which is used between steps, to attempt to find a converging solution. It will continue to do this until it either finds a converging solution, or the time delta is below some specified minimum. This process can continue for a very long time, and even if it does eventually find a time delta with a converging solution, we will not obtain any further useful information since the system is already very close to a steady state. So instead of waiting for MOOSE to do this process, we can trigger an alert as soon as there is a non-converged step, and use it to stop execution of the MOOSE simulation.
 
-As an example, take your MOOSE script, and change the details in the Executioner block to have `end_time = 60`. If you were to run the simulation now, you would see that you get non convergence at around step 50. Waiting for the simulation to fully complete will take around 6 minutes on a standard office laptop, but most of this time was taken up by the code reducing the time step and retrying.
+As an example, take your MOOSE script, and change the details in the Executioner block to have `end_time = 60`. If you were to run the simulation now, you would see that you get non-convergence at around step 50. Waiting for the simulation to fully complete will take around 6 minutes on a standard office laptop, but most of this time is taken up by the code reducing the time step and retrying.
 
 !!! docker "Run in Docker Container"
     If you would like to see what the MOOSE script does when failing to converge, you can run:
@@ -247,7 +256,7 @@ with simvue.Run() as run:
 
     For more information on how to create Alerts with Simvue, [^^information on how to define Alerts can be found here^^](/tracking-monitoring/alerts/), and [^^detailed examples of Alerts can be viewed in the first tutorial.^^](/tutorial_basic/tracking-and-monitoring/#alerts)
 
-Now that this alert is set up, it will send us an alert if a step has failed to converge, and so can act as a trigger for a user to manually come back and check how the simulation is doing. They can then determine if it is worth continuing with the simulation, or whether the job should be terminated to save computational time and cost. If we run our monitoring script, and then run our MOOSE script with `end_time = 60`, we should see a new run appear in the Simvue UI. After around 2 minutes, the Alerts tab should show that a step has failed to converge:
+Now that this alert is set up it will notify the user if a step has failed to converge, prompting them to come back and check how the simulation is doing. They can then determine if it is worth continuing with the simulation, or whether the job should be terminated to save computational time and cost. If we run our monitoring script, and then run our MOOSE script with `end_time = 60`, we should see a new run appear in the Simvue UI. After around 2 minutes, the Alerts tab should show that a step has failed to converge:
 <figure markdown>
   ![An alert showing that one of the steps has failed to converge](images/moose_step_not_converged_alert.png){ width="1000" }
 </figure>
@@ -266,15 +275,15 @@ You should also receive an email, since you set that as your notification policy
 However when this alert fires, it will still require manual intervention to stop the MOOSE simulation, and then also stop the background processes which are caused by the monitoring script.
 
 !!! docker "Run in Docker Container"
-    To stop execution of the MOOSE script after the alert has fired, press `Ctrl+C` on the command line and you should stop seeing any logs being printed to the console. Remember the monitoring script will still be running in the background, so also do:
+    To stop execution of the MOOSE script after the alert has fired, press <kbd>ctrl</kbd> + <kbd>C</kbd> on the command line and you should stop seeing any logs being printed to the console. Remember the monitoring script will still be running in the background, so also do:
     ```
     pkill -9 python
     ```
     
 ### Creating Simvue Processes
-When we reach this steady state, it would be good if Simvue could automatically abort the MOOSE simulation without any human intervention. To allow this to happen, we must define our MOOSE simulation as a Process in Simvue. This means that Simvue is able to automatically kick off the execution of this script, and can terminate it if things go wrong.
+We can extend this further to allow Simvue to automatically abort the MOOSE simulation without any human intervention. To allow this to happen, we must define our MOOSE simulation as a Process in Simvue. This means that Simvue is able to automatically execute the script, and can terminate it if things go wrong.
 
-To do this, we use the method `add_process()` on our run. This method can essentially be used to convert any command which you would run in the terminal to a process which Simvue runs automatically. It can take certain default arguments, such as:
+To do this, we use the method `add_process()` on our run. This method can essentially be used to convert any terminal command to a process which Simvue executes automatically. It can take certain default arguments, such as:
 
 - `identifier`: String used to identify this process
 - `executable`: The executable to run for this process. This can either be the absolute or relative path to an executable on your system, or the shorthand command for an executable (such as `bash` or `python`).
@@ -284,7 +293,7 @@ To do this, we use the method `add_process()` on our run. This method can essent
 It can also accept any number of keyword arguments, which it will simply pass in as arguments to the command when it is executed. In our case, the command which we would run on the command line is something like:
 
 ```
-$: /path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off
+/path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off
 ```
 
 To convert this to a process, we give it an identifier like `'thermal_diffusion_simulation'`, and we assign the `executable` to be the path to our MOOSE application. We can then pass in the other two command line arguments as kwargs, like so:
@@ -296,7 +305,7 @@ run.add_process(
     color='off',
     )
 ```
-Add this line to your script, after the run is initialised. Now when we run our script, the MOOSE simulation should automatically begin without us having to run any commands on the command line!  To check the simulation is correctly running, open the Simvue UI and check that there is an active run, and check that the Events log is being updated live. Note that you will no longer see the MOOSE output being printed to the console, but log files should have been created in your working directory which contains all of `stdout` and `stderr` messages generated by the process.
+Add this line to your script, after the run is initialised. Now when we run our script, the MOOSE simulation should automatically begin without us having to run any commands on the command line!  To verify the simulation is correctly running, open the Simvue UI and check that there is an active run, containing an Events log which is being updated live. Note that you will no longer see the MOOSE output being printed to the console, but log files should have been created in your working directory which contains all of `stdout` and `stderr` messages generated by the process.
 
 ### Terminating Processes
 As well as running processes automatically, we can also stop Simvue processes from running at any point, using the `kill_all_processes()` method. In our case, we want to stop the MOOSE simulation from proceeding if it has reached a non converging step. In our `per_event()` callback function, we can add a check for whether the message being added to the log is for a non converging step, and if so kill the process:
@@ -308,7 +317,7 @@ def per_event(log_data, metadata):
         run.kill_all_processes()
 ``` 
 
-In this situation we could also upload the Exodus file as an output artifact for storage on the Simvue server. To do this, we use the `save()` method of the run class, passing in the path to the file. We may also want to set the status of the run to be 'failed':
+In this situation we could also upload the Exodus file (`simvue_thermal.e`) as an output artifact for storage on the Simvue server. To do this, we use the `save()` method of the run class, passing in the path to the file. We could also set the status of the run to be 'failed':
 ```py
 def per_event(log_data, metadata):
     ...
@@ -364,15 +373,15 @@ Lets say that we want to add information about the Framework which MOOSE is runn
 
 Firstly, we need to consider whether we would want to use the `tail()` or `track()` method. Since the MOOSE log file is initialized by printing all of this configuration information at once, we can just read it from the file at once, and so will use `track()`. 
 
-We then want to build our own custom parser function on top of the file parser built into Multiparser. We can import the existing parser, and use it as a decorator to our custom function:
+We then want to build our own custom parser in the format required by Multiparser. To do this, we make use of the file parser decorator:
 ```py
 import multiparser.parsing.file as mp_file_parser
 
 @mp_file_parser.file_parser
 def moose_header_parser(input_file, **_):
-  return
+  ...
 ```
-This means that all of the metadata which is produced by the Multiparser by default, such as the filename and timestamp, are also returned by our custom parser. Our custom parser then takes an input file path, and an unknown number of other arguments. We then need to open and read the information from the file as a list of lines, filter out any blank lines which may exist, and then slice the list so that only the framework information which we want to consider is included:
+This ensures metadata collected by Multiparser, such as the filename and timestamp, are also available. Our custom parser then takes an input file path, and allows an arbitrary number of other keyword arguments. We then need to open and read the information from the file as a list of lines, filter out any blank lines which may exist, and then slice the list so that only the framework information which we want to consider is included:
 ```py
 @mp_file_parser.file_parser
 def moose_header_parser(input_file, **_):
@@ -381,7 +390,7 @@ def moose_header_parser(input_file, **_):
     file_lines = list(filter(None, file_lines))
     header_lines = file_lines[1:7]
 ```
-We then need to take these lines, which will look something like `PETSc Version:           3.16.6`, and convert them to a dictionary of key:value pairs. To do this, we will simply split the string at the first colon, so that anything to the left of the colon is the key, and anything to the right of the colon is the value. We can then do some formatting to the key to make it more Pythonic, and strip the value of any whitespace:
+We then need to take the lines from the header and convert them to a dictionary of key-value pairs. To do this, we will simply split the string at the first colon, so that anything to the left of the colon is the key, and anything to the right of the colon is the value. We can then do some formatting to the key to make it more Pythonic, and strip the value of any whitespace:
 ```py
     ...
     header_data = {}
@@ -391,7 +400,7 @@ We then need to take these lines, which will look something like `PETSc Version:
         value = value.strip()
         header_data[key] = value
 ```
-Finally, we must return a pair of arguments: the first argument is a dictionary of metadata, and the second argument is the dictionary of data which the parser has found in the file. In our case, we return an empty dictionary for the metadata which allows the default parser to add its metadata, and return our `header_data` dictionary as the parsed data:
+Finally we must return a pair of arguments: the first argument is a dictionary of metadata, and the second argument is the dictionary of data which the parser has found in the file. In our case, we return an empty dictionary for the metadata (which is later combined with the metadata collected by the decorator), and return our `header_data` dictionary as the parsed data:
 ```py
     @mp_file_parser.file_parser
     def moose_header_parser(input_file, **_):
@@ -410,9 +419,9 @@ Finally, we must return a pair of arguments: the first argument is a dictionary 
 ```
 
 ### Obtaining Metadata
-Where we instantiate our `file_monitor` object, we can tell the file monitor to track the console file again, but using the custom parser. We can also set different callbacks for each file we are tracking - so we remove `per_thread_callback` from the initialization, and instead define it in each call to `tail()` and `track()`. 
+Where we instantiate our `file_monitor` object, we can tell it to track the console file again, but now using the custom parser. We can also set different callbacks for each tracked file - so we remove `per_thread_callback` from the initialization, and instead define it in each call to `tail()` and `track()`. 
 
-To add metadata to a Simvue run, we simply need to pass our dictionary of metadata to the `run.update_metadata()` method. In our case we will do this using a lambda function, where we combine the `header_data` produced by our custom parser, and `metadata` produced by the default parser, into a single dictionary and pass it to the method:
+To add metadata to a Simvue run, we need to pass a dictionary of data to the `run.update_metadata()` method. In our case we will do this using a lambda function, where we combine the `header_data` produced by our custom parser, and `metadata` produced by the default parser, into a single dictionary and pass it to the method:
 ```py
 with multiparser.FileMonitor() as file_monitor:
   file_monitor.tail(

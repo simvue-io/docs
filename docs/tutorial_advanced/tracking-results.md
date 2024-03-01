@@ -132,7 +132,7 @@ We can also now plot all of these metrics on the same graph to compare them - on
 ## Adding Alerts
 Now that we have metrics which are monitoring the temperatures of certain points along the bar, we can set up alerts which automatically stop the simulation if certain conditions have been breached. for example, let's say that instead of the rod being a fixed temperature at both ends, the temperature of both ends begins at zero, but one end has a temperature which increases linearly with time as the simulation progresses.
 
-Now imagine that we have a system where we cannot allow the temperature at the centre of the bar to exceed 600 degrees, as if it does the material will become too weak and the bar will begin to collapse in the middle. For this system, we can add an alert based on the metric for the temperature at the centre of the bar, `x=3`. 
+Now imagine that we have a system where we cannot allow the temperature at the centre of the bar to exceed 600 degrees, this being the point where the material will become too weak and the bar will begin to collapse in the middle. For this system, we can add an alert based on the metric for the temperature at the centre of the bar, `x=3`. 
 
 Firstly, lets update our MOOSE input file so that we have a few more data points to play with. In the executioner block, change the time step to be `0.5` and the end time to be `100`:
 ```
@@ -176,7 +176,7 @@ If we run our script, we should see now see in the run UI that the temperatures 
 
 ## Monitoring Alerts using the Client
 
-The above alert will trigger when the temperature at the centre of the bar has been above the given value for more than 1 minute. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To monitor the status of this alert, we will use the `Client` class from the Simvue client. This class allows you to retrieve a number of different aspects of ongoing or past runs, including metrics, events, artifacts and alerts.
+The above alert will trigger when the temperature at the centre of the bar has been above the given value for more than 1 minute. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To monitor the status of this alert, we will use the `Client` class from Simvue. This class allows you to retrieve a number of different aspects of ongoing or past runs, including metrics, events, artifacts and alerts.
 
 To be able to regularly monitor the status of our alert as the run proceeds, we will create a new Python script. This script will then create a CSV file which contains the status of the alert at regular time intervals, which can be monitored using Multiparser. Create a new file called `moose_alerter.py`, and use the `argparse` Python module to create a script which accepts the name of the run to monitor, the time interval between checks of the alert status, and the maximum time which the script will run for:
 
@@ -265,7 +265,7 @@ with multiparser.FileMonitor() as file_monitor:
   )
   file_monitor.run()
 ```
-We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates it is in (or near) a steady temperature state, and set the status as failed:
+We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates that the centre of the bar has exceeded the maximum temperature, and set the status as failed:
 ```py
 def per_alert(data, metadata):
   if data['temperature_exceeds_maximum'] == 'Firing':
