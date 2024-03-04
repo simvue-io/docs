@@ -66,6 +66,15 @@ These can be combined with specification of a `category`. For example, to downlo
 client.get_artifacts_as_files(run_name, category='input', startswith='system/')
 ```
 
+## Data Lineage and Dependencies
+Simvue keeps track of how the artifacts stored within different runs are linked together, so that the lineage and dependencies of different artifacts and runs can be tracked. This is done automatically by using the checksum of artifacts stored by different runs. 
+
+For example, say we have a script which is attempting to find the square root of a number. This script starts with an array of evenly spaced `guesses`, which it then squares and subtracts the target number from to calculate the error. The guess which has the minimum error is recorded as the `closest`, and the `guesses` and `closest` are then stored as outputs of the run. A new run is then started, using the outputs of the previous run to choose a smaller range of `guesses` (with the range defined by the guess values from the previous run which were on either side of the closest guess), and it continually repeats this process until an accurate answer is reached. If we look at the data lineage for the result from the third run, we can see how the other runs' artifacts fed into the result:
+![A graphical representation of the data lineage for the square root estimate after the third run. Shows how the results from the previous two runs feed into the inputs for this run.](images/output-lineage.png)
+
+You can also view the dependencies of any of your artifacts, including the code which was used to run the simulation (if stored as an artifact). In the case where we have a large number of different runs which all use the same code, where each run produces a number of different output artifacts, we can easily visualise how these are all linked together. Hovering over any of these bubbles will show us the name of the run or artifact.
+![A graphical representation of the dependencies of a piece of code used during a number of different runs, showing how each run, and its assoiated output artifacts, depend on the code.](images/code-dependencies.png)
+
 ## Simple example
 
 Here is a simple example where we download all output artifacts from `run1` and use them as input into `run2`.
