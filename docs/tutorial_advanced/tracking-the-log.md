@@ -202,7 +202,6 @@ def per_event(log_data, metadata):
   elif "finished" in log_data.keys():
     time.sleep(1) # To allow other processes to complete
     run.update_tags(["completed",])
-    run.close()
     trigger.set()
 ```
 
@@ -340,7 +339,6 @@ def per_event(log_data, metadata):
         run.kill_all_processes()
         run.save("MOOSE/results/simvue_thermal.e", "output")
         run.set_status('failed')
-        run.close()
         trigger.set()
         print("Simulation Terminated due to Non Convergence!")
 ```

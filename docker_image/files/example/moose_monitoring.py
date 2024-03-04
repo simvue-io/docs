@@ -43,7 +43,6 @@ def per_event(log_data, metadata, run, results_path):
             run.update_tags(["not_converged"])
             run.save(os.path.join(results_path, "mug_thermal.e"), "output")
             run.set_status('failed')
-            run.close()
             trigger.set()
             print("Simulation Terminated due to Non Convergence!")
     
@@ -52,7 +51,6 @@ def per_event(log_data, metadata, run, results_path):
         time.sleep(1) # To allow other processes to complete
         run.update_tags(["handle_ok"])
         run.save(os.path.join(results_path, "mug_thermal.e"), "output")
-        run.close()
         trigger.set()
 
 def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
@@ -73,7 +71,6 @@ def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
         run.save(os.path.join(results_path, "mug_thermal.e"), "output")
         run.kill_all_processes()
         run.set_status('failed')
-        run.close()
         trigger.set()  
 
 
@@ -130,7 +127,8 @@ def monitor_moose_simulation(run_name, moose_file, results_dir):
 
         # Start an instance of the file monitor, to keep track of log and results files from MOOSE
         with multiparser.FileMonitor(
-            termination_trigger=trigger, 
+            termination_trigger=trigger,
+            
         ) as file_monitor:
             # Monitor each line added to the MOOSE log file as the simulation proceeds and look out for certain phrases to upload to Simvue
             file_monitor.tail(

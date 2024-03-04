@@ -230,7 +230,6 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 run.update_tags(["not_converged"])
                 run.save(os.path.join(results_path, "mug_thermal.e"), "output")
                 run.set_status('failed')
-                run.close()
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")
         
@@ -239,7 +238,6 @@ We then want to create our Python script which runs the MOOSE simulations for ea
             time.sleep(1) # To allow other processes to complete
             run.update_tags(["handle_ok"])
             run.save(os.path.join(results_path, "mug_thermal.e"), "output")
-            run.close()
             trigger.set()
 
     def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
@@ -260,7 +258,6 @@ We then want to create our Python script which runs the MOOSE simulations for ea
             run.save(os.path.join(results_path, "mug_thermal.e"), "output")
             run.kill_all_processes()
             run.set_status('failed')
-            run.close()
             trigger.set()  
 
 

@@ -28,7 +28,6 @@ with simvue.Run() as run:
         elif "finished" in log_data.keys():
             time.sleep(1) # To allow other processes to complete
             run.update_tags(["completed",])
-            run.close()
             trigger.set()
     
     with multiparser.FileMonitor(

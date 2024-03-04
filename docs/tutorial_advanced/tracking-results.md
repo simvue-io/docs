@@ -272,7 +272,6 @@ def per_alert(data, metadata):
     run.update_tags(['temperature_exceeds_maximum',])
     run.kill_all_processes()
     run.set_status('failed')
-    run.close()
     trigger.set()
 ```
 If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 100 steps of the simulation. This is opposed to waiting for all 200 steps to complete when our simulation would normally have finished, cutting our computation time by half.
