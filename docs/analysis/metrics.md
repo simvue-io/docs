@@ -151,6 +151,6 @@ giving the following plot:
 
     - [^^The get_metrics_multiple() method^^](/reference/client#get_metrics_multiple)
 
-    - [^^Example of how to get and plot Metrics in the Tutorial^^](/tutorial/analysis/#retrieving-metrics)
+    - [^^Example of how to get and plot Metrics in the Tutorial^^](/tutorial_basic/analysis/#retrieving-metrics)
 
     - [^^Documentation for plotting with Matplotlib^^](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)

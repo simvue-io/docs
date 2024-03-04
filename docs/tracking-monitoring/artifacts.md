@@ -110,4 +110,4 @@ will save the files `file1` and `file2` in addition to the directory `directory1
 
     - [^^The save_all() method^^](/reference/run/#save_all)
     
-    - [^^Example of saving artifacts in the Tutorial^^](/tutorial/tracking-and-monitoring/#artifacts)
+    - [^^Example of saving artifacts in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#artifacts)

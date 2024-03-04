@@ -80,4 +80,4 @@ Continue on to the [^^Tracking & Monitoring section^^](/tracking-monitoring/gett
 in more detail.
 
 You can also see a step by step example of how to expand this script to use more of Simvue's functionality in the
-[^^Tutorial^^](/tutorial/introduction/) section.
+[^^Tutorial^^](/tutorial_basic/introduction/) section.

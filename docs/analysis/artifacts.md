@@ -94,4 +94,4 @@ Instead they will automatically be registered as being associated with `run2` bu
 
     - [^^The get_artifacts_as_files() method^^](/reference/client#get_artifacts_as_files)
 
-    - [^^Example of retrieving artifacts in the Tutorial^^](/tutorial/analysis/#retrieving-artifacts)
+    - [^^Example of retrieving artifacts in the Tutorial^^](/tutorial_basic/analysis/#retrieving-artifacts)

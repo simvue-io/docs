@@ -119,6 +119,6 @@ run = Run(mode='disabled')
 
     - [^^The update_metadata() method^^](/reference/run/#update_metadata)
     
-    - [^^Example of initializing a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#initialising-the-run)
+    - [^^Example of initializing a run in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#initialising-the-run)
 
-    - [^^Example of adding metadata and tags in the Tutorial^^](/tutorial/tracking-and-monitoring/#metadata-and-tags)
+    - [^^Example of adding metadata and tags in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#metadata-and-tags)

@@ -978,4 +978,4 @@ if __name__ == "__main__":
         run.update_tags(['random-numbers', 'v1', 'completed'])
 ```
 
-After running your full script, you can now move on to the [^^Analysis^^](/tutorial/analysis) section of the tutorial to learn about how we can retrieve data from a run and use it to perform some data analysis.
+After running your full script, you can now move on to the [^^Analysis^^](/tutorial_basic/analysis) section of the tutorial to learn about how we can retrieve data from a run and use it to perform some data analysis.

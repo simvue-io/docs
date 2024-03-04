@@ -33,4 +33,4 @@ graph LR
 
     - [^^The set_folder_details() method^^](/reference/run/#set_folder_details)
     
-    - [^^Example of adding details to folders in the Tutorial^^](/tutorial/tracking-and-monitoring/#add-information-for-folders)
+    - [^^Example of adding details to folders in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#add-information-for-folders)
