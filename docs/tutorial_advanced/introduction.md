@@ -30,15 +30,11 @@ sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
 ### Pull Docker image
-Next we need to obtain the tutorial materials from the internal UKAEA Gitlab Registry. Firstly, log into the Gitlab registry with your UKAEA credentials:
+Next we need to pull the container, which is stored in the Simvue repository's registry:
 ```
-sudo docker login git.ccfe.ac.uk:4567
+sudo docker pull ghcr.io/simvue-io/moose_example:latest
 ```
-Then we need to pull the container, which is currently stored in the Multiparser repository's registry:
-```
-sudo docker pull git.ccfe.ac.uk:4567/kzarebsk/multiparser:latest
-```
-This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `git.ccfe.ac.uk:4567/kzarebsk/multiparser` listed.
+This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/moose_example` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
@@ -47,7 +43,7 @@ xhost +local:docker
 ```
 Then you can run the container:
 ```
-sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it git.ccfe.ac.uk:4567/kzarebsk/multiparser
+sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/moose_example:latest
 ```
 If this is running correctly, you should see your command prompt change to something like:
 ```
@@ -74,8 +70,8 @@ source ./venv/bin/activate
 
 Install the Python client:
 ```
-pip install git+https://github.com/simvue-io/client.git@support_v2_server
-pip install git+https://git.ccfe.ac.uk/kzarebsk/multiparser.git@main
+pip install git+https://github.com/simvue-io/client.git@dev
+pip install ukaea-multiparser
 ```
 
 ### Configuring Simvue

@@ -6,8 +6,6 @@ FROM lhumph/moose-training-workshop
 
 # Specify the user for the container
 ARG USERNAME=dev
-ARG GIT_ACCESS_TOKEN_NAME
-ARG GIT_ACCESS_TOKEN
 USER ${USERNAME}
 
 RUN sudo apt-get update && \
@@ -24,9 +22,9 @@ COPY --chown=${USERNAME} docker/bashrc ${HOME}/.bashrc
 RUN CC=gcc-10 CXX=g++-10 /home/dev/.pyenv/bin/pyenv install 3.10.13
 RUN /home/dev/.pyenv/bin/pyenv global 3.10.13
 
-# Add Simvue (support_v2_server for now), Multiparser (from Gitlab for now)
-RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install git+https://github.com/simvue-io/client.git@support_v2_server#egg=simvue[plot,dataset]
-RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install git+https://${GIT_ACCESS_TOKEN_NAME}:${GIT_ACCESS_TOKEN}@git.ccfe.ac.uk/kzarebsk/multiparser.git
+# Add Simvue (dev for now), Multiparse
+RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install git+https://github.com/simvue-io/client.git@dev#egg=simvue[plot,dataset]
+RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install ukaea-multiparser
 
 # Some generic settings for building the image
 ENV HOME=/home/${USERNAME}
