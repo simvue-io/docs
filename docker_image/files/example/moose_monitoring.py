@@ -113,7 +113,7 @@ def monitor_moose_simulation(run_name, moose_file, results_dir):
             source='metrics',
             metric='handle_temp_avg',
             rule='is above',
-            threshold=323,
+            threshold=320,
             frequency=1,
             window=1,
             ) 

@@ -7,8 +7,6 @@ This example demonstrates how you can use Simvue to track MOOSE simulations. In 
 - Abort simulation runs based on firing alerts
 - Save Artifacts
 
-## Setup
-
 ## Specifying the Problem
 In our example, we will imagine that we are a coffee cup manufacturer, looking to design a new cup which we want to put onto the market. While we have decided on the shape and thickness of the mug, we aren't sure whether to make the mug out of Copper, Steel or Ceramic. The main factor which will influence our decision is how hot the handle of the mug gets - if it gets too hot, the customer won't be able to pick it up!
 
@@ -49,7 +47,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 !!! warning
-    Currently this tutorial will only work on the Dev02 Simvue server as it relies on methods implemented in the `support_v2_server` branch.
+    Currently this example will only work on the Dev02 Simvue server as it relies on methods implemented in the `dev` branch.
 
 ## Using Simvue with MOOSE
 To be able to use Simvue with a program not written in Python such as MOOSE, we can instead parse log and results files produced by the simulation for useful information, and use Simvue to store and track this information. 
@@ -296,7 +294,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 source='metrics',
                 metric='handle_temp_avg',
                 rule='is above',
-                threshold=323,
+                threshold=320,
                 frequency=1,
                 window=1,
                 ) 
@@ -373,7 +371,7 @@ To run the simulations in the Docker container, run the following command:
 ```
 python example/moose_monitoring.py
 ```
-These simulations will take around 10 minutes to complete - look out for the message `All simulations complete!` printed to the command line to indicate when it is complete.
+These simulations will take around 20 minutes to complete - look out for the message `All simulations complete!` printed to the command line to indicate when it is complete.
 
 ## Results
 Once our simulations have completed, you can view the results using Paraview. To do this, for example for the Ceramic mug, you can run `paraview example/results/ceramic/mug_thermal.e`. Then to view the results, do the following steps:

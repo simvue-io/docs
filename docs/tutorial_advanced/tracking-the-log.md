@@ -349,7 +349,7 @@ Now if we run our script again, we should see that after a few minutes of runnin
     ```
     python tutorial/step_5/moose_monitoring.py
     ```
-    Note that you should not expect to see the MOOSE log being printed to the console anymore, as this is now stored in a file instead.
+    Note that you should not expect to see the MOOSE log being printed to the console anymore, as this is now stored in a file instead. However you can of course still see the excerpts from the log which we are uploading to Simvue by viewing the Events tab in the run UI.
 
     After a few minutes, you will also see that the MOOSE simulation and monitoring script correctly terminate after the first non convergence.
 

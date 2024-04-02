@@ -1,8 +1,4 @@
-# Introduction
-
-!!! warning
-    This tutorial can currently only be used by internal UKAEA clients.
-    
+# Introduction  
 Welcome to the second tutorial on how to use Simvue, which uses the techniques covered in the first tutorial, as well as some more advanced functionality. This tutorial focuses on an example simulation using MOOSE (Multiphysics Object-Oriented Simulation Environment), which is an open-source, parallel finite element framework for solving various Physics problems. However while focussed on MOOSE, the techniques covered are applicable to any software which produces output files which you want to keep track of. In this tutorial we will define a simple problem, briefly discuss how to set up the MOOSE input file to solve this problem, and use Simvue to track the progress of the simulation. If you have not done so yet, we recommend that you [^^work through the first tutorial before attempting this one^^](/tutorial_basic/introduction).
 
 By the end of this tutorial, you will be able to:
@@ -56,7 +52,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 !!! warning
-    Currently this tutorial will only work on the Dev02 Simvue server as it relies on methods implemented in the `support_v2_server` branch.
+    Currently this tutorial will only work on the Dev02 Simvue server as it relies on methods implemented in the `dev` branch.
 ## Option 2: Custom Setup
 ### Create a virtual environment
 
@@ -87,7 +83,7 @@ token = eyJ0eXAi...
 ```
 
 !!! warning
-    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `support_v2_server` branch.
+    Currently this tutorial will only work on the Dev02 server as it relies on methods implemented in the `dev` branch.
 ### Install MOOSE
 Next you will need to setup MOOSE on your computer. [^^See the installation instructions here^^](https://mooseframework.inl.gov/getting_started/installation/index.html), using the link corresponding to your operating system. 
 
