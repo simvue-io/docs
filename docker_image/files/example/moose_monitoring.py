@@ -35,7 +35,10 @@ def per_event(log_data, metadata, run, results_path):
 
     # Look for relevant keys in the dictionary of data which we are passed in, and log the event with Simvue
     if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
-        run.log_event(list(log_data.values())[0])
+        try:
+            run.log_event(list(log_data.values())[0])
+        except RuntimeError as e:
+            print(e)
 
         # If run has failed to converge, save outputs, close the run as Failed, terminate multiparser
         if "non_converged" in log_data.keys():
@@ -56,8 +59,14 @@ def per_event(log_data, metadata, run, results_path):
 def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
     """Monitor each line in the results CSV file, and add data from it to Simvue Metrics."""
 
-    # Log all results for this timestep as Metrics
     metric_time = csv_data.pop('time')
+
+    # If the time is zero (initial reading), then set the temperature of all mug components to room temp (293.15)
+    # MOOSE correctly uses this within the simulation, but for some reason still writes temperatures of 0K as the initial point in the CSV
+    if metric_time == 0:
+        csv_data = {key: 293.15 for key in csv_data.keys()}
+
+    # Log all results for this timestep as Metrics
     run.log_metrics(
         csv_data,
         time = metric_time,
@@ -113,7 +122,7 @@ def monitor_moose_simulation(run_name, moose_file, results_dir):
             source='metrics',
             metric='handle_temp_avg',
             rule='is above',
-            threshold=320,
+            threshold=323.15,
             frequency=1,
             window=1,
             ) 
@@ -143,7 +152,7 @@ def monitor_moose_simulation(run_name, moose_file, results_dir):
                 path_glob_exprs = os.path.join(results_dir, "mug_thermal.txt"), 
                 callback = lambda header_data, metadata: run.update_metadata({**header_data, **metadata}), 
                 parser_func = moose_header_parser, 
-                static = True
+                static = True,
             )
 
             # Monitor each line added to the MOOSE results file as the simulation proceeds, and upload results to Simvue
@@ -154,7 +163,7 @@ def monitor_moose_simulation(run_name, moose_file, results_dir):
             )
             file_monitor.run()
 
-
+        
 script_dir = os.path.dirname(__file__)
 
 # Our three sets of inputs, to run simulations for Copper, Steel and Ceramic mugs

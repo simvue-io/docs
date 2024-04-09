@@ -153,7 +153,7 @@ Firstly we will create our MOOSE input file, which in our case uses the mesh for
     nl_abs_tol = 1e-9
     nl_rel_tol = 1e-8
     l_tol = 1e-6
-    start_time = 0.0
+    start_time = 0
     dt = 5
     end_time = 200
     []
@@ -216,7 +216,10 @@ We then want to create our Python script which runs the MOOSE simulations for ea
 
         # Look for relevant keys in the dictionary of data which we are passed in, and log the event with Simvue
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
-            run.log_event(list(log_data.values())[0])
+            try:
+                run.log_event(list(log_data.values())[0])
+            except RuntimeError as e:
+                print(e)
 
             # If run has failed to converge, save outputs, close the run as Failed, terminate multiparser
             if "non_converged" in log_data.keys():
@@ -237,8 +240,14 @@ We then want to create our Python script which runs the MOOSE simulations for ea
     def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
         """Monitor each line in the results CSV file, and add data from it to Simvue Metrics."""
 
-        # Log all results for this timestep as Metrics
         metric_time = csv_data.pop('time')
+
+        # If the time is zero (initial reading), then set the temperature of all mug components to room temp (293.15)
+        # MOOSE correctly uses this within the simulation, but for some reason still writes temperatures of 0K as the initial point in the CSV
+        if metric_time == 0:
+            csv_data = {key: 293.15 for key in csv_data.keys()}
+
+        # Log all results for this timestep as Metrics
         run.log_metrics(
             csv_data,
             time = metric_time,
@@ -294,7 +303,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 source='metrics',
                 metric='handle_temp_avg',
                 rule='is above',
-                threshold=320,
+                threshold=323.15,
                 frequency=1,
                 window=1,
                 ) 
@@ -391,11 +400,11 @@ If you log into the Simvue UI and look in the Runs tab, you should see that thre
   ![The Simvue run UI showing three runs, corresponding to the Copper, Steel and Ceramic mugs.](images/moose_runs.png){ width="1000" }
 </figure>
 
-if we click on this run for the Ceramic mug, we can go through each of the tabs at the top to check that all of the information from the run has been stored as expected. For example:
+if we click on the run for the Ceramic mug, we can go through each of the tabs at the top to check that all of the information from the run has been stored as expected. For example:
 
 - Description says 'A simulation to model the transfer of heat through a coffee cup filled with hot liquid.'
 - Metadata contains the information we parsed from the MOOSE header, such as the MOOSE version, libmesh version etc
-- Artifacts contains the MOOSE file in the Inputs folder, and the `mug_thermal.e` exodus file for viewing in Paraview
+- Artifacts contains the MOOSE file in the Inputs folder, and the `mug_thermal.e` exodus file for viewing in Paraview in the Outputs folder
 - Metrics contains three graphs, for the maximum, minimum and average temperatures of the handle
 - Events contains each step which was performed, and whether the step converged successfully
 - Alerts contains the alerts we defined for the temperature of the handle and for non converging errors, and the alerts are all normal

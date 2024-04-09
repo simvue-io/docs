@@ -89,7 +89,7 @@
     nl_abs_tol = 1e-9
     nl_rel_tol = 1e-8
     l_tol = 1e-6
-    start_time = 0.0
+    start_time = 0
     dt = 5
     end_time = 200
   []
