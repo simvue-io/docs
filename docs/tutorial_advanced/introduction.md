@@ -25,6 +25,10 @@ You will need to install the Docker CLI tool to be able to use the Docker contai
 sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
+
+!!! tip
+    If you wish to run this on a Windows computer (without using Docker Desktop) via Windows Subsystem for Linux, [^^follow this guide on setting up Docker with WSL.^^](https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9)
+
 ### Pull Docker image
 Next we need to pull the container, which is stored in the Simvue repository's registry:
 ```
@@ -45,6 +49,16 @@ If this is running correctly, you should see your command prompt change to somet
 ```
 dev:~/simvue-moose$
 ```
+To test that the graphics packages are working correctly, run the command `paraview` within the container. After a few seconds, this should open up a graphical user interface window for the Paraview visualization tool.
+
+!!! tip
+    If you are using WSL and you do not see Paraview open correctly, it may be because your WSL is not set up correctly. To check this, exit the docker container by pressing <kbd>ctrl</kbd> + <kbd>D</kbd>, and then run the following commands:
+    ```
+    sudo apt-get install -y x11-apps
+    xeyes
+    ```
+    This should open a small graphical display window, with a pair of eyes which follow your mouse around the screen. If you do not see this, [^^follow this guide to get graphical apps working on WSL^^](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps), and [^^look through these debugging tips for WSL^^](https://github.com/microsoft/wslg/wiki/Diagnosing-%22cannot-open-display%22-type-issues-with-WSLg).
+
 ### Update Simvue Config File
 Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
 
