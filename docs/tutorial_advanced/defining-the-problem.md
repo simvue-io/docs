@@ -209,10 +209,11 @@ You should see some debug being printed to the console, and the simulation shoul
 
 Once Paraview is opened, follow these steps to see the heat diffuse across the bar:
 
-- In the Properties panel in the left hand side, in the Variables tab, tick the box next to $T$. Press Apply
-- In the second bar of icons at the top of the window, click the 'vtkBlockColours' dropdown and change this to $T$
-- Next to this dropdown, find the button with an arrow and the letter 't'. Click this to rescale the data range over all timestamps
-- Press the green play button in the top bar of the window
+1. In the Properties panel in the left hand side, in the Variables tab, tick the box next to $T$. 
+2. Press Apply.
+3. In the second bar of icons at the top of the window, click the 'vtkBlockColours' dropdown and change this to $T$
+4. Next to this dropdown, find the button with an arrow and the letter 't'. Click this to rescale the data range over all timestamps
+5. Press the green play button in the top bar of the window
 
 You should see something like this:
 <figure markdown>
