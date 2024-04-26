@@ -50,6 +50,7 @@ nav:
     - Tensorflow: examples/basic-tensorflow.md
     - OpenFOAM: examples/openfoam.md
     - MOOSE: examples/moose.md
+    - Tensorflow 2: examples/tensorflow-tuner.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
