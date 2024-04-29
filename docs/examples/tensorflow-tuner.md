@@ -30,7 +30,7 @@ We can then create a basic Sequential model, made up of a `Flatten` layer and tw
 model = keras.Sequential()
 
 model.add(keras.layers.Flatten(input_shape=(28, 28)))
-model.add(keras.layers.Dense(32 activation='relu'))
+model.add(keras.layers.Dense(32, activation='relu'))
 model.add(keras.layers.Dense(10))
 
 model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.01),
@@ -43,7 +43,7 @@ Next, we need to train the model. To do this, we call the `fit()` method on the 
 model.fit(
     img_train,
     label_train,
-    epochs=5,
+    epochs=10,
     validation_split=0.2
 )
 ```
@@ -110,7 +110,7 @@ And add this instance to a list of callbacks provided to the `fit()` and `evalua
 model.fit(
     img_train,
     label_train,
-    epochs=5,
+    epochs=10,
     validation_split=0.2,
     callbacks=[tensorvue,]
 )
@@ -190,7 +190,7 @@ tensorvue = sv_tf.TensorVue(
 model.fit(
     img_train,
     label_train,
-    epochs=5,
+    epochs=10,
     validation_split=0.2,
     # Specify the model callback, BEFORE the tensorvue callback in the list:
     callbacks=[model_checkpoint_callback, tensorvue,]
@@ -252,3 +252,96 @@ And when we now run our script, once training is complete we should see that our
 <figure markdown>
   ![An image of the predictions for the first 25 images, uploaded to Simvue.](images/tf_model_predictions_uploaded.png){ width="1000" }
 </figure>
+
+## Optimising the Model
+To optimise our machine learning model, we may want to tweak the hyperparameters which we set earlier to obtain a more accurate model. If we look back at our model creation, we just guessed the correct values for the units of our Dense layers, and the learning rate of our model compilation. To improve this, we would want to try lots of different values of these parameters in some logical way, and keep track of the results so that we know which values were best. Simvue comes with a built in optimisation framework to help with this, which can use the Keras Tuner top optimise hyperparameters.
+
+To use this, we firstly must define the variables which we want to optimise over. We can provide this as a dictionary like so:
+```py
+tuning_variables = {
+    "first_dense_units": (32, 512, 32),
+    "learning_rate": [1e-2, 1e-3, 1e-4]
+}
+```
+
+This has defined the possible values of each variable as follows:
+
+- The units of the first dense layer will be between 32 and 512, and the Tuner will search in steps of size 32
+- The learning rate will be set to either 1e-2, 1e-3 or 1e-4 (since it is provided as a list of possible arguments, not a tuple as above)
+
+We then define a function to build our model, which accepts a dictionary of variable values to use for each optimisation trial:
+```py
+def model_builder(parameters):
+    model = keras.Sequential()
+
+    model.add(keras.layers.Flatten(input_shape=(28, 28)))
+    model.add(keras.layers.Dense(parameters["first_dense_units"], activation='relu'))
+    model.add(keras.layers.Dense(10))
+
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=parameters["learning_rate"]),
+                loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                metrics=['accuracy'])
+    
+    return model
+```
+We then choose the type of tuner which we want to use ([^^see here for details on the five tuner classes available^^](https://keras.io/api/keras_tuner/tuners/), we will use Gridsearch), and initialize our Simvue Tuner class as so:
+
+```py
+import adapters.tuner_workspace_like as sv_tuner
+import keras_tuner
+
+simvue_tuner = sv_tuner.SimvueTuner(
+    name="recognising_clothes_optimising",
+    variables=tuning_variables,
+    simulation_method=model_builder,
+    tuner=keras_tuner.BayesianOptimization,
+    # Pass in any variables which you would typically instantiate the GridSearch class with here
+    tuner_params={
+        "directory": "testing_tuning",
+    },
+    # Determine which variable you want the tuner to base its evaluations on
+    evaluation_observable="val_accuracy",
+    # And define how many trials you want the tuner to execute (available for GridSearch, RandomSearch and BayesianOptimization)
+    max_trials=10,
+    # Pass in your sets of training and testing images
+    training_images=img_train,
+    training_labels=label_train,
+    testing_images=img_test,
+    testing_labels=label_test,
+    # And then pass in the arguments which we passed into the fit() method before
+    epochs=10,
+    validation_split=0.2,
+    # You can also pass in any arguments which you passed into the TensorVue class above, such as:
+    run_folder="/recognising_clothes_v3",
+    run_description="Runs to keep track of the optimisation of a Tensorflow model for recognising pieces of clothing.",
+    run_tags=["tensorflow", "mnist_fashion"],
+    alert_definitions={
+        "accuracy_below_seventy_percent": {
+            "source": "metrics",
+            "rule": "is below",
+            "metric": "accuracy",
+            "frequency": 1,
+            "window": 1,
+            "threshold": 0.7,
+        }
+    },
+    simulation_alerts=["accuracy_below_seventy_percent"],
+    epoch_alerts=["accuracy_below_seventy_percent"],
+)
+
+# Then create the model by running .launch() on the class above:
+optimised_model = simvue_tuner.launch()
+```
+
+Upon running this, we will see that the tuner will start using a bayesian optimization technique to find the optimal values of our hyperparameters, retrain the model at the end with the full training dataset and validate it with the test dataset, and return this optimal model. Looking at the Simvue UI, we can see that there is now another type of run - the 'manifest' run. This keeps track of the final results from each individual trial with the different hyperparameters. Looking at this run, we can see that it has kept track of a number of important things, such as:
+
+- Metadata detailing the optimization algorithm used and information about the hyperparameters being tuned
+- An events log which details the major steps in the optimization process, the values being tested in each trial, and the results after each trial
+- Metrics showing the accuracy and loss after each trial, so that you can quickly see how the algorithm is performing
+- The final, optimised model stored as an artifact
+
+<figure markdown>
+  ![Image showing output from the Manifest run.](images/tf_simvue_manifest.png){ width="1000" }
+</figure>
+
+This functionality allows you to easily optimise your Tensorflow models, keep track of how the optimisation is progressing, define alerts so that you can be made aware of situations where the optimisation is failing to sufficiently improve the model and terminate runs early, and build your optimised model into wider workflows which can all also be tracked using Simvue!
