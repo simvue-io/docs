@@ -18,7 +18,7 @@ Here we demonstrate using OpenFOAM with Simvue. In this example we will assume O
 ## Setup
 Copy one of the tutorials into an appropriate directory, e.g.
 ```
-cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone .
+cp -r /opt/openfoam10/tutorial_basics/incompressible/pimpleFoam/laminar/movingCone .
 cd movingCone
 ```
 

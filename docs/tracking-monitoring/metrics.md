@@ -84,4 +84,4 @@ calling the `init` method.
 
     - [^^The log_metrics() method^^](/reference/run/#log_metrics)
     
-    - [^^Example of logging metrics in the Tutorial^^](/tutorial/tracking-and-monitoring/#creating-metrics)
+    - [^^Example of logging metrics in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#creating-metrics)

@@ -21,4 +21,4 @@ run.init()
 
     - [^^The config() method^^](/reference/run/#config)
     
-    - [^^Example of configuring a run in the Tutorial^^](/tutorial/tracking-and-monitoring/#configuring-the-run)
+    - [^^Example of configuring a run in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#configuring-the-run)
