@@ -102,7 +102,7 @@ if __name__ in "__main__":
                 parser_func=mp_tail_parse.record_csv,
                 parser_kwargs={"header_pattern": "Time"}
             )
-            run.add_alert(
+            run.create_alert(
                 name="thermocouple_temperature_below_threshold",
                 metric="THCP*",
                 source="metrics",
@@ -111,7 +111,7 @@ if __name__ in "__main__":
                 threshold=500
             )
 
-            run.add_alert(
+            run.create_alert(
                 name="visibility_near_eye_level_threshold",
                 metric="VIS*",
                 source="metrics",
@@ -120,7 +120,7 @@ if __name__ in "__main__":
                 threshold=10
             )
 
-            run.add_alert(
+            run.create_alert(
                 name="fractional_effective_dose_threshold",
                 metric="FED*",
                 source="metrics",
