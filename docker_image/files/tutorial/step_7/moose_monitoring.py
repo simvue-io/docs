@@ -50,6 +50,15 @@ with simvue.Run() as run:
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
+    run.add_alert(
+        name='temperature_exceeds_maximum',
+        source='metrics',
+        metric='temp_at_x.3',
+        rule='is above',
+        threshold=600,
+        frequency=1,
+        window=1,
+        )
 
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):

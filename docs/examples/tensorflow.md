@@ -96,7 +96,7 @@ This is great, but has the following issues:
 These can all be addressed by using Simvue!
 
 ## Adding Basic Simvue Integration
-To add Simvue integration to this model, we will use the `TensorVue` callback class. If you are not familiar with Tensorflow Callbacks, you can [^^view the Callbacks documentation here.^^](https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback). In the simplest example, all we need to do to add Simvue functionality is import the TensorVue class:
+To add Simvue integration to this model, we will use the `TensorVue` callback class. If you are not familiar with Tensorflow Callbacks, you can [^^view the Callbacks documentation here^^](https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback). In the simplest example, all we need to do to add Simvue functionality is import the TensorVue class:
 ```py
 from integrations.tensorflow import TensorVue
 ```
@@ -158,10 +158,11 @@ model_checkpoint_callback = ModelCheckpoint(
 
 tensorvue = sv_tf.TensorVue(
     # Can define additional info, like the folder, description, and tags for the runs
-    "recognising_clothes_detailed",
-    "/recognising_clothes_v2",
-    "A run to keep track of the training and validation of a Tensorflow model for recognising pieces of clothing.",
-    ["tensorflow", "mnist_fashion"],
+    run_name="recognising_clothes_detailed",
+    run_folder="/recognising_clothes_v2",
+    run_description="A run to keep track of the training and validation of a Tensorflow model for recognising pieces of clothing.",
+    run_tags=["tensorflow", "mnist_fashion"],
+
     # Can define alerts:
     alert_definitions={
         "accuracy_below_seventy_percent": {
@@ -173,16 +174,20 @@ tensorvue = sv_tf.TensorVue(
             "threshold": 0.7,
         }
     },
+
     # And different alerts can be applied to the Simulation, Epoch or Validation runs
     simulation_alerts=["accuracy_below_seventy_percent"],
     epoch_alerts=["accuracy_below_seventy_percent"],
     start_alerts_from_epoch=3,
+
     # Saves the checkpoint model after each epoch
     model_checkpoint_filepath=checkpoint_filepath,
+
     # Will stop training early if the accuracy of the model exceeds 95%
     evaluation_condition=">",
     evaluation_parameter="accuracy",
     evaluation_target=0.95,
+    
     # Choose where the final model is saved
     model_final_filepath="tf_fashion_model.keras"
 )
