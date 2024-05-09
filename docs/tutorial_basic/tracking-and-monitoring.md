@@ -647,7 +647,7 @@ Alerts are a feature of Simvue which allows the program to monitor the progress 
 Alerts can be triggered based on the values of metrics being monitored by Simvue. As an example, say that we want to trigger an alert if the mean is outside a range of values for a given period of time. Let's say that if the mean value is not between the values of 4 and 6 for more than two minutes, we want to trigger an alert. To do this, we will need to define an alert after the run is initialised, but before the iterations begin. We could add the following code:
 
 ``` py
-run.add_alert(
+run.create_alert(
     name='mean_outside_acceptable_range',
     source='metrics',
     frequency=1,
@@ -664,7 +664,7 @@ This will evaluate the value of the `averages.mean` metric once per minute. If i
 ### Alerts based on Events
 Alerts can also be triggered based on logged events. These alerts will scan the event log for a given string, and if this string is spotted it will raise the alert. For example, say we want to trigger an alert if we get a division by zero error during the calculation of our `mean / (median - mode)` statistic which we created earlier. To do this, we will add an alert which looks for the string `"Division by Zero Error"` as follows:
 ``` py
-run.add_alert(name='zero_division_error',
+run.create_alert(name='zero_division_error',
               source='events',
               frequency=1,
               pattern='Division by Zero Error',
@@ -713,7 +713,7 @@ if __name__ == "__main__":
                        description='Stores all runs which monitor the function to create random integers between 0 and 10.')
 
         # Add an alert to monitor the value of the mean
-        run.add_alert(
+        run.create_alert(
             name='mean_outside_acceptable_range',
             source='metrics',
             frequency=1,
@@ -725,7 +725,7 @@ if __name__ == "__main__":
         )
 
         # And another alert to check the log for division by zero errors
-        run.add_alert(
+        run.create_alert(
             name='zero_division_error',
             source='events',
             frequency=1,
@@ -880,7 +880,7 @@ if __name__ == "__main__":
                        description='Stores all runs which monitor the function to create random integers between 0 and 10.')
 
         # Add an alert to monitor the value of the mean
-        run.add_alert(
+        run.create_alert(
             name='mean_outside_acceptable_range',
             source='metrics',
             frequency=1,
@@ -892,7 +892,7 @@ if __name__ == "__main__":
         )
 
         # And another alert to check the log for division by zero errors
-        run.add_alert(
+        run.create_alert(
             name='zero_division_error',
             source='events',
             frequency=1,

@@ -1,6 +1,6 @@
 # Alerts
 
-The `add_alert` method can be used to associate an alert with the current run. If the alert definition does not exist it will
+The `create_alert` method can be used to associate an alert with the current run. If the alert definition does not exist it will
 be created. The arguments are:
 
  * `name`: name of the alert
@@ -40,7 +40,7 @@ Here are some examples, illustrating each type of alert.
 
 For example, to create a threshold alert:
 ``` py
-run.add_alert(name='quality too low',
+run.create_alert(name='quality too low',
               source='metrics',
               rule='is below',
               metric='quality',
@@ -54,7 +54,7 @@ In this case if the 1-minute average of the `quality` metric, calculated at 1-mi
 
 Similarly, here is an example of a range-based alert:
 ``` py
-run.add_alert(name='density invalid',
+run.create_alert(name='density invalid',
               source='metrics',
               rule='is outside range',
               metric='density',
@@ -71,7 +71,7 @@ Here we set `notification` to `email`, so that an email will be sent to the user
 
 Finally, in this example we trigger an alert if the string `error` appears in an event message and send an email when this first happens:
 ``` py
-run.add_alert(name='error detector',
+run.create_alert(name='error detector',
               source='events',
               frequency=1,
               pattern='error',
@@ -79,7 +79,7 @@ run.add_alert(name='error detector',
 ```
 ??? further-docs "Further Documentation"
 
-    - [^^The add_alert() method^^](/reference/run/#add_alert)
+    - [^^The create_alert() method^^](/reference/run/#create_alert)
 
     - [^^Example of creating a range based alert in the Tutorial^^](/tutorial_basic/tracking-and-monitoring/#alerts-based-on-metrics)
     

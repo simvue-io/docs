@@ -305,14 +305,14 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 )
             
             # Add alerts which we want to keep track of, so that we can terminate the simulation early if they fire
-            run.add_alert(
+            run.create_alert(
                 name='step_not_converged',
                 source='events',
                 frequency=1,
                 pattern=' Solve Did NOT Converge!',
                 notification='email'
                 )
-            run.add_alert(
+            run.create_alert(
                 name='handle_too_hot',
                 source='metrics',
                 metric='handle_temp_avg',

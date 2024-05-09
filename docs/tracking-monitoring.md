@@ -178,7 +178,7 @@ logger.addHandler(SimvueHandler(run))
 
 ### Alerts
 
-The `add_alert` method can be used to associate an alert with the current run. If the alert definition does not exist it will
+The `create_alert` method can be used to associate an alert with the current run. If the alert definition does not exist it will
 be created. The arguments are:
 
  * `name`: name of the alert
@@ -199,7 +199,7 @@ and for `is outside range` and `is inside range`:
 
 For example, to create a threshold alert:
 ```
-run.add_alert(name='quality too low',
+run.create_alert(name='quality too low',
               type='is below',
               metric='quality',
               frequency=1,
@@ -210,7 +210,7 @@ In this case if the 1-minute average of the `quality` metric, calculated at 1-mi
 
 Similarly, here is an example of a range-based alert:
 ```
-run.add_alert(name='density invalid',
+run.create_alert(name='density invalid',
               type='is outside range',
               metric='density',
               frequency=1,
