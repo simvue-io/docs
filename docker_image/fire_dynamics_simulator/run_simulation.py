@@ -5,11 +5,8 @@ import re
 import os
 import logging
 import uuid
-import argparse
 import multiprocessing
-import subprocess
-import signal
-import time
+import click
 
 from multiparser import FileMonitor
 import multiparser.parsing.tail as mp_tail_parse
@@ -40,41 +37,42 @@ def custom_parser(file_data: str, **_) -> typing.Tuple[typing.Dict[str, typing.A
     return {}, _out_data
 
 
-if __name__ in "__main__":
+@click.command
+@click.argument("input_file", type=click.Path(exists=True))
+@click.option("--offline", is_flag=True, help="Run Simvue in offline mode", default=False)
+def run_fds(input_file: str, offline: bool) -> None:
+    if (not os.environ.get("SIMVUE_URL") or not os.environ.get("SIMVUE_TOKEN")) and not os.path.exists("simvue.ini"):
+        click.secho("No Simvue credentials provided", fg="red", bold=True)
+        raise click.Abort
     logging.getLogger().setLevel(logging.DEBUG)
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input_file")
-    parser.add_argument("tracking_dir")
-    parser.add_argument("--execute", help="Execute a process in parallel", default=None)
-    parser.add_argument("--offline", action="store_true", help="Run offline", )
-    args = parser.parse_args()
 
     _trigger = multiprocessing.Event()
 
     with Run() as run:
         def debug_callback(data, meta, run_instance: Run=run):
-            if args.offline:
-                print(f"Recorded: {data}\n{meta}")
+            if offline:
+                click.secho(f"Recorded: {data}\n{meta}", bold=True)
                 return
 
             run_instance.log_metrics(data, timestamp=meta["timestamp"])
+
         def meta_update(data, meta, run_instance: Run=run):
-            print(f"Received '{meta}'\n\n'{data}'")
-            if args.offline:
+            click.secho(f"Received '{meta}'\n\n'{data}'", bold=True)
+            if offline:
                 return
             run_instance.update_metadata(metadata={k: v for k, v in data.items() if v})
-        def testing_callback(data, meta):
-            print(f"Received '{meta}'\n\n'{data}'")
+
         _id = str(uuid.uuid4()).split("-")[0]
-        run.init(f"fire_safety_real_{_id}",)
+        run.init(
+            f"fire_safety_real_{_id}",
+        )
 
         run.add_process(
             "simulation",
             executable="fds_unlim",
             ulimit="unlimited",
-            input_file=f"{args.input_file}",
+            input_file=input_file,
             completion_callback=lambda *_, **__: _trigger.set(),
-            print_stdout=True,
             env=os.environ | {"PATH": f"{os.environ['PATH']}:{os.getcwd()}"}
         )
                 
@@ -88,17 +86,17 @@ if __name__ in "__main__":
             termination_trigger=_trigger
         ) as monitor:
             monitor.track(
-                path_glob_exprs=args.input_file,
+                path_glob_exprs=input_file,
                 callback=meta_update,
                 file_type="fortran",
                 static=True
             )
             monitor.tail(
-                path_glob_exprs=os.path.join(args.tracking_dir, "*.out"),
+                path_glob_exprs=["*.out"],
                 parser_func=custom_parser
             )
             monitor.tail(
-                path_glob_exprs=os.path.join(args.tracking_dir, "*_devc.csv"),
+                path_glob_exprs=["*_devc.csv"],
                 parser_func=mp_tail_parse.record_csv,
                 parser_kwargs={"header_pattern": "Time"}
             )
@@ -130,3 +128,6 @@ if __name__ in "__main__":
             )
             monitor.run()
 
+
+if __name__ in "__main__":
+    run_fds()

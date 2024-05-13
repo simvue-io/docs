@@ -15,16 +15,16 @@ Alerts are registered based on values present in the `*devc.csv` files:
 
 ## Running a Simulation
 
-To run a simulation you will firstly need to make sure you have cloned the repository:
+To run a simulation you will firstly need to make sure you have cloned this repository:
 
 ```sh
-git clone https://github.com/simvue-io/fire-risk-use-case.git
+git clone https://github.com/simvue-io/docs.git
 ```
 
 It is recommended to build the contained Docker image, from the root of this repository run:
 
 ```sh
-docker build --tag simvue_fds -f images/multiparse/multiparser.Dockerfile .
+docker build --tag simvue_fds -f docker_image/fire_dynamics_simulator/Dockerfile docker_image/fire_dynamics_simulator/
 ```
 
 once built, ensure you have a Simvue `simvue.ini` configuration file and launch the simulation:
@@ -32,8 +32,8 @@ once built, ensure you have a Simvue `simvue.ini` configuration file and launch 
 ```sh
 docker run --net=host \
 --name fire_sim_demo_run \
--v $PWD/images/multiparse/data/test-16.fds:/workdir/simulation_input.fds \
--v $PWD/simvue.ini:/workdir/simvue.ini \
+-v <fds-input-file>:/workdir/input.fds \
+-v <simvue-config>:/workdir/simvue.ini \
 --rm simvue_fds
 ```
 
