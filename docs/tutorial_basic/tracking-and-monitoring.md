@@ -386,7 +386,7 @@ Running this script should now show at least one entry in the Events log, corres
 
 ## Artifacts
 ### Saving Files
-Files can be saved as artifacts and viewed in the UI by using the `save` method. Any files can be saved - for example, we could save our whole script. Firstly import the `os` module, and then add the following line at any point after the run is initialised:
+Files can be saved as artifacts and viewed in the UI by using the `save_file` method. Any files can be saved - for example, we could save our whole script. Firstly import the `os` module, and then add the following line at any point after the run is initialised:
 ``` py
 run.save_file(os.path.abspath(__file__), 'code')
 ```

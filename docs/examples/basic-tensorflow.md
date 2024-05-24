@@ -54,7 +54,7 @@ run.init(metadata={'dataset.num_classes': num_classes,
 ```
 The Python code itself is saved:
 ``` py
-run.save('dynamic_rnn.py', 'code')
+run.save_file('dynamic_rnn.py', 'code')
 ```
 During the part of the code which carries out the training we log metrics:
 ``` py
