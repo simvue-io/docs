@@ -43,14 +43,14 @@ with simvue.Run() as run:
         i="tutorial/step_8/simvue_thermal.i",
         color="off",
         )
-    run.add_alert(
+    run.create_alert(
         name='step_not_converged',
         source='events',
         frequency=1,
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
-    run.add_alert(
+    run.create_alert(
         name='temperature_exceeds_maximum',
         source='metrics',
         metric='temp_at_x.3',
