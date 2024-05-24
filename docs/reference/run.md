@@ -122,7 +122,7 @@ Log an event.
 | `message` | `str` | Text message |
 | `timestamp` | `YYYY-MM-DD hh:mm:ss.zzzzzz`, optional | Timestamp, with up to microsecond precision |
 
-#### `save()`
+#### `save_file()`
 
 Save a file.
 
@@ -130,10 +130,22 @@ Save a file.
 
 | Name  | Type | Description |
 | ----- | ---- | ----------- |
-| `filename` | `str` | Filename |
+| `file_path` | `str` | Filename |
 | `category` | `Enum[code, input, output]` | Type of file | 
 | `filetype` | `str`, optional | MIME type | 
 | `preserve_path` | `Boolean`, optional | Preserve path of file |
+| `name` | `str`, optional | Name of artifact, required for saving Python objects |
+
+#### `save_object()`
+
+Save a Python object.
+
+**Parameters**
+
+| Name  | Type | Description |
+| ----- | ---- | ----------- |
+| `obj` | `Any` | Object to save |
+| `category` | `Enum[code, input, output]` | Type of file | 
 | `name` | `str`, optional | Name of artifact, required for saving Python objects |
 | `allow_pickle` | `Boolean`, optional | Allow use of pickle to serialize Python object |
 

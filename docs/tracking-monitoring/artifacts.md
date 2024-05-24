@@ -9,7 +9,7 @@ saved without being dumped to a file first.
 
 ### Files
 
-Individual files can be saved using the `save` method. One of three categories needs to be specified:
+Individual files can be saved using the `save_file` method. One of three categories needs to be specified:
 
  * `code`: software;
  * `input`: input files;
@@ -17,23 +17,23 @@ Individual files can be saved using the `save` method. One of three categories n
 
 For example:
 ``` py
-run.save('data.png', 'output')
+run.save_file('data.png', 'output')
 ```
 
 An optional `filetype` argument can be used to specify the MIME type of the file. By default the MIME type is determined
 autoatically. For example:
 ``` py
-run.save('in.lj', 'input', 'text/plain')
+run.save_file('in.lj', 'input', 'text/plain')
 ```
 
 By default the name of the artifact will only be the name of the actual file specified, even if an absolute or relative path is specified.
-If the optional argument `preserve_path=True` is added to `save` then paths will be preserved in the names. This can be useful
+If the optional argument `preserve_path=True` is added to `save_file` then paths will be preserved in the names. This can be useful
 in situations where the files are naturally grouped together and you want to preserve this information, e.g. `group1/file1` and
 `group2/file1`.
 
 ### Python objects
 
-The `save` method can also be used to save Python objects, including:
+The `save_object` method can be used to save Python objects, including:
 
 * NumPy arrays,
 * PyTorch tensors and state_dicts,
@@ -47,7 +47,7 @@ to create and save a NumPy array:
 ...
 import numpy as np
 array = np.array([1, 2, 3, 4, 5])
-run.save(array, 'input', name='array')
+run.save_object(array, 'input', name='array')
 ...
 ```
 
@@ -55,7 +55,7 @@ In addition, any Python object which can be pickled can also be saved. This requ
 For example:
 ```
 dictionary = {'key': 'value'}
-run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
+run.save_object(dictionary, 'input', name='dictionary', allow_pickle=True)
 ```
 
 !!! warning
@@ -64,7 +64,7 @@ run.save(dictionary, 'input', name='dictionary', allow_pickle=True)
 
 ### Directories
 
-Multiple files in a directory can be saved using the `save_directory` method which has the same arguments as `save` but
+Multiple files in a directory can be saved using the `save_directory` method which has the same arguments as `save_file` but
 instead of specifying a single filename the name of a directory is specified. A MIME type can be specified but all files
 in the directory will be set to the same MIME type.
 
@@ -104,7 +104,7 @@ will save the files `file1` and `file2` in addition to the directory `directory1
 
 ??? further-docs "Further Documentation"
 
-    - [^^The save() method^^](/reference/run/#save)
+    - [^^The save_file() method^^](/reference/run/#save_file)
 
     - [^^The save_directory() method^^](/reference/run/#save_directory)
 

@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     with Run() as run:
         run.init()
-        run.save(plt.gcf(), 'output', name='plot')
+        run.save_object(plt.gcf(), 'output', name='plot')
 ```
 Note that we have provided a name for the artifact using the `name` argument, which is essential when creating artifacts directly from Python objects. This name
 is completely arbitrary and up to the user.
