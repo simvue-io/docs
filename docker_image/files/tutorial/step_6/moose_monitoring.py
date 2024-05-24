@@ -43,7 +43,7 @@ with simvue.Run() as run:
         i="tutorial/step_6/simvue_thermal.i",
         color="off",
         )
-    run.add_alert(
+    run.create_alert(
         name='step_not_converged',
         source='events',
         frequency=1,
@@ -55,7 +55,7 @@ with simvue.Run() as run:
             run.log_event(list(log_data.values())[0])
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
-                run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
+                run.save_file(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
                 run.set_status('failed')
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")

@@ -43,21 +43,12 @@ with simvue.Run() as run:
         i="tutorial/step_7/simvue_thermal.i",
         color="off",
         )
-    run.add_alert(
+    run.create_alert(
         name='step_not_converged',
         source='events',
         frequency=1,
         pattern=' Solve Did NOT Converge!',
         notification='email'
-        )
-    run.add_alert(
-        name='temperature_exceeds_maximum',
-        source='metrics',
-        metric='temp_at_x.3',
-        rule='is above',
-        threshold=600,
-        frequency=1,
-        window=1,
         )
 
     def per_event(log_data, metadata):
@@ -65,7 +56,7 @@ with simvue.Run() as run:
             run.log_event(list(log_data.values())[0])
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
-                run.save(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
+                run.save_file(os.path.join(script_dir, "results", "simvue_thermal.e"), "output")
                 run.set_status('failed')
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")

@@ -386,9 +386,9 @@ Running this script should now show at least one entry in the Events log, corres
 
 ## Artifacts
 ### Saving Files
-Files can be saved as artifacts and viewed in the UI by using the `save` method. Any files can be saved - for example, we could save our whole script. Firstly import the `os` module, and then add the following line at any point after the run is initialised:
+Files can be saved as artifacts and viewed in the UI by using the `save_file` method. Any files can be saved - for example, we could save our whole script. Firstly import the `os` module, and then add the following line at any point after the run is initialised:
 ``` py
-run.save(os.path.abspath(__file__), 'code')
+run.save_file(os.path.abspath(__file__), 'code')
 ```
 We could also save the final values of each of the averages in a dictionary and store them in a JSON file, and then upload that JSON file as an artifact. Firstly import the `json` and `pathlib` modules (installing it using pip if it is not in your python package already). Then after the for loop is complete, add the following code:
 ``` py
@@ -400,14 +400,14 @@ averages_out = {
 with open(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), "w") as out_file:
     json.dump(averages_out, out_file)
 
-run.save(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
+run.save_file(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
 ```
 Running the code with these additions should mean that in the `Artifacts` tab of the run in the UI, the full script is saved under the `Code` tab, and the JSON file containing the final values of the averages is saved under the `Outputs` tab.
 
 ### Saving Python Objects
 It is not only files which can be saved - Python objects, such as Numpy arrays, Pandas dataframes, or Matplotlib figures can also be saved directly as artifacts. For example, say that we want to also save our Numpy array of all of the random numbers which we generated. We can easily do this by adding this line of code after the for loop:
 ``` py
-run.save(all_numbers, 'output', name='all_random_numbers')
+run.save_object(all_numbers, 'output', name='all_random_numbers')
 ```
 Similarly to the files saved above, this array should now be visible in the `Outputs` section of the `Artifacts` tab of the run. The full code to save these artifacts can be seen here:
 ```  py
@@ -433,7 +433,7 @@ if __name__ == "__main__":
                 folder='/rand_nums')
 
         # Save the code as an artifact
-        run.save(os.path.abspath(__file__), 'code')
+        run.save_file(os.path.abspath(__file__), 'code')
 
         # Set details about the folder which we have created to store our runs:
         run.set_folder_details('/rand_nums',
@@ -484,10 +484,10 @@ if __name__ == "__main__":
         with open(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), "w") as out_file:
             json.dump(averages_out, out_file)
 
-        run.save(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
+        run.save_file(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
 
         # Store the array of random numbers as an artifact
-        run.save(all_numbers, 'output', name='all_random_numbers')
+        run.save_object(all_numbers, 'output', name='all_random_numbers')
 ```
 ## Metadata and Tags
 ### Initialising Metadata
@@ -574,7 +574,7 @@ if __name__ == "__main__":
                 })
 
         # Save the code as an artifact
-        run.save(os.path.abspath(__file__), 'code')
+        run.save_file(os.path.abspath(__file__), 'code')
 
         # Set details about the folder which we have created to store our runs:
         run.set_folder_details('/rand_nums',
@@ -625,10 +625,10 @@ if __name__ == "__main__":
         with open(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), "w") as out_file:
             json.dump(averages_out, out_file)
 
-        run.save(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
+        run.save_file(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
 
         # Store the array of random numbers as an artifact
-        run.save(all_numbers, 'output', name='all_random_numbers')
+        run.save_object(all_numbers, 'output', name='all_random_numbers')
 
         # Update metadata and tags once the run is completed
         run.update_metadata({'mean': mean})
@@ -647,7 +647,7 @@ Alerts are a feature of Simvue which allows the program to monitor the progress 
 Alerts can be triggered based on the values of metrics being monitored by Simvue. As an example, say that we want to trigger an alert if the mean is outside a range of values for a given period of time. Let's say that if the mean value is not between the values of 4 and 6 for more than two minutes, we want to trigger an alert. To do this, we will need to define an alert after the run is initialised, but before the iterations begin. We could add the following code:
 
 ``` py
-run.add_alert(
+run.create_alert(
     name='mean_outside_acceptable_range',
     source='metrics',
     frequency=1,
@@ -664,7 +664,7 @@ This will evaluate the value of the `averages.mean` metric once per minute. If i
 ### Alerts based on Events
 Alerts can also be triggered based on logged events. These alerts will scan the event log for a given string, and if this string is spotted it will raise the alert. For example, say we want to trigger an alert if we get a division by zero error during the calculation of our `mean / (median - mode)` statistic which we created earlier. To do this, we will add an alert which looks for the string `"Division by Zero Error"` as follows:
 ``` py
-run.add_alert(name='zero_division_error',
+run.create_alert(name='zero_division_error',
               source='events',
               frequency=1,
               pattern='Division by Zero Error',
@@ -704,7 +704,7 @@ if __name__ == "__main__":
                 })
 
         # Save the code as an artifact
-        run.save(os.path.abspath(__file__), 'code')
+        run.save_file(os.path.abspath(__file__), 'code')
 
         # Set details about the folder which we have created to store our runs:
         run.set_folder_details('/rand_nums',
@@ -713,7 +713,7 @@ if __name__ == "__main__":
                        description='Stores all runs which monitor the function to create random integers between 0 and 10.')
 
         # Add an alert to monitor the value of the mean
-        run.add_alert(
+        run.create_alert(
             name='mean_outside_acceptable_range',
             source='metrics',
             frequency=1,
@@ -725,7 +725,7 @@ if __name__ == "__main__":
         )
 
         # And another alert to check the log for division by zero errors
-        run.add_alert(
+        run.create_alert(
             name='zero_division_error',
             source='events',
             frequency=1,
@@ -775,10 +775,10 @@ if __name__ == "__main__":
         with open(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), "w") as out_file:
             json.dump(averages_out, out_file)
 
-        run.save(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
+        run.save_file(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
 
         # Store the array of random numbers as an artifact
-        run.save(all_numbers, 'output', name='all_random_numbers')
+        run.save_object(all_numbers, 'output', name='all_random_numbers')
 
         # Update metadata and tags once the run is completed
         run.update_metadata({'mean': mean})
@@ -871,7 +871,7 @@ if __name__ == "__main__":
         logger.addHandler(Handler(run))
 
         # Save the code as an artifact
-        run.save(os.path.abspath(__file__), 'code')
+        run.save_file(os.path.abspath(__file__), 'code')
 
         # Set details about the folder which we have created to store our runs:
         run.set_folder_details('/rand_nums',
@@ -880,7 +880,7 @@ if __name__ == "__main__":
                        description='Stores all runs which monitor the function to create random integers between 0 and 10.')
 
         # Add an alert to monitor the value of the mean
-        run.add_alert(
+        run.create_alert(
             name='mean_outside_acceptable_range',
             source='metrics',
             frequency=1,
@@ -892,7 +892,7 @@ if __name__ == "__main__":
         )
 
         # And another alert to check the log for division by zero errors
-        run.add_alert(
+        run.create_alert(
             name='zero_division_error',
             source='events',
             frequency=1,
@@ -963,11 +963,11 @@ if __name__ == "__main__":
         with open(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), "w") as out_file:
             json.dump(averages_out, out_file)
 
-        run.save(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
+        run.save_file(os.path.join(pathlib.Path(__file__).parent, "averages_out.json"), 'output')
 
         # Store the array of random numbers and percentage changes as artifacts
-        run.save(all_numbers, 'output', name='all_random_numbers')
-        run.save(percentage_changes_in_mean, 'output', name='percentage_changes_in_mean')
+        run.save_object(all_numbers, 'output', name='all_random_numbers')
+        run.save_object(percentage_changes_in_mean, 'output', name='percentage_changes_in_mean')
 
         # Update metadata and tags once the run is completed
         run.update_metadata({'mean': mean})

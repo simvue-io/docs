@@ -157,7 +157,7 @@ We can then edit our boundary conditions block to support a function of temperat
 
 We can then add a new alert to our run: Let us use it to track the temperature at `x=3`, and alert us when the value is above 600 degrees for more than 1 minute (to ensure it isn't just an outlier). To do this we will use the `is above` alert, with the threshold set to 600. After the alert which we have added to monitor non convergence, we can add the following:
 ```py
-run.add_alert(
+run.create_alert(
   name='temperature_exceeds_maximum',
   source='metrics',
   metric='temp_at_x.3',

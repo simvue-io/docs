@@ -239,7 +239,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
             if "non_converged" in log_data.keys():
                 run.kill_all_processes()
                 run.update_tags(["not_converged"])
-                run.save(os.path.join(results_path, "mug_thermal.e"), "output")
+                run.save_file(os.path.join(results_path, "mug_thermal.e"), "output")
                 run.set_status('failed')
                 trigger.set()
                 print("Simulation Terminated due to Non Convergence!")
@@ -248,7 +248,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
         elif "finished" in log_data.keys():
             time.sleep(1) # To allow other processes to complete
             run.update_tags(["handle_ok"])
-            run.save(os.path.join(results_path, "mug_thermal.e"), "output")
+            run.save_file(os.path.join(results_path, "mug_thermal.e"), "output")
             trigger.set()
 
     def per_metric(csv_data, sim_metadata, run, client, run_id, results_path):
@@ -272,7 +272,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
         if 'handle_too_hot' in client.get_alerts(run_id):
             print("Handle is too hot!")
             run.update_tags(['handle_too_hot',])
-            run.save(os.path.join(results_path, "mug_thermal.e"), "output")
+            run.save_file(os.path.join(results_path, "mug_thermal.e"), "output")
             run.kill_all_processes()
             run.set_status('failed')
             trigger.set()  
@@ -305,14 +305,14 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 )
             
             # Add alerts which we want to keep track of, so that we can terminate the simulation early if they fire
-            run.add_alert(
+            run.create_alert(
                 name='step_not_converged',
                 source='events',
                 frequency=1,
                 pattern=' Solve Did NOT Converge!',
                 notification='email'
                 )
-            run.add_alert(
+            run.create_alert(
                 name='handle_too_hot',
                 source='metrics',
                 metric='handle_temp_avg',
@@ -323,7 +323,7 @@ We then want to create our Python script which runs the MOOSE simulations for ea
                 ) 
             
             # Save the MOOSE input file for this run to the Simvue server
-            run.save(moose_file, "input")   
+            run.save_file(moose_file, "input")   
 
             # Create a Client instance for keeping track of which alerts are firing
             client = simvue.Client()
