@@ -58,7 +58,7 @@ if __name__ == "__main__":
                  folder='/tests')
 
         # Save this script
-        run.save(os.path.basename(__file__), 'code')
+        run.save_file(os.path.basename(__file__), 'code')
 
         # Generate 10 random numbers, one per second
         for count in range(0, 10):
