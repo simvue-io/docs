@@ -190,7 +190,7 @@ Set metadata, tags and a description for a folder.
 | `tags` | `List[str]`, optional | List of tags | 
 | `description` | `str`, optional | Description | 
 
-#### `add_alert()`
+#### `create_alert()`
 
 Define an alert and add it to the simulation run. If the alert is not already defined a new one
 will be created.

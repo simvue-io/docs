@@ -21,7 +21,7 @@ with simvue.Run() as run:
         description="A simulation to model the diffusion of heat across a metal bar",
         folder='/moose'
     )
-    run.add_alert(
+    run.create_alert(
         name='step_not_converged',
         source='events',
         frequency=1,

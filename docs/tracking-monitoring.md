@@ -98,13 +98,13 @@ Individual files can be saved using the `save` method. One of three categories n
 
 For example:
 ```
-run.save('data.png', 'output')
+run.save_file('data.png', 'output')
 ```
 
 An optional `filetype` argument can be used to specify the MIME type of the file. By default the MIME type is determined
 autoatically. For example:
 ```
-run.save('in.lj', 'input', 'text/plain')
+run.save_file('in.lj', 'input', 'text/plain')
 ```
 
 By default the name of the artifact will only be the name of the actual file specified, even if an absolute or relative path is specified.
@@ -199,7 +199,7 @@ and for `is outside range` and `is inside range`:
 
 For example, to create a threshold alert:
 ```
-run.add_alert(name='quality too low',
+run.create_alert(name='quality too low',
               type='is below',
               metric='quality',
               frequency=1,
@@ -210,7 +210,7 @@ In this case if the 1-minute average of the `quality` metric, calculated at 1-mi
 
 Similarly, here is an example of a range-based alert:
 ```
-run.add_alert(name='density invalid',
+run.create_alert(name='density invalid',
               type='is outside range',
               metric='density',
               frequency=1,
