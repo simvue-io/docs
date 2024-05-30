@@ -13,12 +13,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: windows-latest
+    env:
+        SIMVUE_CLIENT_REF: v1.0-rc
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - run: pip install -r requirements.txt
+      - run: pip install git+https://github.com/simvue-io/client.git@$SIMVUE_CLIENT_REF
+      - name: Create Reference Pages
+        run: python scripts/create_api_docs.py docs/
       - run: mkdocs build
       - uses: actions/upload-pages-artifact@v1
         with:

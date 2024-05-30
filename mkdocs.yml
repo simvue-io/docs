@@ -10,6 +10,7 @@ theme:
   logo: images/logo.png
   favicon: images/favicon.png
 nav:
+  - Test: test.md
   - Home:
     - Welcome: index.md
     - Concepts: home/concepts.md
@@ -55,6 +56,8 @@ nav:
 repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
   - admonition
   - def_list
   - attr_list
