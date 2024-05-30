@@ -10,7 +10,6 @@ theme:
   logo: images/logo.png
   favicon: images/favicon.png
 nav:
-  - Test: test.md
   - Home:
     - Welcome: index.md
     - Concepts: home/concepts.md
