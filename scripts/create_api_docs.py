@@ -81,6 +81,8 @@ def parse_numpydoc(
 
                 if signature:
                     if name not in signature.parameters:
+                        if not name.startswith("*"):
+                            raise ValueError(f"Unknown parameter '{name}' in docstring")
                         annotation = type_var.strip()
                         if name.startswith("*"):
                             name = name.replace("*", "")
