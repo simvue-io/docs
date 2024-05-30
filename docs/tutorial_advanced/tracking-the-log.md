@@ -316,13 +316,13 @@ def per_event(log_data, metadata):
         run.kill_all_processes()
 ``` 
 
-In this situation we could also upload the Exodus file (`simvue_thermal.e`) as an output artifact for storage on the Simvue server. To do this, we use the `save()` method of the run class, passing in the path to the file. We could also set the status of the run to be 'failed':
+In this situation we could also upload the Exodus file (`simvue_thermal.e`) as an output artifact for storage on the Simvue server. To do this, we use the `save_file()` method of the run class, passing in the path to the file. We could also set the status of the run to be 'failed':
 ```py
 def per_event(log_data, metadata):
     ...
     if "non_converged" in log_data.keys():
         run.kill_all_processes()
-        run.save("MOOSE/results/simvue_thermal.e", "output")
+        run.save_file("MOOSE/results/simvue_thermal.e", "output")
         run.set_status('failed')
 ```
 !!! further-docs "Further Documentation"
@@ -337,7 +337,7 @@ def per_event(log_data, metadata):
     run.log_event(list(log_data.values())[0])
     if "non_converged" in log_data.keys():
         run.kill_all_processes()
-        run.save("MOOSE/results/simvue_thermal.e", "output")
+        run.save_file("MOOSE/results/simvue_thermal.e", "output")
         run.set_status('failed')
         trigger.set()
         print("Simulation Terminated due to Non Convergence!")

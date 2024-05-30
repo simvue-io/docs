@@ -55,6 +55,8 @@ nav:
 repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
   - admonition
   - def_list
   - attr_list

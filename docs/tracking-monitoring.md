@@ -90,7 +90,7 @@ where here `time` is a floating point number.
 
 #### Individual files
 
-Individual files can be saved using the `save` method. One of three categories needs to be specified:
+Individual files can be saved using the `save_file` method. One of three categories needs to be specified:
 
  * `code`: software;
  * `input`: input files;
@@ -108,13 +108,13 @@ run.save_file('in.lj', 'input', 'text/plain')
 ```
 
 By default the name of the artifact will only be the name of the actual file specified, even if an absolute or relative path is specified.
-If the optional argument `preserve_path=True` is added to `save` then paths will be preserved in the names. This can be useful
+If the optional argument `preserve_path=True` is added to `save_file` then paths will be preserved in the names. This can be useful
 in situations where the files are naturally grouped together and you want to preserve this information, e.g. `group1/file1` and
 `group2/file1`.
 
 #### Directories
 
-Multiple files in a directory can be saved using the `save_directory` method which has the same arguments as `save` but
+Multiple files in a directory can be saved using the `save_directory` method which has the same arguments as `save_file` but
 instead of specifying a single filename the name of a directory is specified. A MIME type can be specified but all files
 in the directory will be set to the same MIME type.
 

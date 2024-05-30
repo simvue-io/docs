@@ -1,0 +1,24 @@
+### **{{ function_name }}{% if not is_property %}({% if metadata.parameters %}...{% else %}{% endif %}){% endif %}**
+{% if metadata.description %}{{ metadata.description | join('\n') }}{% endif %}
+{% if metadata.parameters %}
+**Parameters**
+
+|   |     |   |
+|---|:---:|---|{% for key, parameter in metadata.parameters.items() %}
+| {{ key }} | `#!python {{ parameter.type }}` | {{ parameter.description }} |{% endfor %}
+{% endif %}
+{% if metadata.returns %}
+**Returns**
+
+`#!python {{ metadata.returns[0] }}`
+{% for line in metadata.returns[1:] %}
+{{ line }}{% endfor %}
+{% endif %}
+{%if metadata.raises %}
+**Raises**
+
+`#!python {{ metadata.raises[0] }}`
+{% for line in metadata.raises[1:] %}
+{{ line }}
+{% endfor %}
+{% endif %}
