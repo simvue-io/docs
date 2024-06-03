@@ -1,12 +1,8 @@
 # Metrics
 
-!!! warning
-
-    The metrics API is in active development and is likely to change.
-
 Methods are available in the `Client` class for retrieving metrics. For all of the examples below an instance of the `Client`
 class needs to be created first:
-```
+```python
 from simvue import Client
 client = Client()
 ```
@@ -14,25 +10,9 @@ client = Client()
 ## Metrics names
 The method `get_metrics_names` can be used to obtain a list of metrics available for the specified run. Usage:
 ```
-metrics = client.get_metrics_names(run)
+metrics = client.get_metrics_names(run_id)
 ```
-where `run` is the run name. The result (`metrics` in this case) is a list of the names of the metrics.
-
-## Summaries
-The method `get_metrics_summaries` returns basic statistics such as average, min, max and latest values when
-provided with a run name and metric name:
-```
-client.get_metrics_summaries(run, metric)
-```
-Example response:
-```
-{
-    "latest":0.0366741130749,
-    "avg":0.0973743406633,
-    "min":0.0348126348521,
-    "max":0.970791599485
-}
-```
+where `run_id` is the run identifier. The result (`metrics` in this case) is a list of the names of the metrics.
 
 ## Basic usage
 
@@ -40,17 +20,17 @@ For basic line plots the method `plot_metrics` can be used. If more control is n
 there are also methods for obtaining dataframes which can be used with Matplotlib (described below).
 
 The `plot_metrics` class is used as follows:
-```
-plot = client.plot_metrics(runs, metrics, xaxis)
+```python
+plot = client.plot_metrics(run_ids, metric_names, xaxis)
 ```
 where:
 
-* `runs`: list of run names,
-* `metrics`: list of metrics names,
+* `run_ids`: list of run identifiers,
+* `metric_names`: list of metrics names,
 * `xaxis`: either `step` or `time`.
 
 To save the plot in a file:
-```
+```python
 plot.savefig('plot.png')
 ```
 
@@ -58,14 +38,21 @@ plot.savefig('plot.png')
 
 ### Metrics from a single run
 
-To obtain time series metrics from a single run use the `get_metrics` method. For example, suppose we want to plot
+To obtain time series metrics from a single run use the `get_metric_values` method on a single run identifier. For example, suppose we want to plot
 a metric `Train Loss` versus `step` for a run called `first-fno-8`. We can first retrieve the metrics in the form
 of a dataframe:
-```
-df = client.get_metrics('first-fno-8', 'Train Loss', 'step', format='dataframe')
+```python
+run_id = client.get_run_id_from_name('first-fno-8')
+
+df = client.get_metric_values(
+    run_ids=[run_id],
+    metric_names=['Train Loss'],
+    xaxis='step',
+    output_format='dataframe'
+)
 ```
 which we can then plot easily:
-```
+```python
 fig = df.plot(kind='line', x='step', y='Train Loss').get_figure()
 fig.savefig('plot.png')
 ```
@@ -75,18 +62,22 @@ giving the following plot:
 
 ### Multiple metrics from a single run
 
-We can use the `get_metrics_multiple` method to create a single dataframe containing multiple metrics from a single
+We can also use the `get_metric_values` method to create a single dataframe containing multiple metrics from a single
 (or multiple) runs.
 
 For example, here we retrieve metrics named `rms[RhoV]`, `rms[RhoW]` and `rms[RhoE]` from a run named `paper-amplifier`:
+```python
+run_id = client.get_run_id_from_name('paper-amplifier')
+
+df = client.get_metric_values(
+    run_ids=[run_id],
+    metric_names=['rms[RhoV]', 'rms[RhoW]', 'rms[RhoE]'],
+    xaxis='step',
+    output_format='dataframe'
+)
 ```
-df = client.get_metrics_multiple(['paper-amplifier'],
-                                 ['rms[RhoV]', 'rms[RhoW]', 'rms[RhoE]'],
-                                 'step',
-                                 format='dataframe')
-```
-We cam then use Matplotlib to plot all 3 metrics on a single plot:
-```
+We can then use Matplotlib to plot all 3 metrics on a single plot:
+```python
 import matplotlib.pyplot as plt
 
 plt.plot(df[('paper-amplifier', 'rms[RhoV]', 'step')],
@@ -106,19 +97,29 @@ giving the following plot:
 
 ### Multiple runs
 
-Here we again use `get_metrics_multiple` but this time use it to obtain a single metric from multiple runs and make a comparison plot. Firstly
+Here we again use `get_metric_values` but this time use it to obtain a single metric from multiple runs and make a comparison plot. Firstly
 we create a dataframe:
-```
-df = client.get_metrics_multiple(['paper-amplifier',
-                                  'tranquil-tone',
-                                  'crazy-domain',
-                                  'decidable-pod'],
-                                 ['rms[RhoV]'],
-                                 'step',
-                                 format='dataframe')
+```python
+run_ids = [
+    client.get_run_id_from_name(run_name)
+    for run_name in
+    [
+        'paper-amplifier',
+        'tranquil-tone',
+        'crazy-domain',
+        'decidable-pod'
+    ]
+]
+
+df = client.get_metrics_multiple(
+    run_ids,
+    metric_names=['rms[RhoV]'],
+    xaxis='step',
+    output_format='dataframe'
+)
 ```
 while we can then plot with Matplotlib:
-```
+```python
 import matplotlib.pyplot as plt
 
 plt.plot(df[('paper-amplifier', 'rms[RhoV]', 'step')],

@@ -21,7 +21,7 @@ When running inside the provided docker container, each step in the tutorial has
 
 ### Install Docker
 You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. [^^Full instructions for installing Docker can be found here^^](https://docs.docker.com/engine/install/). If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
-```
+```sh
 sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
@@ -31,22 +31,22 @@ To check that this worked, run `docker` - you should see a list of help for the 
 
 ### Pull Docker image
 Next we need to pull the container, which is stored in the Simvue repository's registry:
-```
+```sh
 sudo docker pull ghcr.io/simvue-io/moose_example:latest
 ```
 This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/moose_example` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
-```
+```sh
 xhost +local:docker
 ```
 Then you can run the container:
-```
+```sh
 sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/moose_example:latest
 ```
 If this is running correctly, you should see your command prompt change to something like:
-```
+```sh
 dev:~/simvue-moose$
 ```
 To test that the graphics packages are working correctly, run the command `paraview` within the container. After a few seconds, this should open up a graphical user interface window for the Paraview visualization tool.
@@ -71,7 +71,7 @@ Finally we need to update the config file inside the Docker container to use you
 ### Create a virtual environment
 
 Run the following commands to create and activate a new virtual environment:
-```
+```sh
 python3 -m venv venv
 source ./venv/bin/activate
 ```
@@ -79,8 +79,8 @@ source ./venv/bin/activate
 ### Install Simvue
 
 Install the Python client:
-```
-pip install git+https://github.com/simvue-io/client.git@dev
+```sh
+pip install git+https://github.com/simvue-io/client.git@v1.0-rc
 pip install ukaea-multiparser
 ```
 
@@ -90,7 +90,7 @@ The next step is to specify the URL of the Simvue server and provide an access t
 
 Login to the web UI, go to the **Runs** page and click **Create new run**. Create a file called `simvue.ini` containing the contents as provided.
 The file should look something like:
-```
+```ini
 [server]
 url = https://dev02.simvue.io
 token = eyJ0eXAi...
