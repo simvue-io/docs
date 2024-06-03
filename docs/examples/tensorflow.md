@@ -159,6 +159,8 @@ The `TensorVue` class comes with a number of other options, allowing the user to
 ```py
 # Can use the ModelCheckpoint callback, which is built into Tensorflow, to save a model after each Epoch
 # Provinding the model_checkpoint_filepath in the TensorVue callback means it will automatically upload checkpoints to the Epoch runs
+from tensorflow.keras.callbacks import ModelCheckpoint
+
 checkpoint_filepath = "/tmp/ckpt/checkpoint.model.keras"
 model_checkpoint_callback = ModelCheckpoint(
     filepath=checkpoint_filepath, save_best_only=False, verbose=1
@@ -226,7 +228,7 @@ As a simple example, we will say that we want to create the image of the first 2
 class MyTensorVue(sv_tf.TensorVue):
     # This method will be called whenever a training session ends
     def on_train_end(self, logs):
-        predictions = model.predict(self.img_predict)
+        predictions = self.model.predict(self.img_predict)
         overall_guess = numpy.argmax(predictions, axis=1)
 
         # Change colours of labels based on whether prediction is correct / incorrect
@@ -244,7 +246,7 @@ class MyTensorVue(sv_tf.TensorVue):
         plt.savefig("predictions.png")
 
         # Upload as artifact to simulation run
-        self.simulation_run.save("predictions.png", "output")
+        self.simulation_run.save_file("predictions.png", "output")
 
         # Don't forget to then call the base TensorVue method!
         super().on_train_end(logs)
