@@ -2,11 +2,11 @@
 As the simulation which we ran in the previous step was progressing, you should have seen a series of messages being printed to the log. These have also been stored in a log file, called `simvue_thermal.txt`. If we look at the most recent lines in this file by running `tail simvue_thermal.txt -n 100` in the terminal, we should see something like this:
 !!! docker "Run in Docker Container"
     To view the log file produced by the previous run in the Docker container:
-    ```
+    ```sh
     tail tutorial/step_1/results/simvue_thermal.txt -n 100
     ```
   
-```
+```log
 ...
 Time Step 10, time = 10, dt = 1
  0 Nonlinear |R| = 4.974806e-01
@@ -36,7 +36,7 @@ The next thing which we need to do is initialize a Simvue run. To do this, we fi
 ```py
 import time
 import shutil
-import os
+import os.path
 
 if os.path.exists('./MOOSE/results'):
     shutil.rmtree('./MOOSE/results')
@@ -48,7 +48,7 @@ with simvue.Run() as run:
     name=run_name,
     description="A simulation to model the diffusion of heat across a metal bar",
     folder='/moose'
-    )
+  )
 ```
 In the case above, we have specified a name for the run (with a timestamp), and that the run should be placed in a folder called `/moose` so that we can group all of our runs together. We also remove any existing results from previous simulations, so that logs and results from previous simulations aren't automatically added to new Simvue runs.
 
@@ -65,7 +65,7 @@ We then need to define which way the file monitor should keep track of the files
 - `FileMonitor.track()`: The contents of the whole file are read at once. This should be used for cases where the full output is written in one go, when the file is created.
 - `FileMonitor.tail()`: The initial contents of the file are read, and then any additional lines added after this point are read on a line by line basis. This is useful for live updating files, such as log files, where new lines are being appended to the end of the file during execution of the program.
 
-For our console output file, new lines are being constantly appended to the file as the simulation progresses, and we want an event to be logged as soon as one of these lines is written. Therefore we will chose the `tail()` method of file tracking. To allow this function to start tracking our file, we need to provide it with three main arguments:
+For our console output file, new lines are being constantly appended to the file as the simulation progresses, and we want an event to be logged as soon as one of these lines is written. Therefore we will chose the `#!python tail()` method of file tracking. To allow this function to start tracking our file, we need to provide it with three main arguments:
 
 - `path_glob_exprs`: This specifies the path at which to look for the files which we want monitored. This can be provided in the form of an absolute or relative path to a single file, a list of absolute or relative paths, or globular expressions for locating desired files. In our case, we will simply pass in the relative path to our console output file as a string, `MOOSE/results/simvue_thermal.txt`.
 - `tracked_values`: This is a list of values to look out for in the tracked file. These can be provided as literal strings, or regular expressions. When one of these values is seen in the file, a callback to a user defined function is triggered (in our case to add an event to Simvue, which we will see later).
@@ -110,11 +110,11 @@ with multiparser.FileMonitor(
 
 ### Testing our Events Log
 Now we can test whether our code is working! We can start our file monitoring script by running:
-```
+```sh
 python MOOSE/moose_monitoring.py &
 ```
 This will run our monitoring script in the background. We can then run our MOOSE simulation:
-```
+```sh
 /path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off`
 ```
 
@@ -141,7 +141,7 @@ Firstly, let's manually terminate our monitoring script from before. On Linux sy
 !!! docker "Run in Docker Container"
 
     To stop the moose monitoring script running in the background:
-    ```
+    ```sh
     pkill -9 python
     ```
 
@@ -209,10 +209,10 @@ If we now run our monitoring script and our MOOSE simulation, they should behave
 
 !!! docker "Run in Docker Container"
     To run this in the Docker container:
-    ```
+    ```sh
     python tutorial/step_3/moose_monitoring.py &
     ```
-    ```
+    ```sh
     app/moose_tutorial-opt -i tutorial/step_3/simvue_thermal.i --color off
     ```
     You can check the running processes with `ps -a`, you should see that `moose_monitoring.py` is Done and there are no running Python processes left.
@@ -225,11 +225,11 @@ As an example, take your MOOSE script, and change the details in the Executioner
 
 !!! docker "Run in Docker Container"
     If you would like to see what the MOOSE script does when failing to converge, you can run:
-    ```
+    ```sh
     app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i
     ```
     And wait for a few minutes until the problem begins approaching a steady state. Once it fails to converge, you will see red `Solve Did NOT Converge!` messages in the log. You can then stop the simulation manually by pressing `Ctrl C`, and you can see the results with:
-    ```
+    ```sh
     paraview tutorial/step_4/results/simvue_thermal.e
     ```
     Again, [^^set up Paraview as detailed at the bottom of the previous section^^](/tutorial_advanced/defining-the-problem#run-the-simulation). You will see that for approximately the last 20 steps, the problem has already been in a roughly steady state, with heat uniformly distributed across the bar.
@@ -262,10 +262,10 @@ Now that this alert is set up it will notify the user if a step has failed to co
 
 !!! docker "Run in Docker Container"
     To run this in the Docker container:
-    ```
+    ```sh
     python tutorial/step_4/moose_monitoring.py &
     ```
-    ```
+    ```sh
     app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i --color off
     ```
 
@@ -275,7 +275,7 @@ However when this alert fires, it will still require manual intervention to stop
 
 !!! docker "Run in Docker Container"
     To stop execution of the MOOSE script after the alert has fired, press <kbd>ctrl</kbd> + <kbd>C</kbd> on the command line and you should stop seeing any logs being printed to the console. Remember the monitoring script will still be running in the background, so also do:
-    ```
+    ```sh
     pkill -9 python
     ```
     
@@ -291,7 +291,7 @@ To do this, we use the method `add_process()` on our run. This method can essent
 
 It can also accept any number of keyword arguments, which it will simply pass in as arguments to the command when it is executed. In our case, the command which we would run on the command line is something like:
 
-```
+```sh
 /path/to/MOOSE/application/file -i MOOSE/simvue_thermal.i --color off
 ```
 
@@ -346,7 +346,7 @@ Now if we run our script again, we should see that after a few minutes of runnin
 
 !!! docker Run in Docker Container
     To run this in the Docker container, we now only need to run the monitoring script:
-    ```
+    ```sh
     python tutorial/step_5/moose_monitoring.py
     ```
     Note that you should not expect to see the MOOSE log being printed to the console anymore, as this is now stored in a file instead. However you can of course still see the excerpts from the log which we are uploading to Simvue by viewing the Events tab in the run UI.
@@ -355,7 +355,7 @@ Now if we run our script again, we should see that after a few minutes of runnin
 
 ## Adding Metadata
 To allow us to keep track of how a particular run has been performed, we may want to add metadata to the Simvue run. As an example, in the console log, important information about the MOOSE environment and simulation parameters are included at the very top. This can be seen by running `head results/simvue_thermal.txt -n 40`:
-```
+```log
 Framework Information:
 MOOSE Version:           git commit 0db956d593 on 2023-08-20
 LibMesh Version:         fd900b54a02b9d1b99f0a4371d4acb4761e57b0f
@@ -446,6 +446,6 @@ Now, let's run our script again to see if the metadata loads correctly. Running 
 
 !!! docker "Run in Docker Container"
     To run this in the provided Docker container, enter this command:
-    ```
+    ```sh
     python tutorial/step_6/moose_monitoring.py
     ```

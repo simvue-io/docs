@@ -12,17 +12,17 @@ The code is based on a dynamic recurrent neural network example - [^^find the or
 ## Running the code
 
 To run this example, firstly clone the Simvue client GitHub repository:
-```
+```sh
 git clone https://github.com/simvue-io/client
 cd examples/Tensorflow
 ```
 Create a virtual environment:
-```
+```sh
 python3 -m venv venv
 source venv/bin/activate
 ```
 Install the required dependencies:
-```
+```sh
 pip install --upgrade pip
 pip install tensorflow simvue
 ```
@@ -30,7 +30,7 @@ Ensure that Simvue is configured properly, for example by creating a `.simvue.in
 in the UI for more information.
 
 Run the code:
-```
+```sh
 python3 dynamic_rnn.py
 ```
 

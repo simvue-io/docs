@@ -7,7 +7,7 @@ Here we demonstrate using OpenFOAM with Simvue. In this example we will assume O
 
     If using the OpenFOAM Docker image, note that it doesn't contain `pip`, making it difficult to install Simvue or any other Python modules. In this
     case a custom container image can be created using the following `Dockerfile`:
-    ```
+    ```docker
     FROM openfoam/openfoam10-paraview56
     USER root
     RUN apt-get update && \
@@ -17,7 +17,7 @@ Here we demonstrate using OpenFOAM with Simvue. In this example we will assume O
 
 ## Setup
 Copy one of the tutorials into an appropriate directory, e.g.
-```
+```sh
 cp -r /opt/openfoam10/tutorial_basics/incompressible/pimpleFoam/laminar/movingCone .
 cd movingCone
 ```
@@ -25,7 +25,7 @@ cd movingCone
 ## Integration with Simvue
 Instead of trying to integrate Simvue directly into OpenFOAM, which would probably be a complex task, we note that we can obtain
 useful information from log files. With this example the log file `log.pimpleFoam` has records like this:
-```
+```log
 PIMPLE: Iteration 1
 DICPCG:  Solving for cellMotionUx, Initial residual = 8.36859e-06, Final residual = 5.97076e-09, No Iterations 13
 GAMG:  Solving for pcorr, Initial residual = 1, Final residual = 0.0184091, No Iterations 4
@@ -49,7 +49,7 @@ In order to collect these metrics
 `log.pimpleFoam` and sends them to Simvue.
 
 Download the Simvue Python script for OpenFOAM:
-```
+```sh
 wget https://raw.githubusercontent.com/simvue-io/client/main/examples/simvue_openfoam.py
 ```
 

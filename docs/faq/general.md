@@ -3,7 +3,7 @@
 ## Why is my run in the **lost** state?
 The Simvue client sends a heartbeat to the server every minute. A run goes into the **lost** state if there are no heartbeats for over 3 minutes. Because of this,
 it is preferable to use the context manager for the `Run()` object, for example:
-```
+```py
 from simvue import Run
 
 if __name__ == "__main__":
@@ -13,7 +13,7 @@ if __name__ == "__main__":
 ```
 If the user's code exits with an exception the state of the run will be set to `failed` and an event will be created with details about this exception. Without the
 context manager, i.e.
-```
+```py
 from simvue import Run
 
 if __name__ == "__main__":
@@ -28,7 +28,7 @@ If Matplotlib and Plotly plots are saved directly as artifacts (rather than save
 
 Here is a simple but complete example creating a Matplotlib plot ([^^based on an example from the Matplotlib documentation, seen here^^](https://matplotlib.org/stable/tutorial_basics/introductory/pyplot.html)) and saving it as an artifact. Note the use of the `gcf()` method to get the current figure, as we need to 
 pass a `matplotlib.figure.Figure` instance to Simvue.
-```
+```py
 import numpy as np
 import matplotlib.pyplot as plt
 from simvue import Run
@@ -55,11 +55,11 @@ Note that we have provided a name for the artifact using the `name` argument, wh
 is completely arbitrary and up to the user.
 
 If you get an error like:
-```
+```log
 Aw. Snap! You're gonna have to hold off on the selfies for now. Plotly can't import images from matplotlib yet!
 ```
 or:
-```
+```log
 AttributeError: 'PathCollection' object has no attribute 'get_offset_position
 ```
 it means that your plot is not compatible with the Plotly conversion function ([^^see documentation for the Plotly conversion function^^](https://plotly.github.io/plotly.py-docs/generated/plotly.html#plotly.tools.mpl_to_plotly)). In this situation the only option currently is to try using Plotly  rather than Matplotlib to create the plot. If you are unfamiliar with this, [^^view the full Plotly documentation^^](https://plotly.com/python/).
