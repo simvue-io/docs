@@ -5,7 +5,7 @@ In this section, we will update our MOOSE file to allow us to track the temperat
 Firstly, we need to update our MOOSE input file to allow us to take measurements of the temperature at different points along the bar. To do this, we will add a new block called `VectorPostProcessors`, which allows us to specify positions in the system as (x,y,z) coordinates, along with a function which we want to calculate at each time in the simulation at these points. In our case, we will evaluate the temperature at the centre of the bar for every metre along the bar.
 
 Add the following block to your MOOSE input file:
-```
+```ini
 [VectorPostprocessors]
   [temps]
     type = PointValueSampler
@@ -18,14 +18,14 @@ Add the following block to your MOOSE input file:
 
 We then also need to specify the format which we would like our outputs to be in. In our case we will use CSV files, where a new CSV file will be created for each timestep containing the value of the temperature at each point. So can add a new section to the `Outputs` block:
 
-```
+```ini
 [csv]
   type = CSV
 []
 ```
 
 And finally we will change the end time for the simulation to 20 seconds, so that the simulation can complete again without hitting non-convergence errors.
-```
+```ini
 [Executioner]
   type = Transient
   end_time = 20
@@ -48,11 +48,11 @@ T,id,x,y,z
 !!! docker "Run in Docker Container"
 
     To run this updated MOOSE script in the Docker container:
-    ```
+    ```sh
     app/moose_tutorial-opt -i tutorial/step_7/simvue_thermal.i
     ```
     View an example of the results being produced by doing:
-    ```
+    ```sh
     cat tutorial/step_7/results/simvue_thermal_temps_0001.csv
     ```
 ## Parsing values and adding Metrics
@@ -120,7 +120,7 @@ If we now run our Python script, we should see that the run UI shows all of the 
 
 !!! docker "Run in Docker Container"
     If running within the Docker container, use the following command to see our results being added as metrics:
-    ```
+    ```sh
     python tutorial/step_7/moose_monitoring.py
     ```
 

@@ -66,9 +66,9 @@ that 8 CPUs are fully utilised.
 
 In the above `i` is the GPU index. If multiple GPUs are used metrics will be available for each separately.
 
-By default the resource usage of the Python script itself is monitored. To monitor an external code, for example a FORTRAN or C++
+By default the resource usage of the Python script itself is monitored (including any processes added by `Run.add_process`). To monitor an external code execution not handled by the client, for example a FORTRAN or C++
 simulation code, the (parent) PID needs to be specified using the `set_pid` method of the `Run` class, e.g.
-```
+```sh
 run.set_pid(18231)
 ```
 Note that resource utilisation metrics are collected for the sum of the parent PID and all children. The PID must be specified before
