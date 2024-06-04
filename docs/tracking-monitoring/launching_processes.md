@@ -59,3 +59,11 @@ while not trigger.is_set():
     time.sleep(10)
 ```
 
+## Monitoring
+
+When a process is added to a Simvue run:
+
+* The executed command is added to the metadata for that run.
+* Any files specified by `input_file` or `script` are uploaded as artifacts.
+* If not empty files, the `stdout` and `stderr` for the process are uploaded as artifacts.
+* User alerts are created which are set to either "ok" or "critical" depending on process exit status.
