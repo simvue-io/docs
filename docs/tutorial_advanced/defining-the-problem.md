@@ -11,7 +11,7 @@ where $\alpha$ is the thermal diffusivity of the material.
 MOOSE uses a custom input file to define and run a simulation. While this is not a tutorial on how to use MOOSE, we will provide a brief description of how we setup the problem stated above in MOOSE. If you are completely new to MOOSE, [^^you can find tutorials on how to use MOOSE here^^](https://mooseframework.inl.gov/getting_started/examples_and_tutorials/index.html). If you are experienced at MOOSE and have your own MOOSE files which you are trying to use you may not need to read through the following steps, but pay attention to the [^^outputs block^^](#specify-outputs). See the full file we will be using in the [^^final step of this section^^](#run-the-simulation).
 
 !!!docker "Run in Docker Container"
-    Note: if you are running inside the Docker container, all input files and python Files for running Simvue are provided for you within the container. You do not need to write any of these files yourself!
+    Note: if you are running inside the Docker container, all input files and python Files for running Simvue are provided for you within the container. **You do not need to write any of these files yourself!**
 
 Create a file called `simvue_thermal.i`, and follow the following steps:
 
@@ -189,7 +189,7 @@ To check that the input file is configured correctly, run the file and check the
   []
 []
 ```
-This should be in your `simvue_thermal.i` file. Next, locate where your MOOSE application file is, and run the following command:
+This should be in your `simvue_thermal.i` file. Next, locate where your MOOSE application file is, and run the following command (updated with the relevant paths from your installation):
 ```sh
 /path/to/MOOSE/application/file -i /path/to/simvue_thermal.i --color off
 ```
