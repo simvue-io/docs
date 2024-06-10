@@ -27,28 +27,27 @@ run.log_metrics({'parameter1': 1.2}, step=step)
 ```
 
 ### Naming metrics
-It can be useful to employ a *dot notation* for metrics names, as this helps in automatically creating the web UI view of all metrics. Any
-metrics where the part of the name before the `.` is the same is displayed in a single panel. For example, metrics with names:
+It can be useful to employ a similar prefixes for metric names. The web interface allows you to group metrics with the same prefix together into a single plot. For example, metrics with names:
 
 * `residuals.Ux`
 * `residuals.Uy`
 * `residuals.Uz`
 
-will be displayed on the same panel. However, the following would also be displayed in a single panel:
+would be displayed on the same panel. In order to distinguish between sub-categories we can extend this prefix, for example in the following case:
 
 * `residuals.Ux`
 * `residuals.Uy`
 * `residuals.Uz`
 * `residuals.p`
 
-which might not be what you want. In this case it would be better to use instead:
+we can separate the components of `U` from `p`:
 
 * `residuals.U.x`
 * `residuals.U.y`
 * `residuals.U.z`
 * `residuals.p`
 
-In this case `residuals.U.x`, `residuals.U.y` and `residuals.U.z` would be displayed in one panel with `residuals.p` in another.
+this resulting in `residuals.U.x`, `residuals.U.y` and `residuals.U.z` being displayed in one panel  `residuals.p` in another.
 
 !!! note
 
