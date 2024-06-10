@@ -16,7 +16,7 @@ To model this scenario, we will model the fluid inside the cup as having an expo
 The easiest way to run this example is to use the provided Docker container:
 ### Install Docker
 You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. [^^Full instructions for installing Docker can be found here^^](https://docs.docker.com/engine/install/). If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
-```
+```sh
 sudo apt-get update && sudo apt-get install docker.io
 ```
 To check that this worked, run `docker` - you should see a list of help for the commands.
@@ -26,22 +26,22 @@ To check that this worked, run `docker` - you should see a list of help for the 
 
 ### Pull Docker image
 Next we need to pull the container, which is stored in the Simvue repository's registry:
-```
+```sh
 sudo docker pull ghcr.io/simvue-io/moose_example:latest
 ```
 This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/moose_example` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
-```
+```sh
 xhost +local:docker
 ```
 Then you can run the container:
-```
+```sh
 sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/moose_example:latest
 ```
 If this is running correctly, you should see your command prompt change to something like:
-```
+```sh
 dev:~/simvue-moose$
 ```
 To test that the graphics packages are working correctly, run the command `paraview` within the container. After a few seconds, this should open up a graphical user interface window for the Paraview visualization tool.
@@ -75,7 +75,7 @@ Firstly we will create our MOOSE input file, which in our case uses the mesh for
 ??? example "Example MOOSE Input File"
 
     Here is an example input file for MOOSE - this is for the steel coffee cup, and can be viewed or edited in the Docker container using `nano /example/steel_mug.i`:
-    ```
+    ```ini
     [Mesh]
     file = 'cup.e'
     []

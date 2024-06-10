@@ -13,7 +13,7 @@ The `get_folder` method can be used to obtain details about a specified folder. 
 * Number of runs stored in the folder
 
 For example:
-```
+```python
 client.get_folder('/rand_nums')
 ```
 gives:
@@ -24,28 +24,11 @@ gives:
   "id": "kLwNUm4KXSR7SXUi7TsnAe",
   "user": "my_user",
   "description": 'Stores runs for monitoring random number generation.',
+  "visibility": {'users': [], 'tenant': False, 'public': False},
+  "name": 'rand_nums',
+  "starred": False,
+  "ttl": None,
   "runs": 20
-}
-```
-If tags and metadata are also required then the optional arguments `tags` and `metadata` can be set to `True`, for example:
-```
-client.get_folder('/rand_nums', tags=True, metadata=True)
-```
-gives:
-```
-{
-  "path": "/rand_nums",
-  "created": "2023-12-01 13:58:01.492625",
-  "id": "kLwNUm4KXSR7SXUi7TsnAe",
-  "user": "my_user",
-  "description": 'Stores runs for monitoring random number generation.',
-  "runs": 20
-  "tags": [
-    "random-numbers",
-  ],
-  "metadata": {
-    "environment": 'testing',
-  }
 }
 ```
 ## Retrieving Multiple Folders
@@ -53,14 +36,14 @@ Instead of specifying the path of a single folder, filters can be provided with 
 The output dictionary is in the form of a list, where the information about each folder has the same format as the output from the `get_run` method described above.
 
 For example, to get details of all folders which contain runs which were ran in the 'testing' environment:
-```
-client.get_folders(['environment' == 'testing'], tags=True, metadata=True)
+```python
+client.get_folders(['environment' == 'testing'])
 ```
 
 ## Deleting Folders
-Folders can also be deleted using the `delete_folder()` method. You can select whether to only delete the folder itself, or whether to also recursively delete all of the runs which are stored inside of it, by specifying the `runs` parameter. For example, say we wanted to create a Python script which is executed every day, which checks for any folders which are marked with the `expiring` tag and deletes them (and all runs contained within them) if they are more than 30 days old:
+Folders can also be deleted using the `delete_folder` method. You can select whether to only delete the folder itself, or whether to also recursively delete all of the runs which are stored inside of it, by specifying the `runs` parameter. For example, say we wanted to create a Python script which is executed every day, which checks for any folders which are marked with the `expiring` tag and deletes them (and all runs contained within them) if they are more than 30 days old:
 
-```py
+```python
 date_30d_ago = datetime.now() - timedelta(days=30)
 folders = client.get_folders(['expiring'])
 

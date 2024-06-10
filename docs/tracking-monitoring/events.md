@@ -10,7 +10,7 @@ except Exception as exc:
     ...
 ```
 The timestamp at which the `log_event` method is called is recorded, and similar to metrics this can be overriden if necessary, for example:
-```
+```python
 run.log_event(message, timestamp='2022-01-03 16:42:30.849617')
 ```
 ??? further-docs "Further Documentation"

@@ -15,7 +15,7 @@ the Simvue Python client, in particular demonstrating:
 ### Create a virtual environment
 
 Run the following commands to create and activate a new virtual environment:
-```
+```sh
 python3 -m venv venv
 source ./venv/bin/activate
 ```
@@ -23,7 +23,7 @@ source ./venv/bin/activate
 ### Install
 
 Install the Python client:
-```
+```sh
 pip install simvue
 ```
 
@@ -34,7 +34,7 @@ The next step is to specify the URL of the Simvue server and provide an access t
 Login to the web UI, go to the **Runs** page and click **Create new run**. Create a file called `simvue.ini` containing
 the contents as provided.
 The file should look something like:
-```
+```ini
 [server]
 url = https://app.simvue.io
 token = eyJ0eXAi...
@@ -67,7 +67,7 @@ if __name__ == "__main__":
 ```
 
 Run the script, for example:
-```
+```sh
 python test.py
 ```
 

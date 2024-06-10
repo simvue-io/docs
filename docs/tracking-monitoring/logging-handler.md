@@ -4,11 +4,11 @@ Logs from the standard Python logging module can be captured - [^^see more detai
 ``` py
 from simvue import Run, Handler
 
-run = Run()
-run.init()
+with Run() as run:
+    run.init()
 
-logger = logging.getLogger(__name__)
-logger.addHandler(Handler(run))
+    logger = logging.getLogger(__name__)
+    logger.addHandler(Handler(run))
 ```
 
 This enables log messages to be visible in the Simvue UI and alerts can be defined which check for the occurence of

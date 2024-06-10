@@ -24,6 +24,7 @@ nav:
     - Events: tracking-monitoring/events.md
     - Artifacts: tracking-monitoring/artifacts.md
     - Alerts: tracking-monitoring/alerts.md
+    - Launching processes: tracking-monitoring/launching_processes.md
     - Logging handler: tracking-monitoring/logging-handler.md
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md

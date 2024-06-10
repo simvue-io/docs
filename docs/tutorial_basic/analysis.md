@@ -23,7 +23,7 @@ my_runs = client.get_runs(['/rand_nums', 'completed', 'v1'], metadata=True, tags
 print(my_runs)
 ```
 If you then run the analysis script using `python3 analysis.py` on the command line, you should hopefully see a list of dictionaries printed, similar to the following:
-```
+```py
 [
     {
         'name': 'random-numbers-1696963675', 

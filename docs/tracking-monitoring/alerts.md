@@ -41,14 +41,16 @@ Here are some examples, illustrating each type of alert.
 ### Threshold alert
 
 For example, to create a threshold alert:
-``` py
-run.create_alert(name='quality too low',
-              source='metrics',
-              rule='is below',
-              metric='quality',
-              frequency=1,
-              window=1,
-              threshold=0.4)
+```python
+run.create_alert(
+   name='quality too low',
+   source='metrics',
+   rule='is below',
+   metric='quality',
+   frequency=1,
+   window=1,
+   threshold=0.4
+)
 ```
 In this case if the 1-minute average of the `quality` metric, calculated at 1-minute intervals, goes below 0.4 the alert will be triggered.
 
@@ -56,15 +58,17 @@ In this case if the 1-minute average of the `quality` metric, calculated at 1-mi
 
 Similarly, here is an example of a range-based alert:
 ``` py
-run.create_alert(name='density invalid',
-              source='metrics',
-              rule='is outside range',
-              metric='density',
-              frequency=2,
-              window=2,
-              range_low=1.0,
-              range_high=5.0,
-              notification='email')
+run.create_alert(
+   name='density invalid',
+   source='metrics',
+   rule='is outside range',
+   metric='density',
+   frequency=2,
+   window=2,
+   range_low=1.0,
+   range_high=5.0,
+   notification='email'
+)
 ```
 In this case, if the 2-minute average of the `density`, calculated at 2-minute intervals, goes below 1.0 or above 5.0 the alert will be triggered.
 Here we set `notification` to `email`, so that an email will be sent to the user when the alert first goes critical.
@@ -73,11 +77,13 @@ Here we set `notification` to `email`, so that an email will be sent to the user
 
 In this example we trigger an alert if the string `error` appears in an event message and send an email when this first happens:
 ``` py
-run.create_alert(name='error detector',
-              source='events',
-              frequency=1,
-              pattern='error',
-              notification='email')
+run.create_alert(
+   name='error detector',
+   source='events',
+   frequency=1,
+   pattern='error',
+   notification='email'
+)
 ```
 
 ### Manual alert
