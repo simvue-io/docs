@@ -53,45 +53,12 @@ Download the Simvue Python script for OpenFOAM:
 wget https://raw.githubusercontent.com/simvue-io/client/main/examples/simvue_openfoam.py
 ```
 
-Modify `Allrun` by making the following highlighted changes:
-``` sh hl_lines="23 23 25 25 27 27"
-#!/bin/sh
-cd ${0%/*} || exit 1    # Run from this directory
+This script both launches the simulation, and uses the Multiparser module to parse the output from the log file sending extracted values as metrics to the Simvue server.
 
-# Source tutorial run functions
-. $WM_PROJECT_DIR/bin/tools/RunFunctions
+Create a `simvue.ini` configuration file within the directory and run the script pointing to the `AllRun` file:
 
-application=$(getApplication)
-
-mapTimes="0.0015 0.003"
-
-# Iterate the string variable using for loop
-for mapTime in $mapTimes; do
-
-    runApplication -a blockMesh -dict blockMeshDict_$mapTime
-    rm -rf constant/meshToMesh_$mapTime
-    mkdir constant/meshToMesh_$mapTime
-    mv constant/polyMesh constant/meshToMesh_$mapTime
-
-done
-
-runApplication -a blockMesh
-
-python3 simvue_openfoam.py log.pimpleFoam &
-
-rm -f .finished
-runApplication $application
-touch .finished
-
-#------------------------------------------------------------------------------
-```
-We use a file `.finished` to tell the Python script that the application has finished executing, so that it knows
-when to close the simulation run and send any remaining metrics.
-
-## Running OpenFOAM
-OpenFOAM can then be run as normal:
-```
-./Allrun
+```sh
+python simvue_openfoam.py ./AllRun
 ```
 
 While the simulation is running we can visualize the residuals in the UI in order to understand how well it is converging, for example:
