@@ -48,6 +48,8 @@ def run_fds(input_file: str, offline: bool) -> None:
 
     _trigger = multiprocessing.Event()
 
+    click.echo(f"Running FDS simulation with input '{input_file}'")
+
     with Run() as run:
         def debug_callback(data, meta, run_instance: Run=run):
             if offline:
@@ -106,7 +108,8 @@ def run_fds(input_file: str, offline: bool) -> None:
                 source="metrics",
                 frequency=1,
                 rule="is above",
-                threshold=500
+                threshold=500,
+                trigger_abort=True
             )
 
             run.create_alert(
@@ -115,7 +118,8 @@ def run_fds(input_file: str, offline: bool) -> None:
                 source="metrics",
                 frequency=1,
                 rule="is below",
-                threshold=10
+                threshold=10,
+                trigger_abort=True
             )
 
             run.create_alert(
@@ -124,7 +128,8 @@ def run_fds(input_file: str, offline: bool) -> None:
                 source="metrics",
                 frequency=1,
                 rule="is above",
-                threshold=0.5
+                threshold=0.5,
+                trigger_abort=True
             )
             monitor.run()
 
