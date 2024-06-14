@@ -55,7 +55,7 @@ with simvue.Run() as run:
         source='metrics',
         metric='temp_at_x.3',
         rule='is above',
-        threshold=600,
+        threshold=400,
         frequency=1,
         window=1,
         )

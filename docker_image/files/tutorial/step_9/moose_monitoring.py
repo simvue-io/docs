@@ -65,10 +65,20 @@ with simvue.Run() as run:
         source='metrics',
         metric='temp_at_x.3',
         rule='is above',
-        threshold=600,
+        threshold=400,
         frequency=1,
         window=1,
         )
+    run.create_alert(
+        name='temperature_exceeds_melting_point',
+        source='metrics',
+        metric='temp_at_x.3',
+        rule='is above',
+        threshold=600,
+        frequency=1,
+        window=1,
+        trigger_abort=True
+    )
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
@@ -92,12 +102,6 @@ with simvue.Run() as run:
             step = int(step_num),
             timestamp = sim_metadata['timestamp']
         )
-    def per_alert(data, metadata):
-        if data['temperature_exceeds_maximum'] == 'Firing':
-            run.update_tags(['temperature_exceeds_maximum',])
-            run.kill_all_processes()
-            run.set_status('failed')
-            trigger.set()      
 
     with multiparser.FileMonitor(
         termination_trigger=trigger, 
@@ -119,9 +123,4 @@ with simvue.Run() as run:
             callback = per_metric,
             static=True
         )
-        file_monitor.tail(
-            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"),
-            parser_func=mp_tail_parser.record_csv,
-            callback = per_alert,
-  )
         file_monitor.run()
