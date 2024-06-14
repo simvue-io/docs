@@ -245,7 +245,7 @@ while time_elapsed < args.max_time:
     time_elapsed += args.time_interval
 ```
 
-So our new script will periodically check whether there are any firing alerts for our run, and write the names of any firing alerts to a CSV file. We will want this script to run whenever we are running a MOOSE simulation, and therefore can add it as another process for Simvue to handle. In `moose_multiparser.py`, we can add a new process under where we defined our alert:
+So our new script will periodically check whether there are any firing alerts for our run, and record any firing alerts in a CSV file. We will want this script to run whenever we are running a MOOSE simulation, and therefore can add it as another process for Simvue to handle. In `moose_multiparser.py`, we can add a new process under where we defined our alert:
 ```py
 run.add_process(
     identifier='alert_monitor', 
@@ -264,4 +264,9 @@ You can create a similar script for any parameter which you want to retrieve fro
     ```
     python tutorial/step_9/moose_monitoring.py
     ```
+    You can view the CSV file produced with the following command:
+    ```
+    cat tutorial/step_9/results/alert_status.csv
+
+Once our monitoring script has finished, we can view the CSV file which has been produced in our results directory called `alert_status.csv`. We should see that our 400 degree alert is triggered first, and then some time later our 600 degree alert is triggered. While this 600 degree alert will abort the run, it may take up to a minute for the run to actually abort since the signal to do this is sent as part of the heartbeat.
 
