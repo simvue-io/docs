@@ -151,7 +151,7 @@ def create_markdown(
     metadata = parse_numpydoc(docstring, signature)
 
     return template.render(
-        metadata=metadata, function_name=name, is_property=is_property
+        metadata=metadata, function_name=name.replace("_","\\_"), is_property=is_property
     )
 
 

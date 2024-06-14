@@ -89,23 +89,14 @@ All existing metadata is preserved. If a metadata attribute already exists its v
 
 
 ## Ending the run
-To cleanly finish a run:
+If using the context manager the run will close automatically and the state of the run will be set to either "completed" or "failed" depending on whether or not the code exited correctly. Any batches of metrics or events not yet sent to the remote server will be sent at this point.
+
+If the context manager is not used, you must ensure the `close` method is closed to correctly terminate monitoring:
 ```python
 run.close()
 ```
-Any batches of metrics or events not yet sent to the remote server will be sent at this point.
+If the method is not called the run will eventually be set to a state of "lost".
 
-An alternative to this is to use a context manager, for example:
-```python
-with Run() as run:
-   run.init(...)
-
-   ...
-```
-In this case it is not necessary to explicitly run `run.close()`. Another benefit of using the context manager is
-that if the code exits with an exception the status of the run will change to `failed`.
-
-Without the context manager, if a code exits without calling `close()` after a few minutes the state of the run will change to `lost`.
 
 ## Multiple runs in one code
 
@@ -126,15 +117,6 @@ During testing it might be useful to disable monitoring by Simvue. To do this, u
 with Run(mode='disabled') as run:
 ```
 
-## Alternative use
-In cases where the context manager cannot be used (e.g. the `Run` object is required externally) you will need to
-manually close the run on completion:
-
-```python
-run = Run()
-...
-run.close()
-```
 ??? further-docs "Further Documentation"
 
     - [^^The init() method^^](/reference/run/#init)
