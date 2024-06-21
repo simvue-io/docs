@@ -23,7 +23,7 @@ RUN CC=gcc-10 CXX=g++-10 /home/dev/.pyenv/bin/pyenv install 3.10.13
 RUN /home/dev/.pyenv/bin/pyenv global 3.10.13
 
 # Add Simvue (dev for now), Multiparse
-RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install git+https://github.com/simvue-io/client.git@v1.0-rc3#egg=simvue[plot,dataset]
+RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install simvue[plot,dataset]
 RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install ukaea-multiparser
 
 # Some generic settings for building the image

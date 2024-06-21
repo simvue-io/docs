@@ -37,6 +37,7 @@ The next thing which we need to do is initialize a Simvue run. To do this, we fi
 import time
 import shutil
 import os.path
+import re
 
 if os.path.exists('./MOOSE/results'):
     shutil.rmtree('./MOOSE/results')
