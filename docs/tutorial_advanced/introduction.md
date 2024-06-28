@@ -14,6 +14,9 @@ By the end of this tutorial, you will be able to:
 
 There are two options for following along with this tutorial. The recommended option is to use the provided Docker container, which has MOOSE, Paraview, and Simvue pre installed. The scripts which we produce after each step are also provided in the container so that you can run them more easily. You could alternatively install each component individually, and brief instructions for this are also listed below.
 
+!!! note
+    This tutorial uses MOOSE as an example simulation to teach you how to build your own custom scripts for tracking any generic simulation. We do also provide a Wrapper for convenient tracking of MOOSE scripts specifically (along with a number of other simulation softwares), so if you just want to easily track your MOOSE simulations then [^^see here for an example of using that Wrapper.^^](/examples/moose)
+
 ## Option 1: Setup using Docker container **(Recommended)**
 When running inside the provided docker container, each step in the tutorial has a corresponding file stored in the container. To run these, look out for boxes in each step which look like this:
 !!! docker "Run in Docker Container"
