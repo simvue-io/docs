@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install -r requirements.txt
-      - run: pip install git+https://github.com/simvue-io/client.git@v1.0-rc
+      - run: pip install git+https://github.com/simvue-io/client.git@v1.0.1-rc
       - name: Create Reference Pages
         run: python scripts/create_api_docs.py docs/
       - run: mkdocs build
