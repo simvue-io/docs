@@ -36,7 +36,7 @@ if __name__ == "__main__":
     with Run() as run:
         # Initialise the run
         run.init(name='random-numbers-%d' % time.time(),
-                description='Monitoring of the generation of random integers between 0 and 10.'
+                description='Monitoring of the generation of random integers between 0 and 10.',
                 tags=['random-numbers', 'WIP'],
                 folder='/rand_nums')
 
@@ -221,7 +221,7 @@ if __name__ == "__main__":
             })
             time.sleep(1)
 ```
-Upon running the script again and checking the UI, you should now see a new graph in the `Metrics` tab which shows three lines, one for each metric:
+Run the script again and in the run UI, press the 'magic wand' button on the `Metrics` tab to group similar metrics together. You should now see a new graph which shows three lines, one for each metric:
 
 ![Averages line plot](images/metrics-averages-twenty-steps.png)
 
@@ -246,14 +246,14 @@ run.log_metrics({
 ```
 Rerunning the code with either of these solutions should show the the two graphs of the metrics in the UI go back to using the number of the iteration for the `step` parameter on the x axis.
 
-You can also customise these plots from within the UI. From the `Metrics` tab of your run, disable `Display All Metrics` using the toggle in the top left of the screen. You can now add any metrics you wish to the plot, and define the `x` and `y` axis which you wish to look at. As an example, let us plot the metrics `random_number` and `averages.mean` on a single plot. We can than also change the `x` axis to show units of `time` instead of `step`,  and set the `y` axis to be between zero and ten. Doing this gives us a plot which looks something like this:
+You can also customise these plots from within the UI. From the `Metrics` tab of your run, click the `View` dropdown in the top left, and select `Single`. Then on the empty window which appears, click the three dots on the right hand side, and then click `Edit`. You can now add any metrics you wish to the plot, and define the `x` and `y` axis which you wish to look at. As an example, go to the `Data` tab, and select `random_number` and `averages.mean`. Doing this gives us a plot which looks something like this:
 
 ![Averages line plot](images/metrics-custom-plot.png)
 
 You should be able to see that the random number generated has a direct effect on the value of the mean - if the random number generated at any given time is below the mean, then the mean is dragged downwards, and if the random number is above the mean then the mean is pushed upwards.
 
 ### Resource Usage Metrics
-Resource usage metrics are collected automatically from the Python client, and displayed under the `Resources` tab of the run in the UI. So far we have not been able to see them, since they are collected every thirty seconds be default, and our program has only run for 10 seconds at a time. To fix this, we will update our run config to sample the resource metrics every 10 seconds using the `resources_metrics_interval` argument, and we will increase our number of iterations in the loop to 30:
+Resource usage metrics are collected automatically from the Python client - to view these, go to the `Metrics` tab of the run UI, and select `Resources` in the `View` dropdown in the top left. So far we have not been able to see them, since they are collected every thirty seconds be default, and our program has only run for 10 seconds at a time. To fix this, we will update our run config to sample the resource metrics every 10 seconds using the `resources_metrics_interval` argument, and we will increase our number of iterations in the loop to 30:
 
 ```  py
 import random
@@ -301,7 +301,7 @@ if __name__ == "__main__":
             }, step=count)
             time.sleep(1)
 ```
-Rerunning the script should now allow you to see your computer's CPU and RAM usage over time in the `Resources` tab in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
+Rerunning the script should now allow you to see your computer's CPU and RAM usage over time in the `Resources` view in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
 
 ## Events
 ### Logging
@@ -538,7 +538,7 @@ If we rerun our code now, we should see that the `Metadata` tab of the run's UI 
 In a similar way, we can update the tags of a run at any point. Let us say that we want to keep track of which runs have been completed, and which were interrupted / crashed before they could finish. To do this, we will add a new tag to our run initialisation when the code is complete, by adding the following line to the end of our code:
 
 ``` py
-run.update_tags(['random-numbers', 'WIP', 'completed'])
+run.update_tags(['completed',])
 ```
 
 Now running our code and allowing the run to complete should show that a new tag is added to the run in the `Runs` tab of the UI. If the code is executed and stopped mid way through its iterations, then the run should not have the new tag. You can then use the filters in the UI to only show runs which fully completed - in our case, this should only show the one run which we just allowed to be fully completed.
@@ -671,7 +671,7 @@ run.create_alert(name='zero_division_error',
               )
 ```
 
-Running the code again should show that this alert is immediately triggered for every run (since on the first iteration, `median == mode`). The alert should show up in the `Alerts` tab of the run UI.
+Running the code again should show that this alert is triggered after around a minute or so for every run (since on the first iteration, `median == mode`). The alert should show up in the `Alerts` tab of the run UI.
 
 The full code is as follows:
 ```  py

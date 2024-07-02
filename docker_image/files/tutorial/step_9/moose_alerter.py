@@ -6,17 +6,17 @@ import os
 
 parser = argparse.ArgumentParser(description='Monitor alerts from a Simvue run.')
 parser.add_argument(
-  '--run_name', 
+  '--run-name', 
   type=str,
   help='The name of the run to monitor alerts for.'
   )
 parser.add_argument(
-  '--time_interval', 
+  '--time-interval', 
   type=int,
   help='The interval between queries to the alert status, in seconds.'
   )
 parser.add_argument(
-  '--max_time', 
+  '--max-time', 
   type=int,
   help='The maximum time which this script will run for.'
   )
