@@ -1,5 +1,4 @@
-import os
-from openfoam import OpenfoamRun
+from simvue_integrations.wrappers.openfoam import OpenfoamRun
 
 with OpenfoamRun() as run:
     # Initialize your Simvue run as normal
@@ -8,7 +7,7 @@ with OpenfoamRun() as run:
     )
 
     # Can add anything to the Simvue run which you want before / after the MOOSE simulation
-    run.update_metadata({"user_name": "Matt F"})
+    run.update_metadata({"simulation": "movingCone"})
     run.create_alert(
         name='ux_residuals_too_high',
         source='metrics',
@@ -23,8 +22,7 @@ with OpenfoamRun() as run:
     
     # Call this to begin your MOOSE simulation
     run.launch(
-        openfoam_case_dir='?',
-
+        openfoam_case_dir='/home/openfoam/movingCone',
     )
 
     # Again can add any custom data to the Simvue run

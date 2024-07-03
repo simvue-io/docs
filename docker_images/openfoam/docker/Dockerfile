@@ -7,11 +7,11 @@ RUN apt-get update && \
     apt-get install -y python3.10-distutils && \
     apt-get install -y python3-pip && \
     curl https://bootstrap.pypa.io/get-pip.py | python3 && \
-    apt-get install python3.10-venv
-
+    apt-get install python3.10-venv && \
+    apt-get install -y git
 
 RUN python3.10 -m venv venv && \
-    venv/bin/python -m pip install simvue ukaea-multiparser && \
+    venv/bin/python -m pip install git+https://github.com/simvue-io/integrations.git && \
     cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone/ . && \
     cp -r /opt/openfoam10/tutorials/heatTransfer/buoyantFoam/hotRoom/ .
 

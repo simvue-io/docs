@@ -17,15 +17,15 @@ material_inputs = {
         'moose_file': os.path.join(script_dir, 'steel_mug.i'),
         'results_dir': os.path.join(script_dir, 'results', 'steel')
     },
-    'copper': {
-        'run_name': 'mug_thermal_copper-%d' % time.time(),
-        'moose_file': os.path.join(script_dir, 'copper_mug.i'),
-        'results_dir': os.path.join(script_dir, 'results', 'copper')
-    },
     'ceramic': {
         'run_name': 'mug_thermal_ceramic-%d' % time.time(),
         'moose_file': os.path.join(script_dir, 'ceramic_mug.i'),
         'results_dir': os.path.join(script_dir, 'results', 'ceramic')
+    },
+    'copper': {
+        'run_name': 'mug_thermal_copper-%d' % time.time(),
+        'moose_file': os.path.join(script_dir, 'copper_mug.i'),
+        'results_dir': os.path.join(script_dir, 'results', 'copper')
     }
 }
 
