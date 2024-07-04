@@ -33,6 +33,9 @@ nav:
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
     - Artifacts: analysis/artifacts.md
+  - Integrations:
+    - Custom Wrapper: integrations/generic.md
+    - MOOSE Wrapper: integrations/moose.md
   - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial_basic/introduction.md
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
