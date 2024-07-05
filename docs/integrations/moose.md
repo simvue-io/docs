@@ -75,7 +75,7 @@ with MooseRun() as run:
    # Can use any of the base Simvue run methods before calling launch():
    run.update_metadata({"simulation_type": "moose"})
    run.update_tags["moose",]
-   run.save_file(os.path.abspath(__file__), "input")
+   run.save_file(os.path.abspath(__file__), "code")
    run.log_event("Starting MOOSE simulation...")
 
    run.launch(
@@ -99,7 +99,7 @@ import import multiparser.parsing.file as mp_file_parser
 
 class MyMooseRun:
    def during_simulation(self):
-      # Call the 'trac' method to the file monitor produced by MooseRun
+      # Call the 'track' method to the file monitor produced by MooseRun
       # Use the JSON parser, and upload data produced as metadata
       self.file_monitor.track(
          path_glob_exprs = os.path.join(self.output_dir_path, f"{self.results_prefix}.json"),
