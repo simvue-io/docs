@@ -2,7 +2,7 @@
 
 When integrating Simvue with a new simulation software, a wrapper to the Simvue `Run` class will be created which adds functionality for tracking any generic simulation. This wrapper should inherit from the generic `WrappedRun` class.
 
-For monitoring generic simulations (which are not Python based), we will typically parse log and results files as they are written by the simulation. We do this using the `multiparser` module - [see here for full documentation](https://ukaea.github.io/Multiparser/).
+For monitoring generic simulations (which are not Python based), we will typically parse log and results files as they are written by the simulation. We do this using the `multiparser` module - [see here for full documentation.](https://ukaea.github.io/Multiparser/) You can also view an example of using Multiparser with Simvue to track a simulation [in the advanced tutorial](/tutorial_advanced/introduction).
 ## WrappedRun
 
 The `WrappedRun` class is included in the `simvue_integrations` repository. To get this functionality, install this within your virtual environment:
