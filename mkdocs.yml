@@ -36,6 +36,7 @@ nav:
   - Integrations:
     - Custom Wrapper: integrations/generic.md
     - MOOSE Wrapper: integrations/moose.md
+    - Openfoam Wrapper: integrations/openfoam.md
   - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial_basic/introduction.md
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md

@@ -2,7 +2,7 @@
 
 MOOSE is an open source, parallel finite element framework for solving complex multiphysics problems. To make tracking a MOOSE simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any MOOSE simulation.
 
-[See here to view a full example of implementing the MooseRun wrapper to track a MOOSE simulation.](/examples/moose)
+[^^See here to view a full example of implementing the MooseRun wrapper to track a MOOSE simulation.^^](/examples/moose)
 
 ## What is tracked
 

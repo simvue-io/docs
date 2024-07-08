@@ -2,7 +2,7 @@
 
 Openfoam is an open source Computational Fluid Dynamics solver. To make tracking an Openfoam simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any Openfoam simulation.
 
-[See here to view a full example of implementing the OpenfoamRun wrapper to track an Openfoam simulation.](/examples/openfoam)
+[^^See here to view a full example of implementing the OpenfoamRun wrapper to track an Openfoam simulation.^^](/examples/openfoam)
 
 ## What is tracked
 
