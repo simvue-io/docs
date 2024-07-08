@@ -50,7 +50,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 ## Integration with Simvue
-Using the provided `OpenfoamRun` wrapper, we can easily add Simvue tracking to an Openfoam run. This works by tracking the log files which are produced during execution of an Openfoam simulation. 
+Using the provided `OpenfoamRun` wrapper, we can easily add Simvue tracking to an OpenFOAM run. This works by tracking the log files which are produced during execution of an OpenFOAM simulation. 
 useful information from log files. With this example the log file `log.pimpleFoam` has records like this:
 ```log
 PIMPLE: Iteration 1
@@ -70,7 +70,12 @@ GAMG:  Solving for p, Initial residual = 0.122032, Final residual = 8.54167e-07,
 time step continuity errors : sum local = 4.65559e-09, global = -1.05257e-09, cumulative = -5.46678e-06
 ExecutionTime = 0.08856 s  ClockTime = 0 s
 ```
-To automatically track these, we can use the `OpenfoamRun` class from `simvue-integrations`. To initialize it, we simply need to provide the class with the directory where the Openfoam case is defined, adding any extra information as we wish before/after calling the `launch()` method:
+To automatically track these, we can use the `OpenfoamRun` class from `simvue-integrations`. 
+
+!!! further-docs
+    For information on how to install and use the `OpenfoamRun` wrapper, [^^see the full documentation here.^^](/integrations/openfoam)
+
+To initialize it, we simply need to provide the class with the directory where the OpenFOAM case is defined, adding any extra information as we wish before/after calling the `launch()` method:
 ```py
 from simvue_integrations.wrappers.openfoam import OpenfoamRun
 
@@ -100,15 +105,15 @@ source venv/bin/activate
 python example.py
 ```
 
-By using the Openfoam class:
+By using the OpenfoamRun class:
 
-- Information from the header of the log file, such as the build of Openfoam being used, is uploaded as metadata
+- Information from the header of the log file, such as the build of OpenFOAM being used, is uploaded as metadata
 - All inputs in the System and Constants folders, as well as the Allrun file, are uploaded as artifacts
 - Messages from all log files created before the solver begins are recorded as events
 - Residuals from the simulation are being plotted in real time in the Metrics tab of the run UI, as seen below
 
 <figure markdown>
-  ![A plot of theOpenFOAM residuals metrics, evaluated in real time on the UI. The metrics residuals.final.Ux, residuals.final.Uy and residuals.final.Uz are plotted on the same graph in different colours (blue, green and yellow respectively), with time in seconds along the x axis.](images/openfoam-residuals.png){ width="1000" }
+  ![A plot of the OpenFOAM residuals metrics, evaluated in real time on the UI. The metrics residuals.final.Ux, residuals.final.Uy and residuals.final.Uz are plotted on the same graph in different colours (blue, green and yellow respectively), with time in seconds along the x axis.](images/openfoam-residuals.png){ width="1000" }
 </figure>
 
 This should take approximately a minute to produce a solution. To view the solution in Paraview, type the following in your docker terminal:

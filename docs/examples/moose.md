@@ -74,11 +74,8 @@ To easily use Simvue to track your MOOSE simulations, a wrapper for the Simvue `
 - Track any variable values which are being output to a CSV file after each step by MOOSE, logging them as Metrics
 - Upload the Exodus file as an output artifact (if present) once the simulation has finished
 
-!!! note
-    To be able to use the MOOSE wrapper (or any of the other included wrappers and integrations) in your own scripts, you will need to checkout the `simvue-integrations` repository:
-    ```
-    pip install git+https://github.com/simvue-io/integrations.git
-    ```
+!!! further-docs
+    For information on how to install and use the MooseRun wrapper, [^^see the full documentation here.^^](/integrations/moose)
 
 
 Firstly we will create our MOOSE input file, which in our case uses the mesh for a coffee cup stored in the file `cup.e`, and defines the heat conduction kernels and functions to use to simulate the flow of heat through the cup. We define the boundary conditions for the system, eg the background temperature and the maximum temperature inside the mug, as well as some properties about the material such as the thermal conductivity and heat capacity. The log is sent to a file for storage, and results of the minimum, maximum and average temperature of the handle are stored in a CSV file after each time step.
