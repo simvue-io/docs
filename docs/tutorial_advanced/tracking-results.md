@@ -95,7 +95,15 @@ with multiparser.FileMonitor() as file_monitor:
   file_monitor.run()
 ```
 
-If we run our Python script now, we should see that our metrics are being updated live as the run progresses in the UI! However, you may notice something strange - the `step` parameter in the graphs looks odd, and does not correspond to the step which we are at in our simulation:
+If we run our Python script now, we should see that our metrics are being updated live as the run progresses in the UI!
+
+!!! docker "Run in Docker Container"
+    If running within the Docker container, use the following command to see our results being added as metrics:
+    ```sh
+    python tutorial/step_7/moose_monitoring_wrong_steps.py
+    ```
+
+However, you may notice something strange - the `step` parameter in the graphs looks odd, and does not correspond to the step which we are at in our simulation:
 <figure markdown>
   ![The Simvue run UI, showing metrics for the temperature at various points along the bar, but with incorrect steps.](images/moose_metrics_wrong_step.png){ width="1000" }
 </figure>
@@ -119,7 +127,7 @@ def per_metric(csv_data, sim_metadata):
 If we now run our Python script, we should see that the run UI shows all of the metrics updating live again, but with the step parameter correctly corresponding to the step in the simulation which the temperature was measured at. 
 
 !!! docker "Run in Docker Container"
-    If running within the Docker container, use the following command to see our results being added as metrics:
+    If running within the Docker container, use the following command to see our results being added as metrics, with the corrected `step` parameter:
     ```sh
     python tutorial/step_7/moose_monitoring.py
     ```

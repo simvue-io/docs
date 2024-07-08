@@ -1,5 +1,5 @@
 # OpenFOAM
-Here we will demonstrate how Openfoam simulations can be easily tracked using the OpenfoamRun integration into Simvue.
+OpenFOAM (Open Field Operation and Manipulation) is an open-source Computational Fluid Dynamics (CFD) software package used to solve complex fluid flows involving chemical reactions, turbulence, heat transfer, solid mechanics, and electromagnetics. It is widely used in academia and industry for research and engineering applications. Here we will demonstrate how Openfoam simulations can be easily tracked using the OpenfoamRun integration into Simvue.
 
 ## Setup
 The easiest way to run this example is to use the provided Docker container:
@@ -94,8 +94,9 @@ with OpenfoamRun() as run:
     run.update_tags(["finished"])
 ```
 
-To run our simulation in the docker container, simply run:
+To run our simulation in the docker container, simply activate the virtual environment and run the script:
 ```
+source venv/bin/activate
 python example.py
 ```
 

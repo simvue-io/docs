@@ -319,7 +319,7 @@ If you log into the Simvue UI and look in the Runs tab, you should see that thre
   ![The Simvue run UI showing three runs, corresponding to the Copper, Steel and Ceramic mugs.](images/moose_runs.png){ width="1000" }
 </figure>
 
-if we click on the run for the Ceramic mug, we can go through each of the tabs at the top to check that all of the information from the run has been stored as expected. For example:
+If we click on the run for the Ceramic mug, we can go through each of the tabs at the top to check that all of the information from the run has been stored as expected. For example:
 
 - Description says 'A simulation to model the transfer of heat through a coffee cup filled with hot liquid.'
 - Metadata contains the information we parsed from the MOOSE header, such as the MOOSE version, libmesh version etc
@@ -343,6 +343,8 @@ During execution of the simulation, you may have noticed that the Copper mug sim
 <figure markdown>
   ![The firing alert for the temperature of the copper mug's handle.](images/moose_firing_alert.png){ width="1000" }
 </figure>
+
+This is an important feature of Simvue, since it allows runs which are breach certain conditions and therefore are destined to fail to be terminated early, without intervention from the user. This can give a huge reduction in computational time and cost which is typically wasted on pointless simulations, while also helping to reduce the environmental impacts of running simulations.
 
 We can also plot the metrics from multiple runs all at once, to easily compare the temperatures which each of the different mugs reached. Firstly, Go to the Runs page of the UI and select the check box next to all three of our runs for our different materials. Next, click on the `Show Plots` button in the top right of the page (zig zag lines), which will open a window on the side of the page, where you can press `Add Plot`. You will see that this opens a similar popup to the one we used to create our custom graph above. We will then follow a similar process to before:
 
