@@ -18,10 +18,16 @@ By default, the following things are tracked by the `MooseRun` wrapper:
 
 ## Usage
 
-To use the `MooseRun` class, you must have the `simvue_integrations` repository installed:
+To use the `MooseRun` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+```
+python -m venv venv
+source venv/bin/activate
+```
+Then install the repository using `pip`:
 ```
 pip install git+https://github.com/simvue-io/integrations.git
 ```
+
 You can then use the `MooseRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
 - `moose_application_path`: Path to the compiled MOOSE application

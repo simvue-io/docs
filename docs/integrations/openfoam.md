@@ -2,7 +2,7 @@
 
 Openfoam is an open source Computational Fluid Dynamics solver. To make tracking an Openfoam simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any Openfoam simulation.
 
-[See here to view a full example of implementing the OpenfoamRun wrapper to track a MOOSE simulation.](/examples/moose)
+[See here to view a full example of implementing the OpenfoamRun wrapper to track an Openfoam simulation.](/examples/openfoam)
 
 ## What is tracked
 
@@ -17,10 +17,16 @@ By default, the following things are tracked by the `OpenfoamRun` wrapper:
 
 ## Usage
 
-To use the `OpenfoamRun` class, you must have the `simvue_integrations` repository installed:
+To use the `OpenfoamRun` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+```
+python -m venv venv
+source venv/bin/activate
+```
+Then install the repository using `pip`:
 ```
 pip install git+https://github.com/simvue-io/integrations.git
 ```
+
 You can then use the `OpenfoamRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
 - `openfoam_case_dir`: Path to the openfoam case directory, containing an AllRun script and all required inputs
