@@ -1,8 +1,9 @@
-# Openfoam Wrapper
+# OpenFOAM Wrapper
 
-Openfoam is an open source Computational Fluid Dynamics solver. To make tracking an Openfoam simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any Openfoam simulation.
+OpenFOAM is an open source Computational Fluid Dynamics solver. To make tracking an OpenFOAM simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any OpenFOAM simulation.
 
-[^^See here to view a full example of implementing the OpenfoamRun wrapper to track an Openfoam simulation.^^](/examples/openfoam)
+!!! further-docs
+    To view a detailed example of monitoring an OpenFOAM simulation using the OpenfoamRun wrapper, [^^see the example here.^^](/examples/openfoam)
 
 ## What is tracked
 
@@ -10,7 +11,7 @@ By default, the following things are tracked by the `OpenfoamRun` wrapper:
 
 - Uploads the input files stored in the `Constant` and `System` directories, as well as the initial conditions in the `0` directory, as `input` artifacts
 - Uploads the `Allrun` script as a `code` artifact
-- Uploads information from the top of the log files, such as the Openfoam build used, as metadata
+- Uploads information from the top of the log files, such as the OpenFOAM build used, as metadata
 - Uploads information from the log files before the solve begins to the events log
 - Tracks the residuals being calculated for each parameter as metrics
 - Once complete, uploads all of the outputs for each time step as `output` artifacts
@@ -29,9 +30,9 @@ pip install git+https://github.com/simvue-io/integrations.git
 
 You can then use the `OpenfoamRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
-- `openfoam_case_dir`: Path to the openfoam case directory, containing an AllRun script and all required inputs
+- `openfoam_case_dir`: Path to the OpenFOAM case directory, containing an AllRun script and all required inputs
 - `upload_as_zip`: Whether to upload inputs and outputs as `zip` archive files, or instead upload each file individually. Default is True.
-- `openfoam_env_vars`: A dictionary of any environment variables to pass to the Openfoam application (optional)
+- `openfoam_env_vars`: A dictionary of any environment variables to pass to the OpenFOAM application (optional)
 
 Your Python script may look something like this:
 ```py
@@ -75,7 +76,7 @@ with OpenfoamRun() as run:
 ```
 
 ### Adding files to track during the simulation
-If there are extra files being produced by your specific Openfoam simulation which you would like to keep track of in addition to the functionality provided by the base `OpenfoamRun` class, you can create a new class which inherits from `OpenfoamRun` and add extra files to keep track of to the `during_simulation()` method. For example, say that we have a Openfoam simulation which will produce a JSON file which contains some key metadata which we want to have uploaded to our Simvue run. We create a custom class, `MyOpenfoamRun`, as follows:
+If there are extra files being produced by your specific OpenFOAM simulation which you would like to keep track of in addition to the functionality provided by the base `OpenfoamRun` class, you can create a new class which inherits from `OpenfoamRun` and add extra files to keep track of to the `during_simulation()` method. For example, say that we have a OpenFOAM simulation which will produce a JSON file which contains some key metadata which we want to have uploaded to our Simvue run. We create a custom class, `MyOpenfoamRun`, as follows:
 
 ```py
 # Use file parser from multiparser

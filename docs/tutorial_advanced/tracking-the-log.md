@@ -37,6 +37,7 @@ The next thing which we need to do is initialize a Simvue run. To do this, we fi
 import time
 import shutil
 import os.path
+import re
 
 if os.path.exists('./MOOSE/results'):
     shutil.rmtree('./MOOSE/results')
@@ -269,7 +270,7 @@ Now that this alert is set up it will notify the user if a step has failed to co
     app/moose_tutorial-opt -i tutorial/step_4/simvue_thermal.i --color off
     ```
 
-You should also receive an email, since you set that as your notification policy above. Note that this only took around 2 minutes, whereas waiting for the MOOSE simulation to fully complete would take around 6 minutes. However in both situations the result is the same, with an almost perfectly linear distribution of heat across the length of the bar.
+You should also receive an email, since you set that as your notification policy above. Note that this only took around 2 minutes, whereas waiting for the MOOSE simulation to fully complete would take around 6 minutes. However in both situations the result is the same, with an almost perfectly linear distribution of heat across the length of the bar. This means that by using Simvue alerts, we have been able to reduce the computation time by more than half, while achieving the same result - a potentially huge time and cost saving! This also allows us to reduce the environmental impact of running our simulations, by avoiding simulating steps which will give minimal improvement to the overall solution.
 
 However when this alert fires, it will still require manual intervention to stop the MOOSE simulation, and then also stop the background processes which are caused by the monitoring script.
 

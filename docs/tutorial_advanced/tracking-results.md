@@ -95,7 +95,15 @@ with multiparser.FileMonitor() as file_monitor:
   file_monitor.run()
 ```
 
-If we run our Python script now, we should see that our metrics are being updated live as the run progresses in the UI! However, you may notice something strange - the `step` parameter in the graphs looks odd, and does not correspond to the step which we are at in our simulation:
+If we run our Python script now, we should see that our metrics are being updated live as the run progresses in the UI!
+
+!!! docker "Run in Docker Container"
+    If running within the Docker container, use the following command to see our results being added as metrics:
+    ```sh
+    python tutorial/step_7/moose_monitoring_wrong_steps.py
+    ```
+
+However, you may notice something strange - the `step` parameter in the graphs looks odd, and does not correspond to the step which we are at in our simulation:
 <figure markdown>
   ![The Simvue run UI, showing metrics for the temperature at various points along the bar, but with incorrect steps.](images/moose_metrics_wrong_step.png){ width="1000" }
 </figure>
@@ -119,7 +127,7 @@ def per_metric(csv_data, sim_metadata):
 If we now run our Python script, we should see that the run UI shows all of the metrics updating live again, but with the step parameter correctly corresponding to the step in the simulation which the temperature was measured at. 
 
 !!! docker "Run in Docker Container"
-    If running within the Docker container, use the following command to see our results being added as metrics:
+    If running within the Docker container, use the following command to see our results being added as metrics, with the corrected `step` parameter:
     ```sh
     python tutorial/step_7/moose_monitoring.py
     ```
@@ -132,7 +140,7 @@ We can also now plot all of these metrics on the same graph to compare them - on
 ## Adding Alerts
 Now that we have metrics which are monitoring the temperatures of certain points along the bar, we can set up alerts which automatically stop the simulation if certain conditions have been breached. for example, let's say that instead of the rod being a fixed temperature at both ends, the temperature of both ends begins at zero, but one end has a temperature which increases linearly with time as the simulation progresses.
 
-Now imagine that we have a system where we cannot allow the temperature at the centre of the bar to exceed 600 degrees, this being the point where the material will become too weak and the bar will begin to collapse in the middle. For this system, we can add an alert based on the metric for the temperature at the centre of the bar, `x=3`. 
+Now imagine that we have a system where we cannot allow the temperature at the centre of the bar to exceed 400 degrees, this being the point where the material will become too weak and the bar will begin to collapse in the middle. For this system, we can add an alert based on the metric for the temperature at the centre of the bar, `x=3`. 
 
 Firstly, lets update our MOOSE input file so that we have a few more data points to play with. In the executioner block, change the time step to be `0.5` and the end time to be `100`:
 ```
@@ -155,14 +163,14 @@ We can then edit our boundary conditions block to support a function of temperat
   []
 ```
 
-We can then add a new alert to our run: Let us use it to track the temperature at `x=3`, and alert us when the value is above 600 degrees for more than 1 minute (to ensure it isn't just an outlier). To do this we will use the `is above` alert, with the threshold set to 600. After the alert which we have added to monitor non convergence, we can add the following:
+We can then add a new alert to our run: Let us use it to track the temperature at `x=3`, and alert us when the value is above 400 degrees for more than 1 minute (to ensure it isn't just an outlier). To do this we will use the `is above` alert, with the threshold set to 400. After the alert which we have added to monitor non convergence, we can add the following:
 ```py
 run.create_alert(
   name='temperature_exceeds_maximum',
   source='metrics',
   metric='temp_at_x.3',
   rule='is above',
-  threshold=600,
+  threshold=400,
   frequency=1,
   window=1,
   )
@@ -174,9 +182,24 @@ run.create_alert(
     ```
 If we run our script, we should see now see in the run UI that the temperatures at each point no longer converge, but instead begin to increase linearly as the temperature at the end of the bar increases linearly. We should get an alert which is triggered after a few minutes of the simulation running, which can be viewed in the Alerts tab.
 
+## Using Firing Alerts to Terminate a Run
+So our alert above will trigger when the centre of the bar reaches 400 degrees, alerting the user that they may want to check how the simulation is proceeding and whether it is worth continuing or aborting the run early. However let's say that we have another alert where we are certain that the run has failed - for example, let's say that we are sure that if the centre of the bar has reached 600 degrees, the material will have fully melted and the bar will have collapsed. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To do this, we can specify the `trigger_abort` parameter in our alert definition:
+```py
+run.create_alert(
+  name='temperature_exceeds_melting_point',
+  source='metrics',
+  metric='temp_at_x.3',
+  rule='is above',
+  threshold=600,
+  frequency=1,
+  window=1,
+  trigger_abort=True
+  )
+```
+If we run our script with this new alert in place, we should see the 400 degree alert which we defined above trigger first and be visible in the UI. A short time later, we should see our new 600 degree alert fire, and the simulation should automatically stop.
 ## Monitoring Alerts using the Client
 
-The above alert will trigger when the temperature at the centre of the bar has been above the given value for more than 1 minute. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To monitor the status of this alert, we will use the `Client` class from Simvue. This class allows you to retrieve a number of different aspects of ongoing or past runs, including metrics, events, artifacts and alerts.
+Say that we wanted to keep track of which alerts are firing at regular intervals as the run proceeds, so that we can review these later. To monitor the status of an alert, we will use the `Client` class from Simvue. This class allows you to retrieve a number of different aspects of ongoing or past runs, including metrics, events, artifacts and alerts.
 
 To be able to regularly monitor the status of our alert as the run proceeds, we will create a new Python script. This script will then create a CSV file which contains the status of the alert at regular time intervals, which can be monitored using Multiparser. Create a new file called `moose_alerter.py`, and use the `argparse` Python module to create a script which accepts the name of the run to monitor, the time interval between checks of the alert status, and the maximum time which the script will run for:
 
@@ -205,7 +228,7 @@ We then want the script to create a new CSV file, which contains the time interv
 ```py
 with open('MOOSE/results/alert_status.csv', 'w', newline='') as csvfile: 
     csvwriter = csv.writer(csvfile) 
-    csvwriter.writerow(['time', 'step_not_converged', 'temperature_exceeds_maximum'])
+    csvwriter.writerow(['time', 'step_not_converged', 'temperature_exceeds_maximum', 'temperature_exceeds_melting_point'])
 ```
 We then want to create a loop which performs the check for firing alerts, appends a line to the CSV file, and then waits for the given time interval. The methods which we will need from the Client class are `get_run_id_from_name()` and `get_alerts()`, which returns a list of the names of firing alerts:
 ```py
@@ -222,6 +245,7 @@ while time_elapsed < args.max_time:
                 time_elapsed, 
                 ('Firing' if 'step_not_converged' in alerts else 'Normal'), 
                 ('Firing' if 'temperature_exceeds_maximum' in alerts else 'Normal')
+                ('Firing' if 'temperature_exceeds_melting_point' in alerts else 'Normal')
             ]
           )
     
@@ -229,8 +253,7 @@ while time_elapsed < args.max_time:
     time_elapsed += args.time_interval
 ```
 
-## Using Firing Alerts to Terminate a Run
-So our new script which we created above will periodically check whether there are any firing alerts for our run, and write the names of any firing alerts to a CSV file. We will want this script to run whenever we are running a MOOSE simulation, and therefore can add it as another process for Simvue to handle. In `moose_multiparser.py`, we can add a new process under where we defined our alert:
+So our new script will periodically check whether there are any firing alerts for our run, and record any firing alerts in a CSV file. We will want this script to run whenever we are running a MOOSE simulation, and therefore can add it as another process for Simvue to handle. In `moose_multiparser.py`, we can add a new process under where we defined our alert:
 ```py
 run.add_process(
     identifier='alert_monitor', 
@@ -241,40 +264,7 @@ run.add_process(
     max_time="1000"
   )
 ```
-
-We can then add a new call to `tail()` within our file monitor, to check the latest additions to the CSV file created as the simulation proceeds:
-```py
-with multiparser.FileMonitor() as file_monitor:
-  ...
-  file_monitor.tail(
-    path_glob_exprs = "MOOSE/results/alert_status.csv", 
-    callback = per_alert,
-  )
-  file_monitor.run()
-```
-Typically when using `tail()`, we need to tell the method which values we want to keep track of from the file. However in our case, we would instead want each line of the CSV file to be converted to a dictionary, which we will then use to look for certain values within the callback function. In this case, we can use one of the custom parsers built into Multiparser. If we import the tail parsers, we can then select the `record_csv` function to parse the lines in the file:
-```py
-import multiparser.parsing.tail as mp_tail_parser
-...
-with multiparser.FileMonitor() as file_monitor:
-  ...
-  file_monitor.tail(
-    path_glob_exprs = "MOOSE/results/alert_status.csv", 
-    parser_func = mp_tail_parser.record_csv,
-    callback = per_alert,
-  )
-  file_monitor.run()
-```
-We can then define our callback function - if our alert called `temperature_exceeds_maximum` is firing, we will want to stop execution of the simulation. To do this, we can use the `kill_all_processes()` method of our run to stop the MOOSE simulation and analysis script, and we can set the trigger which will stop the file monitoring processes. We could also add a tag to the run which indicates that the centre of the bar has exceeded the maximum temperature, and set the status as failed:
-```py
-def per_alert(data, metadata):
-  if data['temperature_exceeds_maximum'] == 'Firing':
-    run.update_tags(['temperature_exceeds_maximum',])
-    run.kill_all_processes()
-    run.set_status('failed')
-    trigger.set()
-```
-If we run our `moose_multiparser.py` script now, we should see that the simulation is terminated after around 100 steps of the simulation. This is opposed to waiting for all 200 steps to complete when our simulation would normally have finished, cutting our computation time by half.
+You can create a similar script for any parameter which you want to retrieve from the Simvue run as it proceeds.
 
 !!! docker "Run in Docker Container"
 
@@ -282,4 +272,9 @@ If we run our `moose_multiparser.py` script now, we should see that the simulati
     ```
     python tutorial/step_9/moose_monitoring.py
     ```
+    You can view the CSV file produced with the following command:
+    ```
+    cat tutorial/step_9/results/alert_status.csv
+
+Once our monitoring script has finished, we can view the CSV file which has been produced in our results directory called `alert_status.csv`. We should see that our 400 degree alert is triggered first, and then some time later our 600 degree alert is triggered. While this 600 degree alert will abort the run, it may take up to a minute for the run to actually abort since the signal to do this is sent as part of the heartbeat.
 
