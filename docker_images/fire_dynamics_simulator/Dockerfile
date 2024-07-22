@@ -10,6 +10,6 @@ apt clean
 COPY example/warehouse_w_doors.fds /workdir/input.fds
 COPY run_simulation.py /workdir/run_simulation.py
 COPY fds_unlim /workdir/fds_unlim
-RUN python3 -m pip install git+https://github.com/simvue-io/client.git@v1.0-rc2 --break-system-packages
+RUN python3 -m pip install git+https://github.com/simvue-io/client.git@v1.0.1 --break-system-packages
 RUN python3 -m pip install ukaea-multiparser[fortran] click --break-system-packages
 ENTRYPOINT [ "python3", "/workdir/run_simulation.py", "/workdir/input.fds" ]
