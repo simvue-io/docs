@@ -47,7 +47,7 @@ def completion_callback_func(status_code: int, std_out: str, std_err: str) -> No
     ...
 ```
 
-and will be called once the process has terminated. Note due to differences in Python between UNIX and Windows based systems `completion_callback` is not supported on Windows at this time.
+and will be called once the process has terminated.
 
 Alternatively `completion_trigger` is a `multiprocessing.Event` or `threading.Event` object which will be set once the process completes, this can then be used as a trigger:
 
@@ -58,6 +58,8 @@ run.add_process("my_process", executable="bash", c="echo 'Hello World!'", comple
 while not trigger.is_set():
     time.sleep(10)
 ```
+
+Note due to differences in Python between UNIX and Windows based systems `completion_trigger` is not supported on Windows at this time.
 
 ## Monitoring
 

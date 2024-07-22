@@ -1,7 +1,6 @@
 import simvue
 import multiparser
 import multiparser.parsing.file as mp_file_parser
-import multiparser.parsing.tail as mp_tail_parser
 import time
 import shutil
 import os
@@ -41,18 +40,9 @@ with simvue.Run() as run:
     run.add_process(
         identifier='thermal_diffusion_simulation',
         executable='app/moose_tutorial-opt',
-        i="tutorial/step_9/simvue_thermal.i",
+        i="tutorial/step_7/simvue_thermal.i",
         color="off",
         )
-    run.add_process(
-        identifier='alert_monitor', 
-        executable="python", 
-        script="tutorial/step_9/moose_alerter.py", 
-        run_name=run_name,
-        time_interval="10", 
-        max_time="1000"
-        )
-
     run.create_alert(
         name='step_not_converged',
         source='events',
@@ -60,15 +50,7 @@ with simvue.Run() as run:
         pattern=' Solve Did NOT Converge!',
         notification='email'
         )
-    run.create_alert(
-        name='temperature_exceeds_maximum',
-        source='metrics',
-        metric='temp_at_x.3',
-        rule='is above',
-        threshold=600,
-        frequency=1,
-        window=1,
-        )
+
     def per_event(log_data, metadata):
         if any(key in ("time_step", "converged", "non_converged") for key in log_data.keys()):
             run.log_event(list(log_data.values())[0])
@@ -89,16 +71,9 @@ with simvue.Run() as run:
             {
             f"temp_at_x.{csv_data['x']}": csv_data['T']
             },
-            step = int(step_num),
             timestamp = sim_metadata['timestamp']
         )
-    def per_alert(data, metadata):
-        if data['temperature_exceeds_maximum'] == 'Firing':
-            run.update_tags(['temperature_exceeds_maximum',])
-            run.kill_all_processes()
-            run.set_status('failed')
-            trigger.set()      
-
+                
     with multiparser.FileMonitor(
         termination_trigger=trigger, 
     ) as file_monitor:
@@ -119,9 +94,4 @@ with simvue.Run() as run:
             callback = per_metric,
             static=True
         )
-        file_monitor.tail(
-            path_glob_exprs =  os.path.join(script_dir, "results", "alert_status.csv"),
-            parser_func=mp_tail_parser.record_csv,
-            callback = per_alert,
-  )
         file_monitor.run()

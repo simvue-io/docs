@@ -7,6 +7,7 @@ The `config` method can be used to set some configuration options. It should be 
 * `storage_id`: specify, by identifier, the storage instance to use
 * `disable_resources_metrics`: when set to `False` resource usage metrics are not collected.
 * `resources_metrics_interval`: resource usage metrics are collected at this interval, in seconds. The default is 30 secs.
+* `abort_on_alert`: whether this run can be terminated by alerts which are configured to abort. This is `True` by default.
 
 Example:
 ```  py
