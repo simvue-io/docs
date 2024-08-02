@@ -1,16 +1,16 @@
-# MOOSE Wrapper
+# MOOSE Connector
 
-MOOSE is an open source, parallel finite element framework for solving complex multiphysics problems. To make tracking a MOOSE simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any MOOSE simulation.
+MOOSE is an open source, parallel finite element framework for solving complex multiphysics problems. To make tracking a MOOSE simulation as simple as possible, a connector has been created which can automatically track key metrics from any MOOSE simulation.
 
 !!! further-docs
-    To view a detailed example of monitoring a MOOSE simulation using the MooseRun wrapper, [^^see the example here.^^](/examples/moose)
+    To view a detailed example of monitoring a MOOSE simulation using the MooseRun connector, [^^see the example here.^^](/examples/moose)
 
 
-[^^See here to view a full example of implementing the MooseRun wrapper to track a MOOSE simulation.^^](/examples/moose)
+[^^See here to view a full example of implementing the MooseRun connector to track a MOOSE simulation.^^](/examples/moose)
 
 ## What is tracked
 
-By default, the following things are tracked by the `MooseRun` wrapper:
+By default, the following things are tracked by the `MooseRun` connector:
 
 - Upload the MOOSE input file and application Makefile as input artifacts
 - Launch the MOOSE simulation as a process, triggering an alert if it encounters an error or exception
@@ -42,7 +42,7 @@ You can then use the `MooseRun` class as a context manager, in the same way that
 
 Your Python script may look something like this:
 ```py
-from simvue_integrations.wrappers.moose import MooseRun
+from simvue_integrations.connectors.moose import MooseRun
 
 with MooseRun() as run:
    run.init("my_moose_run")
@@ -77,7 +77,7 @@ You can extend your script to upload extra information which is specific to your
 Since the `MooseRun` class inherits from the base Simvue `Run` class, all of the methods provided by base Simvue are available to use. This means that you can upload any extra data before or after you call the `launch()` method. For example:
 
 ```py
-from simvue_integrations.wrappers.moose import MooseRun
+from simvue_integrations.connectors.moose import MooseRun
 
 with MooseRun() as run:
    run.init("my_moose_run")

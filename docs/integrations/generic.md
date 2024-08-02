@@ -1,6 +1,6 @@
-# Custom Wrapper
+# Custom Connector
 
-When integrating Simvue with a new simulation software, a wrapper to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This wrapper should inherit from the generic `WrappedRun` class.
+When integrating Simvue with a new simulation software, a connector to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This connector should inherit from the generic `WrappedRun` class.
 
 For monitoring generic simulations (which are not Python based), we will typically parse log and results files as they are written by the simulation. We do this using the `multiparser` module - [^^see here for full documentation.^^](https://ukaea.github.io/Multiparser/) You can also view an example of using Multiparser with Simvue to track a simulation [^^in the advanced tutorial^^](/tutorial_advanced/introduction).
 ## WrappedRun

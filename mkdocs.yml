@@ -34,9 +34,9 @@ nav:
     - Events: analysis/events.md
     - Artifacts: analysis/artifacts.md
   - Integrations:
-    - Custom Wrapper: integrations/generic.md
-    - MOOSE Wrapper: integrations/moose.md
-    - Openfoam Wrapper: integrations/openfoam.md
+    - Custom Connector: integrations/generic.md
+    - MOOSE Connector: integrations/moose.md
+    - Openfoam Connector: integrations/openfoam.md
   - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial_basic/introduction.md
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md

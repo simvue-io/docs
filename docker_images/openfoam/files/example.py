@@ -3,7 +3,7 @@ from simvue_integrations.connectors.openfoam import OpenfoamRun
 with OpenfoamRun() as run:
     # Initialize your Simvue run as normal
     run.init(
-        name="testing_openfoam_wrapper",
+        name="testing_openfoam_connector",
     )
 
     # Can add anything to the Simvue run which you want before / after the MOOSE simulation
