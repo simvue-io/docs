@@ -15,6 +15,7 @@ To rebuild the MOOSE Docker file:
 8. Exit the contaner with Ctrl D
 9. Push the container into the registry: `docker push ghcr.io/simvue-io/moose_example:latest`
 
+## Openfoam Docker File
 To rebuild the Openfoam Docker file:
 1. Go to your Github account -> Account Settings -> Developer settings
 2. Create a personal access token, with access to `read:packages`, `write:packages`, and `delete:packages`

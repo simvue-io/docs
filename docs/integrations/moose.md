@@ -5,9 +5,6 @@ MOOSE is an open source, parallel finite element framework for solving complex m
 !!! further-docs
     To view a detailed example of monitoring a MOOSE simulation using the MooseRun connector, [^^see the example here.^^](/examples/moose)
 
-
-[^^See here to view a full example of implementing the MooseRun connector to track a MOOSE simulation.^^](/examples/moose)
-
 ## What is tracked
 
 By default, the following things are tracked by the `MooseRun` connector:

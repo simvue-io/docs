@@ -37,6 +37,7 @@ nav:
     - Custom Connector: integrations/generic.md
     - MOOSE Connector: integrations/moose.md
     - Openfoam Connector: integrations/openfoam.md
+    - FDS Connector: integrations/fds.md
   - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial_basic/introduction.md
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
@@ -55,6 +56,7 @@ nav:
     - Tensorflow: examples/basic-tensorflow.md
     - OpenFOAM: examples/openfoam.md
     - MOOSE: examples/moose.md
+    - FDS: examples/fds.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io
