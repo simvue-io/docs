@@ -105,13 +105,13 @@ source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git@main#egg=simvue-integrations[fds]
+pip install git+https://github.com/simvue-io/integrations.git@main#egg=simvue-integrations[tensorflow]
 ```
 
 ### Adding Basic Simvue Integration
 In the simplest example, all we need to do to add Simvue functionality to our model training is import the TensorVue class:
 ```py
-import simvue_integrations.tensorflow.tensorvue as sv_tf
+import simvue_integrations.connectors.tensorflow as sv_tf
 ```
 Initialize it with a name for our current project:
 ```py
@@ -273,7 +273,7 @@ And when we now run our script, once training is complete we should see that our
   ![An image of the predictions for the first 25 images, uploaded to Simvue.](images/tf_model_predictions_uploaded.png){ width="1000" }
 </figure>
 
-## Optimising the Model
+<!-- ## Optimising the Model
 Simvue allows you to easily optimise your Tensorflow models, keep track of how the optimisation is progressing, define alerts so that you can be made aware of situations where the optimisation is failing to sufficiently improve the model and terminate runs early, and build your optimised model into wider workflows which can all also be tracked using Simvue!
 
 To do the section below, you will need to [^^checkout the Simvue Optimisation repository^^](https://github.com/simvue-io/simvue-optim) - either clone the repository yourself, or add it to your virtual environment. Eg if you are using poetry, add the following to your `pyproject.toml`:
@@ -511,4 +511,4 @@ with param_sweep.ParameterSweep(
     completion_callback=completion_callback,
 ) as workspace:
     best_model = workspace.launch()
-```
+``` -->

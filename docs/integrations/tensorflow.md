@@ -80,7 +80,7 @@ model.fit(
     callbacks=[tensorvue,]
 )
 
-# Evaluate the model, again using the Tensorvue callback
+# Evaluate the model, again using the tensorvue callback
 results = model.evaluate(
     img_test,
     label_test,
