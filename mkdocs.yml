@@ -24,6 +24,7 @@ nav:
     - Events: tracking-monitoring/events.md
     - Artifacts: tracking-monitoring/artifacts.md
     - Alerts: tracking-monitoring/alerts.md
+    - Launching processes: tracking-monitoring/launching_processes.md
     - Logging handler: tracking-monitoring/logging-handler.md
   - Analysis:
     - Retrieving runs: analysis/retrieving-runs.md
@@ -32,6 +33,10 @@ nav:
     - Metrics: analysis/metrics.md
     - Events: analysis/events.md
     - Artifacts: analysis/artifacts.md
+  - Integrations:
+    - Custom Wrapper: integrations/generic.md
+    - MOOSE Wrapper: integrations/moose.md
+    - Openfoam Wrapper: integrations/openfoam.md
   - Tutorial 1 - Basic Functionality:
     - Introduction: tutorial_basic/introduction.md
     - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
@@ -55,6 +60,8 @@ nav:
 repo_url: https://github.com/simvue-io
 edit_uri: ""
 markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
   - admonition
   - def_list
   - attr_list

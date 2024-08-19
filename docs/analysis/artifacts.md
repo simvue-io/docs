@@ -4,7 +4,7 @@ If a simulation or processing step needs to read output (or input) data from an 
 and the data isn't already available then it will be first necessary to download the required data.
 
 In order to download artifacts we first need to create an instance of the Simvue `Client` class:
-```
+```python
 from simvue import Client
 client = Client()
 ```
@@ -15,13 +15,13 @@ the current directory or the required environment variables must be defined.
 
 The method `get_artifact` can be used to download an artifact and return its content. For example, if a run contains
 an artifact which is a NumPy array, you can retrieve it as follows:
-```
-my_array = client.get_artifact(my_run, my_numpy_array_name)
+```python
+my_array = client.get_artifact(run_identifier, my_numpy_array_name)
 ```
 In this case the variable `my_array` would contain the array originally uploaded.
 
-If an artifact was created with `allow_pickle=True` then this option also must be set in `get_artifact`, e.g.
-```
+If an artifact was created with `#!python allow_pickle=True` then this option should also when calling `get_artifact`, e.g.
+```python
 my_object = client.get_artifact(my_run, my_object, allow_pickle=True)
 ```
 
@@ -32,8 +32,8 @@ my_object = client.get_artifact(my_run, my_object, allow_pickle=True)
 ## Downloading a named artifact to a file
 
 The method `get_artifact_as_file` can be used to download a single named artifact from an existing run. For example:
-```
-client.get_artifact_as_file(run_name, artifact_name, path='/tmp')
+```python
+client.get_artifact_as_file(run_identifier, artifact_name, path='/tmp')
 ```
 will download `artifact_name` from run `run_name` into `/tmp`.
 If a path is not provided the file will be downloaded into the current working directory.
@@ -41,7 +41,7 @@ If a path is not provided the file will be downloaded into the current working d
 ## Downloading multiple artifacts
 
 The method `get_artifacts_as_files` can be used to download multiple artifacts from an existing run. For example:
-```
+```python
 client.get_artifacts_as_files(run_name, path='/tmp')
 ```
 will download all artifacts from run `run_name` into `/tmp`.
@@ -52,8 +52,12 @@ will download all artifacts from run `run_name` into `/tmp`.
 
 A category can be specified in order to restrict which files are
 downloaded, for example:
-```
-client.get_artifacts_as_files(run_name, path='/tmp', category='output')
+```python
+client.get_artifacts_as_files(
+    run_identifier,
+    path='/tmp',
+    category='output'
+)
 ```
 There are additional optional arguments for further restricting what files are downloaded:
 
@@ -62,8 +66,12 @@ There are additional optional arguments for further restricting what files are d
 * `endswith`: only files which end with the specified text.
 
 These can be combined with specification of a `category`. For example, to download all input files starting with `system/`:
-```
-client.get_artifacts_as_files(run_name, category='input', startswith='system/')
+```python
+client.get_artifacts_as_files(
+    run_identifier,
+    category='input',
+    startswith='system/'
+)
 ```
 
 ## Data Lineage and Dependencies
@@ -78,7 +86,7 @@ You can also view the dependencies of any of your artifacts, including the code 
 ## Simple example
 
 Here is a simple example where we download all output artifacts from `run1` and use them as input into `run2`.
-```
+```python
 from simvue import Client, Run
 
 # Download output files from previous run
@@ -86,11 +94,10 @@ client = Client()
 client.get_artifacts_as_files('run1', category='output', path='data')
 
 # Create a new run
-run = Run()
-run.init('run2')
-run.save_directory('data', 'input')
-...
-run.close()
+with Run() as run:
+    run.init('run2')
+    run.save_directory('data', category='input')
+    ...
 ```
 It's important to note that the `save_directory` step will not upload and store the same files again if they already exist in Simvue.
 Instead they will automatically be registered as being associated with `run2` but will not be re-uploaded.

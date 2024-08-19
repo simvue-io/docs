@@ -1,7 +1,7 @@
 # Artifacts
 
 Files, directories or combinations of files and directories can easily be uploaded. Python objects
-such as NumPy arrays, PyTorch Tensors, Matplotlib or Plotly plots can also be uploaded. For example,
+such as NumPy arrays, PyTorch tensors, Matplotlib or _Plotly_ plots can also be uploaded. For example,
 a trained model created by a machine learning framework such as PyTorch or Tensorflow can be directly
 saved without being dumped to a file first.
 
@@ -43,19 +43,22 @@ The `save_object` method can be used to save Python objects, including:
 
 One main difference between files and Python objects is that an arbitrary name must be specified when Python objects. For example,
 to create and save a NumPy array:
-```
-...
+```python
 import numpy as np
 array = np.array([1, 2, 3, 4, 5])
 run.save_object(array, 'input', name='array')
-...
 ```
 
 In addition, any Python object which can be pickled can also be saved. This requires the `allow_pickle` to be set to `True`.
 For example:
-```
+```python
 dictionary = {'key': 'value'}
-run.save_object(dictionary, 'input', name='dictionary', allow_pickle=True)
+
+run.save_object(
+    object=dictionary,
+    category='input', name='dictionary',
+    allow_pickle=True
+)
 ```
 
 !!! warning
@@ -69,18 +72,24 @@ instead of specifying a single filename the name of a directory is specified. A 
 in the directory will be set to the same MIME type.
 
 For example, suppose you have a directory `system` containing the following files:
-```
-blockMeshDict
-controlDict
-fvSchemes
-fvSolution
-meshQualityDict
-snappyHexMeshDict
-surfaceFeaturesDict
+```sh
+system
+├── blockMeshDict
+├── controlDict
+├── fvSchemes
+├── fvSolution
+├── meshQualityDict
+├── snappyHexMeshDict
+├── surfaceFeaturesDict
+└── surfaceFeaturesDictblockMeshDict
 ```
 Using:
-```
-run.save_directory('system', 'input', preserve_path=True)
+```python
+run.save_directory(
+    directory='system',
+    category='input',
+    preserve_path=True
+)
 ```
 will result in 7 artifacts being uploaded with names as follows:
 ```
@@ -93,18 +102,23 @@ system/snappyHexMeshDict
 system/surfaceFeaturesDict
 ```
 
-### List of files and/or directories
+### Saving multiple files and/or directories
 
-A list of a combination of files and directories can be provided using the `save_all` method, providing a simple way for saving a group
-of files and/or directories. For example:
+A set of files and directories can be saved using the `save_all` method. For example:
 ``` py
-run.save_all(['file1', 'file2', 'directory1'], 'input', preserve_path=True)
+run.save_all(
+    items=['file1', 'file2', 'directory1'],
+    category='input',
+    preserve_path=True
+)
 ```
 will save the files `file1` and `file2` in addition to the directory `directory1`.
 
 ??? further-docs "Further Documentation"
 
     - [^^The save_file() method^^](/reference/run/#save_file)
+
+    - [^^The save_object() method^^](/reference/run/#save_object)
 
     - [^^The save_directory() method^^](/reference/run/#save_directory)
 

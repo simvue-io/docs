@@ -1,1 +1,3 @@
 mkdocs-material
+click
+jinja2

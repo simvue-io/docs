@@ -7,11 +7,11 @@ metrics from log files.
 ## Installation
 
 The client can be installed from PyPI:
-```
+```sh
 pip install simvue
 ```
 It is usually best to make use of a Python virtual environment, for example run:
-```
+```sh
 python3 -m venv simvue_venv
 source ./simvue_venv/bin/active
 ```
@@ -21,7 +21,7 @@ before running `pip`.
 
 The URL of the Simvue server and authentication token need to be provided by means of a configuration file
 with content of the form:
-```
+```ini
 [server]
 url = https://app.simvue.io
 token = eyJ0eXAi...
@@ -31,7 +31,7 @@ exist the configuration file in the current directory takes precedance.
 The exact values to use can be obtained from the web UI by clicking **Create new run**.
 
 Alternatively environment variables can be used:
-```
+```sh
 export SIMVUE_URL=https://app.simvue.io
 export SIMVUE_TOKEN=eyJ0eXAi...
 ```
@@ -88,7 +88,7 @@ restrictions on the maximum run time of processes, e.g. 5 minutes.
 By default the directory `~/.simvue` is used to store data being passed from worker nodes to Simvue, but this can
 be customized if needed.
 Create a `.simvue.ini` file in your home directory as described above, but with an additional `offline` section:
-```
+```ini
 [server]
 url = https://app.simvue.io
 token = eyJ0eXAi...
@@ -110,7 +110,7 @@ The highlighted line will need to be adjusted as appropriate to point to a virtu
 (see the top of this page).
 
 Then setup a cron to run this script every minute, for example:
-```
+```sh
 chmod a+xr $HOME/simvue_sender.sh
 echo "* * * * * $HOME/simvue_sender.sh" | crontab - 
 ```
