@@ -19,9 +19,9 @@ To check that this worked, run `docker` - you should see a list of help for the 
 ### Pull Docker image
 Next we need to pull the container, which is stored in the Simvue repository's registry:
 ```sh
-sudo docker pull ghcr.io/simvue-io/fds_example_new:latest
+sudo docker pull ghcr.io/simvue-io/fds_example:latest
 ```
-This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/fds_example_new` listed.
+This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/fds_example` listed.
 
 ### Run Docker container
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
@@ -30,7 +30,7 @@ xhost +local:docker
 ```
 Then you can run the container:
 ```sh
-sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/fds_example_new:latest
+sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/fds_example:latest
 ```
 To test that the graphics packages are working correctly, run the command `smokeview initial.smv` within the container. After a few seconds, this should open up a graphical user interface window for the Smokeview visualization tool. You should be able to see the room which we described above.
 
