@@ -13,6 +13,7 @@ RUN apt-get update && \
 RUN python3.10 -m venv venv && \
     venv/bin/python -m pip install git+https://github.com/simvue-io/integrations.git && \
     cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone/ . && \
-    cp -r /opt/openfoam10/tutorials/heatTransfer/buoyantFoam/hotRoom/ .
+    cp -r /opt/openfoam10/tutorials/heatTransfer/buoyantFoam/hotRoom/ . && \
+    cp -r /opt/openfoam10/tutorials/incompressible/simpleFoam/airFoil2D/ .
 
 COPY --chown=${USERNAME} files .
