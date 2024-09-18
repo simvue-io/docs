@@ -1,6 +1,6 @@
-# Custom Wrapper
+# Custom Connector
 
-When integrating Simvue with a new simulation software, a wrapper to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This wrapper should inherit from the generic `WrappedRun` class.
+When integrating Simvue with a new simulation software, a connector to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This connector should inherit from the generic `WrappedRun` class.
 
 For monitoring generic simulations (which are not Python based), we will typically parse log and results files as they are written by the simulation. We do this using the `multiparser` module - [^^see here for full documentation.^^](https://ukaea.github.io/Multiparser/) You can also view an example of using Multiparser with Simvue to track a simulation [^^in the advanced tutorial^^](/tutorial_advanced/introduction).
 ## WrappedRun
@@ -129,8 +129,9 @@ class MyWrappedRun(WrappedRun):
 ## Requesting new integrations
 We currently have the following integrations ready to use:
 
-- MOOSE
-- Openfoam
-- Tensorflow
+- [MOOSE](/integrations/moose.md)
+- [OpenFOAM](/integrations/openfoam.md)
+- [Tensorflow](/integrations/tensorflow.md)
+- [Fire Dynamics Simulator](/integrations/fds.md)
 
 If you have a commonly used simulation which you think would benefit from Simvue integration, you can [^^raise an issue on the simvue-integrations Github repo^^](https://github.com/simvue-io/integrations), and add the 'integration request' label.

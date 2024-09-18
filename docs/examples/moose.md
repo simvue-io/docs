@@ -61,7 +61,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 ## Using Simvue with MOOSE
-To easily use Simvue to track your MOOSE simulations, a wrapper for the Simvue `Run` class has been created, called `MooseRun`. By default, this class will do the following:
+To easily use Simvue to track your MOOSE simulations, a connector for the Simvue `Run` class has been created, called `MooseRun`. By default, this class will do the following:
 
 - Upload your MOOSE input file as an input artifact
 - Upload your MOOSE Makefile as a code artifact, if it is found in the same location as your MOOSE application
@@ -75,7 +75,7 @@ To easily use Simvue to track your MOOSE simulations, a wrapper for the Simvue `
 - Upload the Exodus file as an output artifact (if present) once the simulation has finished
 
 !!! further-docs
-    For information on how to install and use the MooseRun wrapper, [^^see the full documentation here.^^](/integrations/moose)
+    For information on how to install and use the MooseRun connector, [^^see the full documentation here.^^](/integrations/moose)
 
 
 Firstly we will create our MOOSE input file, which in our case uses the mesh for a coffee cup stored in the file `cup.e`, and defines the heat conduction kernels and functions to use to simulate the flow of heat through the cup. We define the boundary conditions for the system, eg the background temperature and the maximum temperature inside the mug, as well as some properties about the material such as the thermal conductivity and heat capacity. The log is sent to a file for storage, and results of the minimum, maximum and average temperature of the handle are stored in a CSV file after each time step.
@@ -196,7 +196,7 @@ Firstly we will create our MOOSE input file, which in our case uses the mesh for
     ```
 
 
-We then want to create our Python script which initializes the `MooseRun` wrapper class. This class can be used as a context manager in the same way as the default Simvue `Run` class. It also has all of the same methods available as the Simvue `Run` class, allowing the user to upload any tags, metadata, artifacts etc which they want to store in addition to the items stored by default by the `MOOSERun` class. 
+We then want to create our Python script which initializes the `MooseRun` connector class. This class can be used as a context manager in the same way as the default Simvue `Run` class. It also has all of the same methods available as the Simvue `Run` class, allowing the user to upload any tags, metadata, artifacts etc which they want to store in addition to the items stored by default by the `MOOSERun` class. 
 
 When we have setup our run, we must call the `launch()` method to start our MOOSE simulation, which takes the following parameters:
 
@@ -207,17 +207,17 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
 
 
 ??? example "Example Simvue Monitoring Script"
-    Here is an example Simvue monitoring script - for each material, it uses our `MOOSERun` wrapper class as a context manager, initializes the run, adds some data specific to this MOOSE run, and then calls `launch()` to perform and track the simulation. Once the simulation completes, we use the `Client` class to get the status of any alerts, and update the tags of the run if the `handle_too_hot` alert which we defined before the simulation began started firing.
+    Here is an example Simvue monitoring script - for each material, it uses our `MOOSERun` connector class as a context manager, initializes the run, adds some data specific to this MOOSE run, and then calls `launch()` to perform and track the simulation. Once the simulation completes, we use the `Client` class to get the status of any alerts, and update the tags of the run if the `handle_too_hot` alert which we defined before the simulation began started firing.
     ```py
     import os
     import shutil
     import time
     import simvue
-    from simvue_integrations.wrappers.moose import MooseRun
+    from simvue_integrations.connectors.moose import MooseRun
 
     script_dir = os.path.dirname(__file__)
 
-    # Delete any results from previous runs, otherwise the MOOSE wrapper will identify and upload these
+    # Delete any results from previous runs, otherwise the MOOSE connector will identify and upload these
     if os.path.exists(os.path.join(script_dir, 'results')):
         shutil.rmtree(os.path.join(script_dir, 'results'))
 
