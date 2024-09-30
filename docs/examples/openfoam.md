@@ -50,7 +50,7 @@ Finally we need to update the config file inside the Docker container to use you
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 ## Integration with Simvue
-Using the provided `OpenfoamRun` wrapper, we can easily add Simvue tracking to an OpenFOAM run. This works by tracking the log files which are produced during execution of an OpenFOAM simulation. 
+Using the provided `OpenfoamRun` connector, we can easily add Simvue tracking to an OpenFOAM run. This works by tracking the log files which are produced during execution of an OpenFOAM simulation. 
 useful information from log files. With this example the log file `log.pimpleFoam` has records like this:
 ```log
 PIMPLE: Iteration 1
@@ -73,16 +73,16 @@ ExecutionTime = 0.08856 s  ClockTime = 0 s
 To automatically track these, we can use the `OpenfoamRun` class from `simvue-integrations`. 
 
 !!! further-docs
-    For information on how to install and use the `OpenfoamRun` wrapper, [^^see the full documentation here.^^](/integrations/openfoam)
+    For information on how to install and use the `OpenfoamRun` connector, [^^see the full documentation here.^^](/integrations/openfoam)
 
 To initialize it, we simply need to provide the class with the directory where the OpenFOAM case is defined, adding any extra information as we wish before/after calling the `launch()` method:
 ```py
-from simvue_integrations.wrappers.openfoam import OpenfoamRun
+from simvue_integrations.connectors.openfoam import OpenfoamRun
 
 with OpenfoamRun() as run:
     # Initialize your Simvue run as normal
     run.init(
-        name="testing_openfoam_wrapper",
+        name="testing_openfoam_connector",
     )
 
     # Can add anything to the Simvue run which you want before / after the MOOSE simulation

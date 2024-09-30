@@ -2,11 +2,11 @@ import os
 import shutil
 import time
 import simvue
-from simvue_integrations.wrappers.moose import MooseRun
+from simvue_integrations.connectors.moose import MooseRun
 
 script_dir = os.path.dirname(__file__)
 
-# Delete any results from previous runs, otherwise the MOOSE wrapper will identify and upload these
+# Delete any results from previous runs, otherwise the MOOSE connector will identify and upload these
 if os.path.exists(os.path.join(script_dir, 'results')):
     shutil.rmtree(os.path.join(script_dir, 'results'))
 

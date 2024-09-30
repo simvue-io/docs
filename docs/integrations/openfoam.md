@@ -1,13 +1,13 @@
-# OpenFOAM Wrapper
+# OpenFOAM Connector
 
-OpenFOAM is an open source Computational Fluid Dynamics solver. To make tracking an OpenFOAM simulation as simple as possible, a wrapper has been created which can automatically track key metrics from any OpenFOAM simulation.
+OpenFOAM is an open source Computational Fluid Dynamics solver. To make tracking an OpenFOAM simulation as simple as possible, a connector has been created which can automatically track key metrics from any OpenFOAM simulation.
 
 !!! further-docs
-    To view a detailed example of monitoring an OpenFOAM simulation using the OpenfoamRun wrapper, [^^see the example here.^^](/examples/openfoam)
+    To view a detailed example of monitoring an OpenFOAM simulation using the OpenfoamRun connector, [^^see the example here.^^](/examples/openfoam)
 
 ## What is tracked
 
-By default, the following things are tracked by the `OpenfoamRun` wrapper:
+By default, the following things are tracked by the `OpenfoamRun` connector:
 
 - Uploads the input files stored in the `Constant` and `System` directories, as well as the initial conditions in the `0` directory, as `input` artifacts
 - Uploads the `Allrun` script as a `code` artifact
@@ -36,7 +36,7 @@ You can then use the `OpenfoamRun` class as a context manager, in the same way t
 
 Your Python script may look something like this:
 ```py
-from simvue_integrations.wrappers.openfoam import OpenfoamRun
+from simvue_integrations.connectors.openfoam import OpenfoamRun
 
 with OpenfoamRun() as run:
    run.init("my_openfoam_run")
@@ -54,7 +54,7 @@ You can extend your script to upload extra information which is specific to your
 Since the `OpenfoamRun` class inherits from the base Simvue `Run` class, all of the methods provided by base Simvue are available to use. This means that you can upload any extra data before or after you call the `launch()` method. For example:
 
 ```py
-from simvue_integrations.wrappers.openfoam import OpenfoamRun
+from simvue_integrations.connectors.openfoam import OpenfoamRun
 
 with OpenfoamRun() as run:
    run.init("my_openfoam_run")
