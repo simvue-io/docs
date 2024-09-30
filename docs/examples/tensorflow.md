@@ -38,7 +38,7 @@ model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.01),
             metrics=['accuracy'])
 ```
 
-Next, we need to train the model. To do this, we call the `fit()` method on the model, providing our set of images to train with. We will specify that we wish to train over 5 epochs, and we will use a 20% of our training set of images for validating the model's accuracy and loss:
+Next, we need to train the model. To do this, we call the `fit()` method on the model, providing our set of images to train with. We will specify that we wish to train over 10 epochs, and we will use a 20% of our training set of images for validating the model's accuracy and loss:
 ```py
 model.fit(
     img_train,
