@@ -37,17 +37,6 @@ for activation_temperature in range(60, 101, 40):
                                 "flow_rate": flow_rate,
                                 "droplet_diameter": droplet_diameter,
                             })
-                            
-                            # We can also define useful alerts for parameters which we want to track
-                            # For example, lets make sure that the temperature in the room isn't getting above 200C
-                            run.create_alert(
-                                name="thermocouple_temp_above_200_degrees",
-                                metric="Ceiling_Thermocouple.Front_Left", # This is the name of the DEVC device to track
-                                source="metrics",
-                                frequency=1,
-                                rule="is above",
-                                threshold=200,
-                            )
 
                             # Launch the FDS simulation, providing the input file and location where you want results to be stored
                             run.launch(
