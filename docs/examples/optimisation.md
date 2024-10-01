@@ -7,21 +7,21 @@ The upper and lower bounds for our design parameters are:
 
 | Parameter | Upper Bound | Lower Bound |
 |-----------|-------------|-------------|
-| Activation Temperature | 60 | 100 |
-| Flow Rate | 120 | 200 |
-| Droplet Diameter | 300 | 700 |
+| Activation Temperature ($^oC$) | 60 | 100 |
+| Flow Rate ($L/min$) | 120 | 200 |
+| Droplet Diameter ($\mu m$) | 300 | 700 |
 
 TODO: Add units ^^
 
 
-To begin with, we will perform a naive gridsearch over our parameter space to find the optimal values of these parameters. We will use Simvue to reduce the carbon impact of these by investigating possible early 
+To begin with, we will perform a naive gridsearch over our parameter space to find the optimal values of these parameters. We will use Simvue to reduce the carbon impact of this gridsearch by investigating possible early stopping parameters which can be added to the FDS input file. We will then further improve the sustainability by using the built in Simvue optimisation framework to perform a Bayesian Optimisation of the parameters instead of a gridsearch.
 
 
 ## Setup
 To Do
 
 ## Creating our Input File
-Details here
+Next we need to setup our FDS problem by creating an input file.
 
 ## Exploring the Parameter Space
 ### First Trial
@@ -71,17 +71,6 @@ As an initial trial run, we are going to do a small gridsearch of the parameter 
                                     "droplet_diameter": droplet_diameter,
                                 })
                                 
-                                # We can also define useful alerts for parameters which we want to track
-                                # For example, lets make sure that the temperature in the room isn't getting above 200C
-                                run.create_alert(
-                                    name="thermocouple_temp_above_200_degrees",
-                                    metric="Ceiling_Thermocouple.Front_Left", # This is the name of the DEVC device to track
-                                    source="metrics",
-                                    frequency=1,
-                                    rule="is above",
-                                    threshold=200,
-                                )
-
                                 # Launch the FDS simulation, providing the input file and location where you want results to be stored
                                 run.launch(
                                     fds_input_file_path = "/workdir/sprinklers_patched.fds",
@@ -92,10 +81,88 @@ As an initial trial run, we are going to do a small gridsearch of the parameter 
                                 os.remove("/workdir/sprinklers_patched.fds")
         ```
 
-Once these simulations are complete, we can use Simvue to easily inspect the results. Firstly if we open the run UI and filter based on the tags which we assigned these runs (`fds`, `sprinkler`, `gridsearch`, `boundaries`), we can see that of our 8 runs, X triggered an alert due to the temperature at one of the thermocouples in the room:
+Once these simulations are complete, we can use Simvue to easily inspect the results. Firstly if we open the run UI and filter by clicking on the tags which we assigned these runs (`fds`, `sprinkler`, `gridsearch`, `boundaries`), we can visualise our eight runs in this gridsearch:
 
 TODO: Insert picture
 
+We can then create custom plots to inspect some of the metrics which we have stored for these runs. Since measurements from all of our `DEVC` devices are automatically tracked, we can create a plot of the temperature measured by the thermocouple at any of the corners of the room. To do this:
+
+1. Click on the 'zig-zag' line at the top left of the list of runs
+2. Click 'Add plot'
+3. Select 'Time Series'
+4. In the Data tab, select 'Ceiling_Thermocouple.Front_Left'
+5. Go back to the list of Runs, and select all of our runs
+
+TODO: Insert picture
+
+From this plot, we can see that some of the runs caused the temperature in the room to exceed 200 degrees, which is one of our failure conditions. There is no point continuing the simulation if that happens, so we can add an early stopping trigger to stop the simulation if this happens.
+
 ### Early Stopping if Temperature Exceeds 200C
 
-Based on the results above, we can add an early stopping feature which stops the simulation early if the temperature recorded by the thermocouples in all four corners of the room exceeds 200 degrees.
+Based on the results above, we can add an early stopping feature which stops the simulation early if the temperature recorded by the thermocouples in all four corners of the room exceeds 200 degrees. To do this, we will use the `CTRL` functions built into FDS - however we could also use the Simvue alerts themselves to terminate a run. Open the FDS input file and add the following section:
+
+TODO: Add CTRL for temp
+
+We will then update our python file before running the script again to add an extra tag and some metadata:
+
+TODO: Updates to python file
+
+We can then rerun our mini gridsearch, and see the impact which this had - go to the run UI, and add the extra tag to our filters. Let us then create a custom plot, showing the temperature in one of the corners over all runs - we should see that runs where the temperature exceeded 200 degrees were automatically terminated shortly after, saving compute time and therefore reducing our carbon footprint.
+
+TODO: Pic of custom plot
+
+Let us try to find some more ways in which we can stop the simulations early to further reduce our carbon footprint. Change the custom plot to show the Heat Release Rate (HRR) during the simulation. We can see that in some of these simulations, the fire is not extinguished after 90 seconds as we require (ie, the HRR is above zero at 90s) - so we may as well stop our simulations early at that point as they are guaranteed to fail.
+
+### Early Stopping if Fire Not Extinguished after 90s
+
+To stop the simulation if the fire is not extinguished after 90 seconds inside the simulation, we can add another `CTRL` line:
+
+TODO: CTRL line
+
+Again we can add a new tag and piece of metadata to our Python code:
+
+TODO: Python code
+
+We can then rerun the gridsearch again, and create a custom plot like before for our latest set of runs. From this, we can see that simulations where the HRR is above zero at 90 seconds are terminated, again increasing our sustainability. Finally, we can notice here that in simulations where the HRR has reached zero and the fire has successfully been extinguished, we can also stop the simulation early.
+
+### Early Stopping when Fire is Extinguished
+To determine when the fire is extinguished, we could monitor for the first moment when the HRR reaches zero after some initial time period (to avoid the simulation stopping immediately, before the fire begins). However we will use the thermocouple temperature at the centre of the room instead as a good proxy, since this is what could potentially be used in real life in a test rig like this to automatically shut off the water supply. In our case we can use the plots in Simvue to see that the central thermocouple reaches 30 degrees shortly after the fire is extinguished each time. Therefore we will add a `CTRL` line which looks for this:
+
+TODO: Add CTRL line
+
+And as before, add some extra metadata and a tag:
+
+TODO: Add python
+
+We can then look at our Simvue plots again - each simulation is now stopped early for one of these reasons! We have been able to greatly reduce the time taken, and hence the energy consumed by our simulations, without compromising on results.
+
+### Sustainability Improvements
+Simvue is able to automatically estimate and track carbon emissions of your simulations using `CodeCarbon`, which we enabled in our `run.config()` calls in each Python script. To visualise the improvement in sustainability, we will compare the emissions from our four sets of grid searches which we have performed.
+
+TODO: How to do in simvue UI
+
+The plot looks something like this - the vertical dashed lines indicate the start of a new grid search, where a new rule for early stopping was defined. Each coloured bar represents a single run, and the colour represents the percentage of emissions which that run produced when compared to the run with the highest emissions.
+
+TODO: Add image
+
+From this we can see that the emissions from the fourth gridsearch (to the right of the pink line) are greatly reduced compared to the emissions from the initial gridsearch. In fact, the total reduction in emissions over our eight grid searches is as follows:
+
+TODO: Add bar chart
+
+This means that when we run a full gridsearch performing hundreds or even thousands of simulations to find the optimal parameters, we can use our early stopping routines to reduce the overall emissions by around TODO: X percent.
+
+## Running a Full Gridsearch
+Run a full gridsearch
+
+Use the parallel coordinates plot
+
+Droplet diameter of 300 is best, fix that, tweak the other two
+
+Overall best:
+
+Second best:
+
+Pull the results from Simvue and run smokeview
+
+## Using Bayesian Optimisation
+Bays Opt
