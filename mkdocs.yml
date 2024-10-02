@@ -4,9 +4,20 @@ theme:
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - search.suggest
     - content.code.copy
   palette:
+    # Palette toggle for light mode
     - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   logo: images/logo.png
   favicon: images/favicon.png
 nav:
@@ -89,6 +100,7 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 plugins:
   - material-plausible
+  - search
 extra:
   analytics:
     provider: plausible
