@@ -1,4 +1,5 @@
 # MOOSE
+
 This example demonstrates how you can use Simvue to track MOOSE simulations. In particular, it will show how you can:
 
 - Extract data from files produced during the execution of MOOSE in real time
@@ -8,42 +9,58 @@ This example demonstrates how you can use Simvue to track MOOSE simulations. In 
 - Save Artifacts
 
 ## Specifying the Problem
+
 In our example, we will imagine that we are a coffee cup manufacturer, looking to design a new cup which we want to put onto the market. While we have decided on the shape and thickness of the mug, we aren't sure whether to make the mug out of Copper, Steel or Ceramic. The main factor which will influence our decision is how hot the handle of the mug gets - if it gets too hot, the customer won't be able to pick it up!
 
 To model this scenario, we will model the fluid inside the cup as having an exponentially decaying temperature from 90 degrees Celsius to room temperature (20 degrees Celsius), and we will use MOOSE to simulate the conductive heat through the walls and handle of the mug over time. We will also get MOOSE to output the maximum, minimum and average temperature of the handle at every time step, so that we can monitor it effectively. We will say that if the average temperature of the handle goes above 50 degrees, then it will be too hot to hold, and the simulation can be aborted to save computational time.
 
 ## Setup
+
 The easiest way to run this example is to use the provided Docker container:
+
 ### Install Docker
+
 You will need to install the Docker CLI tool to be able to use the Docker container for this tutorial. [^^Full instructions for installing Docker can be found here^^](https://docs.docker.com/engine/install/). If you are running Ubuntu (either on a full Linux system or via WSL on Windows), you should be able to do:
+
 ```sh
 sudo apt-get update && sudo apt-get install docker.io
 ```
+
 To check that this worked, run `docker` - you should see a list of help for the commands.
 
 !!! tip
     If you wish to run this on a Windows computer (without using Docker Desktop) via Windows Subsystem for Linux, [^^follow this guide on setting up Docker with WSL.^^](https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9)
 
 ### Pull Docker image
+
 Next we need to pull the container, which is stored in the Simvue repository's registry:
+
 ```sh
 sudo docker pull ghcr.io/simvue-io/moose_example:latest
 ```
+
 This may take some time to download. Once complete, if you run `sudo docker images`, you should see an image with the name `ghcr.io/simvue-io/moose_example` listed.
 
 ### Run Docker container
+
 Firstly, add Docker as a valid user of the X windows server, so that we can view results using Paraview:
+
 ```sh
 xhost +local:docker
 ```
+
 Then you can run the container:
+
 ```sh
 sudo docker run -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -it ghcr.io/simvue-io/moose_example:latest
 ```
+
 If this is running correctly, you should see your command prompt change to something like:
+
 ```sh
 dev:~/simvue-moose$
 ```
+
 To test that the graphics packages are working correctly, run the command `paraview` within the container. After a few seconds, this should open up a graphical user interface window for the Paraview visualization tool.
 
 !!! tip
@@ -55,28 +72,29 @@ To test that the graphics packages are working correctly, run the command `parav
     This should open a small graphical display window, with a pair of eyes which follow your mouse around the screen. If you do not see this, [^^follow this guide to get graphical apps working on WSL^^](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps), and [^^look through these debugging tips for WSL^^](https://github.com/microsoft/wslg/wiki/Diagnosing-%22cannot-open-display%22-type-issues-with-WSLg).
 
 ### Update Simvue Config File
-Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.ini` file. Simply open the existing file using `nano simvue.ini`, and replace the contents with the information from the web UI.
+
+Finally we need to update the config file inside the Docker container to use your credentials. Login to the web UI, go to the **Runs** page and click **Create new run**. You should then see the credentials which you need to enter into the `simvue.toml` file. Simply open the existing file using `nano simvue.toml`, and replace the contents with the information from the web UI.
 
 !!! note
     If you restart the docker container at any point, you will need to repeat this step as your changes will not be saved
 
 ## Using Simvue with MOOSE
+
 To easily use Simvue to track your MOOSE simulations, a connector for the Simvue `Run` class has been created, called `MooseRun`. By default, this class will do the following:
 
 - Upload your MOOSE input file as an input artifact
 - Upload your MOOSE Makefile as a code artifact, if it is found in the same location as your MOOSE application
 - Upload information from the header of the MOOSE console log (such as the MOOSE version, PETSC version etc) as metadata.
 - Track your console log file, adding the following information to the Events log:
-    * The step which is currently being executed by the solver
-    * Whether the step converged or not
-    * How long the step took to converge
+  - The step which is currently being executed by the solver
+  - Whether the step converged or not
+  - How long the step took to converge
 - Create an alert which monitors the Events log, and notifies the user if any step fails to converge
 - Track any variable values which are being output to a CSV file after each step by MOOSE, logging them as Metrics
 - Upload the Exodus file as an output artifact (if present) once the simulation has finished
 
 !!! further-docs
     For information on how to install and use the MooseRun connector, [^^see the full documentation here.^^](/integrations/moose)
-
 
 Firstly we will create our MOOSE input file, which in our case uses the mesh for a coffee cup stored in the file `cup.e`, and defines the heat conduction kernels and functions to use to simulate the flow of heat through the cup. We define the boundary conditions for the system, eg the background temperature and the maximum temperature inside the mug, as well as some properties about the material such as the thermal conductivity and heat capacity. The log is sent to a file for storage, and results of the minimum, maximum and average temperature of the handle are stored in a CSV file after each time step.
 
@@ -195,8 +213,7 @@ Firstly we will create our MOOSE input file, which in our case uses the mesh for
     []
     ```
 
-
-We then want to create our Python script which initializes the `MooseRun` connector class. This class can be used as a context manager in the same way as the default Simvue `Run` class. It also has all of the same methods available as the Simvue `Run` class, allowing the user to upload any tags, metadata, artifacts etc which they want to store in addition to the items stored by default by the `MOOSERun` class. 
+We then want to create our Python script which initializes the `MooseRun` connector class. This class can be used as a context manager in the same way as the default Simvue `Run` class. It also has all of the same methods available as the Simvue `Run` class, allowing the user to upload any tags, metadata, artifacts etc which they want to store in addition to the items stored by default by the `MOOSERun` class.
 
 When we have setup our run, we must call the `launch()` method to start our MOOSE simulation, which takes the following parameters:
 
@@ -204,7 +221,6 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
 - `output_dir_path`: Path to the directory where results will be stored
 - `results_prefix`: The prefix assigned to each output file created by MOOSE (defined in the input file)
 - `moose_env_vars`: A dictionary of any environment variables to pass to the MOOSE application on startup
-
 
 ??? example "Example Simvue Monitoring Script"
     Here is an example Simvue monitoring script - for each material, it uses our `MOOSERun` connector class as a context manager, initializes the run, adds some data specific to this MOOSE run, and then calls `launch()` to perform and track the simulation. Once the simulation completes, we use the `Client` class to get the status of any alerts, and update the tags of the run if the `handle_too_hot` alert which we defined before the simulation began started firing.
@@ -292,13 +308,17 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
     ```
 
 ## Running the Simulations
+
 To run the simulations in the Docker container, run the following command:
+
 ```
 python example/moose_monitoring.py
 ```
+
 These simulations will take around 20 minutes to complete - look out for the message `All simulations complete!` printed to the command line to indicate when it is complete.
 
 ## Results
+
 Once our simulations have completed, you can view the results using Paraview. To do this, for example for the Ceramic mug, you can run `paraview example/results/ceramic/mug_thermal.e`. Then to view the results, do the following steps:
 
 - In the Properties panel in the left hand side, in the Variables tab, tick the box next to `temperature`. Press Apply
@@ -355,8 +375,9 @@ The graph plotted should look look something like this:
   ![A plot of the average temperature of each mug's handle.](images/moose_all_materials.png){ width="1000" }
 </figure>
 
-This allows us to see that, as we may have expected, the Ceramic mug was better at insulating the heat than the Steel and Copper ones. 
+This allows us to see that, as we may have expected, the Ceramic mug was better at insulating the heat than the Steel and Copper ones.
 
-This is of course a relatively simple example, but could be extended to make it more complicated. For example, say we introduced a lid to the mug, and had the heat from the fluid only leave through the walls of the container. How would this change the graphs above? 
+This is of course a relatively simple example, but could be extended to make it more complicated. For example, say we introduced a lid to the mug, and had the heat from the fluid only leave through the walls of the container. How would this change the graphs above?
 
 We could then also monitor how long the temperature remained within a given range using another alert (say between 50 and 70 degrees, so that it is hot but drinkable). Would the copper mug also let the drink go cold too quickly? Would the ceramic mug be too insulating, and the drink would remain too hot for too long? These are the kinds of questions which Simvue makes much easier to keep track of and solve.
+
