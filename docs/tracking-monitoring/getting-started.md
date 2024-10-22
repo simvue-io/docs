@@ -26,10 +26,10 @@ before running `pip`.
 The URL of the Simvue server and authentication token need to be provided by means of a configuration file
 with content of the form:
 
-```ini
+```toml
 [server]
-url = https://app.simvue.io
-token = eyJ0eXAi...
+url = "https://app.simvue.io"
+token = "eyJ0eXAi..."
 ```
 
 This file can either be in the user's home directory (`~/.simvue.toml`) or in the current directory (`simvue.toml`). If both
