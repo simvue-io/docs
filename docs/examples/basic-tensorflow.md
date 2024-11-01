@@ -12,24 +12,31 @@ The code is based on a dynamic recurrent neural network example - [^^find the or
 ## Running the code
 
 To run this example, firstly clone the Simvue client GitHub repository:
+
 ```sh
 git clone https://github.com/simvue-io/client
 cd examples/Tensorflow
 ```
+
 Create a virtual environment:
+
 ```sh
 python3 -m venv venv
 source venv/bin/activate
 ```
+
 Install the required dependencies:
+
 ```sh
 pip install --upgrade pip
 pip install tensorflow simvue
 ```
-Ensure that Simvue is configured properly, for example by creating a `.simvue.ini` file in the Tensorflow directory. Click on `Create new run`
+
+Ensure that Simvue is configured properly, for example by creating a `.simvue.toml` file in the Tensorflow directory. Click on `Create new run`
 in the UI for more information.
 
 Run the code:
+
 ```sh
 python3 dynamic_rnn.py
 ```
@@ -37,10 +44,13 @@ python3 dynamic_rnn.py
 ## Explanation
 
 To begin with we import the required class:
+
 ```
 from simvue import Run
 ```
+
 We next initialise the run and specify metadata:
+
 ``` py
 run = Run()
 run.init(metadata={'dataset.num_classes': num_classes,
@@ -52,20 +62,27 @@ run.init(metadata={'dataset.num_classes': num_classes,
                    'training.batch_size': batch_size,
                    'network.num_units': num_units})
 ```
+
 The Python code itself is saved:
+
 ``` py
 run.save_file('dynamic_rnn.py', 'code')
 ```
+
 During the part of the code which carries out the training we log metrics:
+
 ``` py
 run.log_metrics({'loss': float(loss), 'accuracy': float(acc)})
 ```
+
 Once the training has completed we add some metadata specifying the final values of the metrics:
+
 ``` py
 run.update_metadata({'loss': float(loss), 'accuracy': float(acc)})
 ```
 
 Finally we finish the run:
+
 ``` py
 run.close()
 ```
@@ -77,4 +94,3 @@ for example loss:
 <figure markdown>
   ![A plot of theOpenFOAM residuals metrics, evaluated in real time on the UI. The metrics residuals.final.Ux, residuals.final.Uy and residuals.final.Uz are plotted on the same graph in different colours (blue, green and yellow respectively), with time in seconds along the x axis.](images/tensorflow-loss.png){ width="1000" }
 </figure>
-
