@@ -50,6 +50,30 @@ Again, the values to use for the url and token can be obtained from the web UI b
 
     Do not copy the above examples directly. The correct values of the url and token must be obtained from the web UI.
 
+### Setting project defaults
+The Simvue configuration file `simvue.toml` supports the setting of defaults for key run properties which are set for all runs launched from the current location.
+The key `run` allows the user to define tags, folder path, description, name, and metadata:
+
+```toml
+[server]
+url = "https://app.simvue.io"
+token = "eyJ0eXAi..."
+
+[run]
+name = "my_amazing_project"
+folder = "/amazing_project_runs"
+tags = [
+  "amazing",
+  "demonstration"
+]
+description = "Running my amazing project"
+
+[run.metadata]
+my_favourite_colour = "green"
+```
+
+Any additional metadata or tags applied within an instance of `Run` are appended to those defined within this file, other values are superseded by definitions in `Run.init`.
+
 ## Worker nodes without outgoing internet access
 
 Many HPC systems don't provide outgoing internet access from worker nodes. This is a problem for the Simvue Python client by default
@@ -138,26 +162,3 @@ echo "* * * * * $HOME/simvue_sender.sh" | crontab -
 
     Artifacts, e.g. input or output files, can be saved to Simvue when offline is used. However, it is important to note that it is currently
     assumed that the login node has access to the required files.
-#### Setting project defaults
-The Simvue configuration file `simvue.toml` supports the setting of defaults for key run properties which are set for all runs launched from the current location.
-The key `run` allows the user to define tags, folder path, description, name, and metadata:
-
-```toml
-[server]
-url = "https://app.simvue.io"
-token = "eyJ0eXAi..."
-
-[run]
-name = "my_amazing_project"
-folder = "/amazing_project_runs"
-tags = [
-  "amazing",
-  "demonstration"
-]
-description = "Running my amazing project"
-
-[run.metadata]
-my_favourite_colour = "green"
-```
-
-Any additional metadata or tags applied within an instance of `Run` are appended to those defined within this file, other values are superseded by definitions in `Run.init`.
