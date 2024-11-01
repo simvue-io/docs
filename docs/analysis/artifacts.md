@@ -13,6 +13,9 @@ client = Client()
 As with the `Run` class, there must either be a valid `.simvue.toml` file in the user's home directory, a `simvue.toml` file in
 the current directory or the required environment variables must be defined.
 
+!!! warning "Deprecation of INI configuration"
+    As of `simvue>=1.1.0` the `simvue.ini` form of configuration has been deprecated, users should move to using the newer `simvue.toml`.
+
 ## Obtaining a named artifact
 
 The method `get_artifact` can be used to download an artifact and return its content. For example, if a run contains

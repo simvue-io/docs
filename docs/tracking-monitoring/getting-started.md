@@ -112,6 +112,9 @@ cache = "/data/username/.simvue"
 The path `/data/username/.simvue` should be replaced with an appropriate directory. The directory should be accessible from
 both the login node(s) and worker nodes.
 
+!!! warning "Deprecation of INI configuration"
+    As of `simvue>=1.1.0` the `simvue.ini` form of configuration has been deprecated, users should move to using the newer `simvue.toml`.
+
 It is also necessary to setup a cron to run the command `simvue_sender` (available from the Simvue Python module) every minute.
 Firstly it is necessary to create a script called `$HOME/simvue_sender.sh`, for example, containing:
 
@@ -135,3 +138,26 @@ echo "* * * * * $HOME/simvue_sender.sh" | crontab -
 
     Artifacts, e.g. input or output files, can be saved to Simvue when offline is used. However, it is important to note that it is currently
     assumed that the login node has access to the required files.
+#### Setting project defaults
+The Simvue configuration file `simvue.toml` supports the setting of defaults for key run properties which are set for all runs launched from the current location.
+The key `run` allows the user to define tags, folder path, description, name, and metadata:
+
+```toml
+[server]
+url = "https://app.simvue.io"
+token = "eyJ0eXAi..."
+
+[run]
+name = "my_amazing_project"
+folder = "/amazing_project_runs"
+tags = [
+  "amazing",
+  "demonstration"
+]
+description = "Running my amazing project"
+
+[run.metadata]
+my_favourite_colour = "green"
+```
+
+Any additional metadata or tags applied within an instance of `Run` are appended to those defined within this file, other values are superseded by definitions in `Run.init`.

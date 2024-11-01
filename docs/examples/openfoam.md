@@ -69,7 +69,7 @@ Finally we need to update the config file inside the Docker container to use you
 ## Integration with Simvue
 
 Using the provided `OpenfoamRun` connector, we can easily add Simvue tracking to an OpenFOAM run. This works by tracking the log files which are produced during execution of an OpenFOAM simulation.
-useful information from log files. With this example the log file `log.pimpleFoam` has records like this:
+With this example the log file `log.pimpleFoam` has records like this:
 
 ```log
 PIMPLE: Iteration 1
