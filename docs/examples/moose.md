@@ -86,9 +86,9 @@ To easily use Simvue to track your MOOSE simulations, a connector for the Simvue
 - Upload your MOOSE Makefile as a code artifact, if it is found in the same location as your MOOSE application
 - Upload information from the header of the MOOSE console log (such as the MOOSE version, PETSC version etc) as metadata.
 - Track your console log file, adding the following information to the Events log:
-  - The step which is currently being executed by the solver
-  - Whether the step converged or not
-  - How long the step took to converge
+    - The step which is currently being executed by the solver
+    - Whether the step converged or not
+    - How long the step took to converge
 - Create an alert which monitors the Events log, and notifies the user if any step fails to converge
 - Track any variable values which are being output to a CSV file after each step by MOOSE, logging them as Metrics
 - Upload the Exodus file as an output artifact (if present) once the simulation has finished
