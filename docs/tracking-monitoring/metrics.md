@@ -79,6 +79,23 @@ calling the `init` method.
     client will be measured, not any other node (for the case of multi-node jobs). This limitation will hopefully be removed
     in future.
 
+### 🧪 Emissions Metrics
+
+**Note**: This feature is currently in alpha, accuracy is guaranteed only with correct configuration of [Code Carbon](https://codecarbon.io/).
+
+Emissions metrics for a given Simvue run are made available via the [Code Carbon](https://codecarbon.io/) framework, you can enable these metrics by updating the run configuration:
+
+```python
+import simvue
+
+with simvue.Run():
+  run.config(
+    enable_emission_metrics=True,
+    emission_metrics_interval=20  # OPTIONAL specify the frequency of metric collection, default is 60s
+  )
+```
+
+
 ??? further-docs "Further Documentation"
 
     - [^^The log_metrics() method^^](/reference/run/#log_metrics)

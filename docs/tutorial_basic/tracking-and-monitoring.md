@@ -320,22 +320,6 @@ if __name__ == "__main__":
 
 Rerunning the script should now allow you to see your computer's CPU and RAM usage over time in the `Resources` view in the UI. Note that the CPU metric is measured in percentage usage, while the memory usage metric is measured in Megabytes.
 
-### 🧪 Emissions Metrics
-
-**Note**: This feature is currently in alpha, accuracy is guaranteed only with correct configuration of [Code Carbon](https://codecarbon.io/).
-
-Emissions metrics for a given Simvue run are made available via the [Code Carbon](https://codecarbon.io/) framework, you can enable these metrics by updating the run configuration:
-
-```python
-import simvue
-
-with simvue.Run():
-  run.config(
-    enable_emission_metrics=True,
-    emission_metrics_interval=20  # OPTIONAL specify the frequency of metric collection, default is 60s
-  )
-```
-
 ## Events
 
 ### Logging
