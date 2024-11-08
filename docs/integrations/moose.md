@@ -11,10 +11,11 @@ By default, the following things are tracked by the `MooseRun` connector:
 
 - Upload the MOOSE input file and application Makefile as input artifacts
 - Launch the MOOSE simulation as a process, triggering an alert if it encounters an error or exception
+- Upload information from the MOOSE input file as metadata
 - Upload information from the top of the console log (MOOSE version, parallelism information, mesh information etc) as metadata
 - Upload key information from the console log as events
 - Create an alert which notifies the user if a step fails to converge
-- Upload any variable values being written to the CSV file as metrics
+- Upload any variable values being written to CSV files as metrics
 - Once complete, upload the Exodus file as an output artifact
 
 ## Usage
@@ -33,8 +34,10 @@ You can then use the `MooseRun` class as a context manager, in the same way that
 
 - `moose_application_path`: Path to the compiled MOOSE application
 - `moose_input_file`: Path to the MOOSE input file, usually ending in `.i`
-- `output_dir_path`: Path to the directory where output files are generated and stored
-- `results_prefix`: The prefix to all results files
+- `track_vector_postprocessors`: Whether to track Vector PostProcessor CSV files as metrics (optional, default is False)
+- `track_vector_positions`: If tracking Vector PostProcessors is enabled, whether to track the vector positions (x, y, z, or radius) as their own metrics (optional, default is False)
+- `run_in_parallel`: Whether to use `mpiexec` to run your simulation across multiple processors in parallel (optional, default is False)
+- `num_processors`: If running in parallel, the number of processors to use (default is 1)
 - `moose_env_vars`: A dictionary of any environment variables to pass to the MOOSE application (optional)
 
 Your Python script may look something like this:
@@ -47,12 +50,10 @@ with MooseRun() as run:
    run.launch(
       "/opt/moose/moose-opt",
       "/home/my_user/moose/moose_input.i",
-      "/home/my_user/moose/results",
-      "output_file
    )
 ```
 
-You may also need to edit the `Outputs` section of your MOOSE input file. You need to set the console log to output to a file, and set the `file_base` parameter to match the parameters you passed in above (ie, it should be `file_base = <output_dir_path>/<results_prefix>). For example:
+You may also need to edit the `Outputs` section of your MOOSE input file. You need to set the console log to output to a file, and set the `file_base` parameter to <output_dir_path>/<results_prefix>. For example:
 ```
 [Outputs]
 file_base = results/output_file
@@ -88,8 +89,6 @@ with MooseRun() as run:
    run.launch(
       "/opt/moose/moose-opt",
       "/home/my_user/moose/moose_input.i",
-      "/home/my_user/moose/results",
-      "output_file
    )
 
    # And then can upload anything after the simulation, for example extra results files

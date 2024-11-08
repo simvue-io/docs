@@ -63,8 +63,6 @@ for material_type, inputs in material_inputs.items():
         run.launch(
             moose_application_path='/home/dev/simvue-moose/app/moose_tutorial-opt',
             moose_file_path=inputs['moose_file'],
-            output_dir_path=inputs['results_dir'],
-            results_prefix="mug_thermal",
         )
 
         # Again can add any custom data to the Simvue run once the simulation is finished

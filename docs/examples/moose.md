@@ -84,6 +84,7 @@ To easily use Simvue to track your MOOSE simulations, a connector for the Simvue
 
 - Upload your MOOSE input file as an input artifact
 - Upload your MOOSE Makefile as a code artifact, if it is found in the same location as your MOOSE application
+- Upload information from your input file as metadata.
 - Upload information from the header of the MOOSE console log (such as the MOOSE version, PETSC version etc) as metadata.
 - Track your console log file, adding the following information to the Events log:
     - The step which is currently being executed by the solver
@@ -215,12 +216,10 @@ Firstly we will create our MOOSE input file, which in our case uses the mesh for
 
 We then want to create our Python script which initializes the `MooseRun` connector class. This class can be used as a context manager in the same way as the default Simvue `Run` class. It also has all of the same methods available as the Simvue `Run` class, allowing the user to upload any tags, metadata, artifacts etc which they want to store in addition to the items stored by default by the `MOOSERun` class.
 
-When we have setup our run, we must call the `launch()` method to start our MOOSE simulation, which takes the following parameters:
+When we have setup our run, we must call the `launch()` method to start our MOOSE simulation, which requires the following parameters:
 
+- `moose_application_path`: Path to your MOOSE app
 - `moose_file_path`: Path to the MOOSE input file
-- `output_dir_path`: Path to the directory where results will be stored
-- `results_prefix`: The prefix assigned to each output file created by MOOSE (defined in the input file)
-- `moose_env_vars`: A dictionary of any environment variables to pass to the MOOSE application on startup
 
 ??? example "Example Simvue Monitoring Script"
     Here is an example Simvue monitoring script - for each material, it uses our `MOOSERun` connector class as a context manager, initializes the run, adds some data specific to this MOOSE run, and then calls `launch()` to perform and track the simulation. Once the simulation completes, we use the `Client` class to get the status of any alerts, and update the tags of the run if the `handle_too_hot` alert which we defined before the simulation began started firing.
@@ -290,8 +289,6 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
             run.launch(
                 moose_application_path='/home/dev/simvue-moose/app/moose_tutorial-opt',
                 moose_file_path=inputs['moose_file'],
-                output_dir_path=inputs['results_dir'],
-                results_prefix="mug_thermal",
             )
 
             # Again can add any custom data to the Simvue run once the simulation is finished
