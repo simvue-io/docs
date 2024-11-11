@@ -99,6 +99,21 @@ alert_id = run.create_alert(
 run.log_alert(alert_id, 'ok' if success else 'critical')
 ```
 
+### Aborting on alert
+
+By default alerts are raised but no action is taken on the simulation. In cases where a simulation should be aborted if an alert is raised
+the argument `trigger_abort` should be set:
+
+```py
+run.create_alert(
+  name='abortable_alert',
+  source='user',
+  trigger_abort=True
+)
+```
+
+this argument can be used for any of the alert types above.
+
 ??? further-docs "Further Documentation"
 
     - [^^The create_alert() method^^](/reference/run/#create_alert)
