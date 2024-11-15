@@ -16,6 +16,7 @@ By default, the following things are tracked by the `MooseRun` connector:
 - Upload key information from the console log as events
 - Create an alert which notifies the user if a step fails to converge
 - Upload any variable values being written to CSV files as metrics
+- Add relevant metadata and tags to the run if the [MOOSE Terminator](https://mooseframework.inl.gov/source/userobjects/Terminator.html) stopped the run early
 - Once complete, upload the Exodus file as an output artifact
 
 ## Usage
@@ -53,7 +54,7 @@ with MooseRun() as run:
    )
 ```
 
-You may also need to edit the `Outputs` section of your MOOSE input file. You need to set the console log to output to a file, and set the `file_base` parameter to <output_dir_path>/<results_prefix>. For example:
+You may also need to edit the `Outputs` section of your MOOSE input file. You need to set the console log to output to a file, and set the `file_base` parameter to `output_directory_path`/`results_prefix`. For example:
 ```
 [Outputs]
 file_base = results/output_file
@@ -68,6 +69,10 @@ file_base = results/output_file
    type = CSV
 []
 ```
+!!! note
+      If you wish to use the [MOOSE Terminator](https://mooseframework.inl.gov/source/userobjects/Terminator.html) to stop your runs early when certain conditions are breached, make sure you set the `error_level` parameter to `WARNING` in your MOOSE input file - otherwise Simvue will not be able to detect a run which was terminated early.
+
+
 ## Adding functionality
 You can extend your script to upload extra information which is specific to your simulation:
 
