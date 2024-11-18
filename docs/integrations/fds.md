@@ -32,6 +32,7 @@ You can then use the `FDSRun` class as a context manager, in the same way that y
 
 - `fds_input_file_path`: Path to the FDS input file
 - `workdir_path`: Path to the directory where results will be stored - will be created if it does not already exist. Optional, uses the current working directory by default.
+- `clean_workdir`: Whether to remove FDS results files from the working directory provided above. Optional, by default False
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
 - `ulimit`: Value to set the stack size to - for Linux, this should be kept at the default value of 'unlimited'
 - `fds_env_vars`: A dictionary of any environment variables to pass to the FDS application on startup (optional)
