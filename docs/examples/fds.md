@@ -215,7 +215,8 @@ Once we have setup our run, we must call the `launch()` method to start our FDS 
 
         run.launch(
             fds_input_file_path = "/workdir/input_no_vents.fds",
-            workdir_path = f"results_no_vents"
+            workdir_path = f"results_no_vents",
+            clean_workdir = True
         )
 
     ```
