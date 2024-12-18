@@ -111,7 +111,7 @@ pip install git+https://github.com/simvue-io/integrations.git@main#egg=simvue-in
 ### Adding Basic Simvue Integration
 In the simplest example, all we need to do to add Simvue functionality to our model training is import the TensorVue class:
 ```py
-import simvue_integrations.connectors.tensorflow as sv_tf
+import simvue_integrations.plugins.tensorflow as sv_tf
 ```
 Initialize it with a name for our current project:
 ```py
