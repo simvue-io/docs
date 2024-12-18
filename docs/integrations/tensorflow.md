@@ -42,7 +42,7 @@ Before beginning training for your Tensorflow model, you need to create an insta
    - `simulation_alerts`: Which of the alerts defined above to add to the simulation run, by default None
    - `epoch_alerts`: Which of the alerts defined above to add to the epoch runs, by default None
    - `evaluation_alerts`: Which of the alerts defined above to add to the evaluation runs, by default None
-   - `start_alerts_from_epoch`: The number of the epoch which you would like to begin setting alerts for, by default 0
+   - `start_alerts_from_epoch`: If epoch alerts are enabled, the number of the epoch which you would like to begin setting alerts for, by default 0
    - `script_filepath`: Path of the file to upload as Code to the simulation run, by default uses the file where the callback was instantiated
    - `model_checkpoint_filepath`: If using the ModelCheckpoint callback, the path where the checkpoint files are saved after each epoch, optional
    - `model_final_filepath`: The location where the final model should be stored after training is complete, by default `/tmp/simvue/final_model.keras`
@@ -57,7 +57,7 @@ Before beginning training for your Tensorflow model, you need to create an insta
 Your Python script may look something like this:
 ```py
 from tensorflow import keras
-from simvue_integrations.connectors.tensorflow import TensorVue
+from simvue_integrations.plugins.tensorflow import TensorVue
 
 # Define your model
 model = keras.Sequential()

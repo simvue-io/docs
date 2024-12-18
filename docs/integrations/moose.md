@@ -34,12 +34,13 @@ pip install git+https://github.com/simvue-io/integrations.git
 You can then use the `MooseRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
 - `moose_application_path`: Path to the compiled MOOSE application
-- `moose_input_file`: Path to the MOOSE input file, usually ending in `.i`
+- `moose_file_path`: Path to the MOOSE input file, usually ending in `.i`
 - `track_vector_postprocessors`: Whether to track Vector PostProcessor CSV files as metrics (optional, default is False)
 - `track_vector_positions`: If tracking Vector PostProcessors is enabled, whether to track the vector positions (x, y, z, or radius) as their own metrics (optional, default is False)
+- `moose_env_vars`: A dictionary of any environment variables to pass to the MOOSE application (optional)
 - `run_in_parallel`: Whether to use `mpiexec` to run your simulation across multiple processors in parallel (optional, default is False)
 - `num_processors`: If running in parallel, the number of processors to use (default is 1)
-- `moose_env_vars`: A dictionary of any environment variables to pass to the MOOSE application (optional)
+- `mpiexec_env_vars`: A dictionary of any environment variables to pass to mpiexec on startup if running in parallel (optional)
 
 Your Python script may look something like this:
 ```py

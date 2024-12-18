@@ -10,10 +10,10 @@ FDS (Fire Dynamics Simulator) is an open source simulation code for low-speed fl
 By default, the following things are tracked by the `FDSRun` connector:
 
 - Upload your FDS input file as an input artifact
-- Upload information from the FDS input file as metadata.
-- Track the `.out` file, uploading data produced as metrics
-- Track any variable values which are being output to a CSV file after each step, logging them as Metrics
-- Add the current Time Step and Simulation Time to the Events log
+- Upload information from the FDS input file as metadata
+- Track the log file, uploading data produced as metadata and events
+- Track variables values output in the DEVC and HRR CSV files after each step, logging them as metrics
+- Track the DEVC and CTRL log, recording activations as metadata and events
 - Upload selected results files as Output artifacts
 
 ## Usage
