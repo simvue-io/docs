@@ -35,6 +35,7 @@ Before beginning training for your Tensorflow model, you need to create an insta
    - `run_folder`: Name of the folder to store the run in, will create a folder with the same name as the run if not specified
    - `run_description`: Description of the run, optional
    - `run_tags`: List of tags associated with the run, optional
+   - `run_metadata`: Metadata associated with the run, optional
    - `run_mode`: Whether Simvue should run in Online or Offline mode, by default Online
    - `alert_definitions`: Definitions of any alerts to add to the run as a dictionary of key/value pairs, optional
    - `manifest_alerts`: If using the Optimisation framework, which of the alerts defined above to add to the manifest run, by default None

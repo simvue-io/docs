@@ -126,12 +126,3 @@ class MyWrappedRun(WrappedRun):
     
     super().launch()
 ```
-## Requesting new integrations
-We currently have the following integrations ready to use:
-
-- [MOOSE](/integrations/moose.md)
-- [OpenFOAM](/integrations/openfoam.md)
-- [Tensorflow](/integrations/tensorflow.md)
-- [Fire Dynamics Simulator](/integrations/fds.md)
-
-If you have a commonly used simulation which you think would benefit from Simvue integration, you can [^^raise an issue on the simvue-integrations Github repo^^](https://github.com/simvue-io/integrations), and add the 'integration request' label.
