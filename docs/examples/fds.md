@@ -193,20 +193,18 @@ Once we have setup our run, we must call the `launch()` method to start our FDS 
 
         run.update_tags(["fds", "no_vents"])
 
-        run.create_alert(
+        run.create_metric_threshold_alert(
             name="temperature_above_100_degrees",
             metric="air_temperature",
-            source="metrics",
             frequency=1,
             rule="is above",
             threshold=100,
             trigger_abort=True
         )
 
-        run.create_alert(
+        run.create_metric_threshold_alert(
             name="visibility_below_three_metres",
             metric="eye_level_visibility",
-            source="metrics",
             frequency=1,
             rule="is below",
             threshold=3,

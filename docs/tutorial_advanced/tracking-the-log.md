@@ -244,7 +244,7 @@ with simvue.Run() as run:
     name='thermal-diffusion-monitoring-%d' % time.time(),
     folder='/moose'
     )
-  run.create_alert(
+  run.create_event_alert(
     name='step_not_converged',
     source='events',
     frequency=1,

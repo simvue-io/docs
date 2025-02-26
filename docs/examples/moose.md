@@ -272,16 +272,15 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
             run.update_tags([material_type,])
 
             # Add an alert which will automatically abort the run if the handle becomes too hot to touch
-            run.create_alert(
+            run.create_metric_threshold_alert(
                 name='handle_too_hot',
-                source='metrics',
                 metric='handle_temp_avg',
                 rule='is above',
                 threshold=323.15,
                 frequency=1,
                 window=1,
                 trigger_abort=True
-                )
+            )
             
             run.log_event("MOOSE simulation - coffee cup, terminating if handle too hot.") 
             
