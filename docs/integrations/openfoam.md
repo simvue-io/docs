@@ -18,14 +18,14 @@ By default, the following things are tracked by the `OpenfoamRun` connector:
 
 ## Usage
 
-To use the `OpenfoamRun` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+To use the `OpenfoamRun` class, you must have the `simvue-openfoam` repository installed. Create a virtual environment if you haven't already:
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git
+pip install simvue-openfoam
 ```
 
 You can then use the `OpenfoamRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
@@ -36,7 +36,7 @@ You can then use the `OpenfoamRun` class as a context manager, in the same way t
 
 Your Python script may look something like this:
 ```py
-from simvue_integrations.connectors.openfoam import OpenfoamRun
+from simvue_openfoam.connector import OpenfoamRun
 
 with OpenfoamRun() as run:
    run.init("my_openfoam_run")

@@ -1,20 +1,20 @@
 # Custom Connector
 
-When integrating Simvue with a new simulation software, a connector to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This connector should inherit from the generic `WrappedRun` class.
+When integrating Simvue with a new Non-Python simulation software, a connector to the Simvue `Run` class must be created which adds functionality for tracking any generic run for this software. This connector should inherit from the generic `WrappedRun` class.
 
 For monitoring generic simulations (which are not Python based), we will typically parse log and results files as they are written by the simulation. We do this using the `multiparser` module - [^^see here for full documentation.^^](https://ukaea.github.io/Multiparser/) You can also view an example of using Multiparser with Simvue to track a simulation [^^in the advanced tutorial^^](/tutorial_advanced/introduction).
 ## WrappedRun
 
-The `WrappedRun` class is included in the `simvue_integrations` repository. To get this functionality, create a virtual environment:
+The `WrappedRun` class is included in the `simvue-connector` package. To get this functionality, create a virtual environment:
 
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 
-Then install the `simvue-integrations` repository:
+Then install the `simvue-connector` package:
 ```
-pip install git+https://github.com/simvue-io/integrations.git
+pip install simvue-connector
 ```
 
 This class contains four methods, which should be overriden with the functionality for tracking your specific simulation.
@@ -34,6 +34,8 @@ Because this class inherits from the base Simvue `Run` class, all methods associ
 You should also call the functionality from the `WrappedRun` class at the top of your method - this creates a trigger which can be used to abort the file monitor, and checks that a simvue Run has been initialized before the `launch` method was called.
 
 ```py
+from simvue_connector.connector import WrappedRun
+
 class MyWrappedRun(WrappedRun):
     def pre_simulation(self):
         """Simvue commands which are ran before the simulation begins.

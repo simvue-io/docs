@@ -19,14 +19,14 @@ By default, the `TensorVue` callback will create a `Simulation` run, which repre
 
 ## Usage
 
-To use the `TensorVue` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+To use the `TensorVue` class, you must have the `simvue-tensorflow` repository installed. Create a virtual environment if you haven't already:
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git@main#egg=simvue-integrations[tensorflow]
+pip install simvue-tensorflow
 ```
 
 Before beginning training for your Tensorflow model, you need to create an instance of the TensorVue class. This class can take the following arguments:
@@ -57,7 +57,7 @@ Before beginning training for your Tensorflow model, you need to create an insta
 Your Python script may look something like this:
 ```py
 from tensorflow import keras
-from simvue_integrations.plugins.tensorflow import TensorVue
+from simvue_tensorflow.plugin import TensorVue
 
 # Define your model
 model = keras.Sequential()

@@ -21,14 +21,14 @@ By default, the following things are tracked by the `MooseRun` connector:
 
 ## Usage
 
-To use the `MooseRun` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+To use the `MooseRun` class, you must have the `simvue-moose` package installed. Create a virtual environment if you haven't already:
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git
+pip install simvue-moose
 ```
 
 You can then use the `MooseRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
@@ -44,7 +44,7 @@ You can then use the `MooseRun` class as a context manager, in the same way that
 
 Your Python script may look something like this:
 ```py
-from simvue_integrations.connectors.moose import MooseRun
+from simvue_moose.connector import MooseRun
 
 with MooseRun() as run:
    run.init("my_moose_run")
@@ -107,7 +107,7 @@ If there are extra files being produced by your specific MOOSE simulation which 
 
 ```py
 # Use file parser from multiparser
-import import multiparser.parsing.file as mp_file_parser
+import multiparser.parsing.file as mp_file_parser
 
 class MyMooseRun:
    def during_simulation(self):
