@@ -228,7 +228,7 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
     import shutil
     import time
     import simvue
-    from simvue_integrations.connectors.moose import MooseRun
+    from simvue_moose.connector import MooseRun
 
     script_dir = os.path.dirname(__file__)
 

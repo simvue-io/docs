@@ -81,7 +81,7 @@ You can extend your script to upload extra information which is specific to your
 Since the `MooseRun` class inherits from the base Simvue `Run` class, all of the methods provided by base Simvue are available to use. This means that you can upload any extra data before or after you call the `launch()` method. For example:
 
 ```py
-from simvue_integrations.connectors.moose import MooseRun
+from simvue_moose.connector import MooseRun
 
 with MooseRun() as run:
    run.init("my_moose_run")

@@ -1,4 +1,4 @@
-from simvue_integrations.connectors.openfoam import OpenfoamRun
+from simvue_openfoam.connector import OpenfoamRun
 
 with OpenfoamRun() as run:
     # Initialize your Simvue run as normal

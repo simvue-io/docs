@@ -1,7 +1,7 @@
 import os
 import shutil
 import time
-from simvue_integrations.connectors.fds import FDSRun
+from simvue_fds.connector import FDSRun
 
 timestamp = int(time.time())
 

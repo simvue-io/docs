@@ -24,7 +24,7 @@ RUN /home/dev/.pyenv/bin/pyenv global 3.10.13
 
 # Add Simvue (dev for now), Multiparse
 RUN /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install simvue[plot,dataset] && \
-    /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install git+https://github.com/simvue-io/integrations.git
+    /home/dev/.pyenv/versions/3.10.13/bin/python3.10 -m pip install simvue-moose
 
 # Some generic settings for building the image
 ENV HOME=/home/${USERNAME}

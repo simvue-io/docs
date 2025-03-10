@@ -43,7 +43,3 @@ for identifer, run in Run.get():
   print(f"Run {identifier}:")
   print(json.dumps(run.to_dict(), indent=2))
 ```
-
-
-```
-```

@@ -1,6 +1,6 @@
 import os
 import shutil
-from simvue_integrations.connectors.fds import FDSRun
+from simvue_fds.connector import FDSRun
 
 # Delete old results directory, if present
 if os.path.exists("/workdir/results_no_vents"):
