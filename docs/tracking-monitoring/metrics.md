@@ -11,7 +11,7 @@ The argument is a dictionary consisting of the metric names and their values.
 The `log_metrics` method can be called as many times as necessary during a run, and the time of each is recorded with microsecond precision. The
 timestamp can be overriden if necessary, for example if the metrics are being extracted from another source with its own timestamps. For example:
 ```  py
-run.log_metrics({'parameter1': 1.2}, timestamp='2021-05-03 14:13:27.281920')
+run.log_metrics({'parameter1': 1.2}, timestamp='2021-05-03T14:13:27.281920')
 ```
 In addition to the timestamp the relative time since `init()` was called is also recorded. The relative time can be set manually if needed, e.g.:
 ```  py

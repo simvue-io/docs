@@ -28,7 +28,7 @@ with content of the form:
 
 ```toml
 [server]
-url = "https://app.simvue.io"
+url = "https://uk.simvue.io"
 token = "eyJ0eXAi..."
 ```
 
@@ -39,7 +39,7 @@ The exact values to use can be obtained from the web UI by clicking **Create new
 Alternatively environment variables can be used:
 
 ```sh
-export SIMVUE_URL=https://app.simvue.io
+export SIMVUE_URL=https://uk.simvue.io
 export SIMVUE_TOKEN=eyJ0eXAi...
 ```
 
@@ -56,7 +56,7 @@ The key `run` allows the user to define tags, folder path, description, name, an
 
 ```toml
 [server]
-url = "https://app.simvue.io"
+url = "https://uk.simvue.io"
 token = "eyJ0eXAi..."
 
 [run]
@@ -126,7 +126,7 @@ Create a `.simvue.toml` file in your home directory as described above, but with
 
 ```toml
 [server]
-url = "https://app.simvue.io"
+url = "https://uk.simvue.io"
 token = "eyJ0eXAi..."
 
 [offline]
