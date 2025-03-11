@@ -23,11 +23,12 @@ def format_annotation(annotation) -> str:
     """
     if annotation is None:
         return "None"
-
-    if annotation.__name__ in ("str", "int", "bool", "float"):
-        return annotation.__name__
-
-    return f"{annotation}".replace("typing.", "").replace("NoneType", "None")
+    try:
+        if annotation.__name__ in ("str", "int", "bool", "float"):
+            return annotation.__name__
+    except AttriuteError:
+        continue
+    return f"{annotation}".replace("typing.", "").replace("Type", "")
 
 
 def parse_numpydoc(
