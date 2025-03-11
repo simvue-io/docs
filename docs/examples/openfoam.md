@@ -90,7 +90,7 @@ time step continuity errors : sum local = 4.65559e-09, global = -1.05257e-09, cu
 ExecutionTime = 0.08856 s  ClockTime = 0 s
 ```
 
-To automatically track these, we can use the `OpenfoamRun` class from `simvue-integrations`.
+To automatically track these, we can use the `OpenfoamRun` class from `simvue-openfoam`.
 
 !!! further-docs
     For information on how to install and use the `OpenfoamRun` connector, [^^see the full documentation here.^^](/integrations/openfoam)
@@ -98,7 +98,7 @@ To automatically track these, we can use the `OpenfoamRun` class from `simvue-in
 To initialize it, we simply need to provide the class with the directory where the OpenFOAM case is defined, adding any extra information as we wish before/after calling the `launch()` method:
 
 ```py
-from simvue_integrations.connectors.openfoam import OpenfoamRun
+from simvue_openfoam.connector import OpenfoamRun
 
 with OpenfoamRun() as run:
     # Initialize your Simvue run as normal

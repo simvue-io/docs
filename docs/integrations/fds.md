@@ -18,34 +18,37 @@ By default, the following things are tracked by the `FDSRun` connector:
 
 ## Usage
 
-To use the `FDSRun` class, you must have the `simvue_integrations` repository installed. Create a virtual environment if you haven't already:
+To use the `FDSRun` class, you must have the `simvue_fds` package installed. Create a virtual environment if you haven't already:
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git
+pip install simvue-fds
 ```
 
 You can then use the `FDSRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
-- `fds_input_file_path`: Path to the FDS input file
+- `fds_input_file_path`: Path to the FDS input file. It is typically best practice to specify the full path to the file so that the run can find it, especially if specifying a different working directory below.
 - `workdir_path`: Path to the directory where results will be stored - will be created if it does not already exist. Optional, uses the current working directory by default.
 - `clean_workdir`: Whether to remove FDS results files from the working directory provided above. Optional, by default False
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
 - `ulimit`: Value to set the stack size to - for Linux, this should be kept at the default value of 'unlimited'
 - `fds_env_vars`: A dictionary of any environment variables to pass to the FDS application on startup (optional)
+- `run_in_parallel`: Whether to use MPI to run the FDS job in parallel, by fdefault False
+- `num_processors`: If running in parallel, the number of processors to use, by default 1
+- `mpiexec_env_vars`: Environment variables to pass to `mpiexec` if running in parallel
 
 Your Python script may look something like this:
 ```py
-from simvue_integrations.connectors.fds import FDSRun
+from simvue_fds.connector import FDSRun
 
 with FDSRun() as run:
    run.init("my_fds_run")
 
    run.launch(
-      "my_input_file.fds",
+      "/path/to/my_input_file.fds",
       "/results",
       ['my_output.smv'],
    )
@@ -68,7 +71,7 @@ with FDSRun() as run:
    run.save_file(os.path.abspath(__file__), "code")
 
    run.launch(
-      "my_input_file.fds",
+      "/path/to/my_input_file.fds",
       "/results",
       ['my_output.smv'],
    )

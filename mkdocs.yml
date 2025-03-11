@@ -70,6 +70,8 @@ nav:
     - OpenFOAM: examples/openfoam.md
     - MOOSE: examples/moose.md
     - FDS: examples/fds.md
+  - Development:
+    - Low Level API: development/low_level_api.md
   - FAQ:
     - General: faq/general.md
 repo_url: https://github.com/simvue-io

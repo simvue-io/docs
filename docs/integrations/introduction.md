@@ -17,4 +17,4 @@ Connectors are created for monitoring Non-Python based simulation codes. These w
 - [OpenFOAM](/integrations/openfoam)
 
 ## Requesting new integrations
-If you have a commonly used simulation which you think would benefit from Simvue integration, you can [^^raise an issue on the simvue-integrations Github repo^^](https://github.com/simvue-io/integrations), and add the 'integration request' label.
+If you have a commonly used simulation which you think would benefit from Simvue integration, you can [^^raise an issue on the connectors-generic Github repo^^](https://github.com/simvue-io/connectors-generic/issues), and add the 'integration request' label.

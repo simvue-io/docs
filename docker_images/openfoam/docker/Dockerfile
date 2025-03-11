@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get install -y git
 
 RUN python3.10 -m venv venv && \
-    venv/bin/python -m pip install git+https://github.com/simvue-io/integrations.git && \
+    venv/bin/python -m pip install simvue-openfoam && \
     cp -r /opt/openfoam10/tutorials/incompressible/pimpleFoam/laminar/movingCone/ . && \
     cp -r /opt/openfoam10/tutorials/heatTransfer/buoyantFoam/hotRoom/ . && \
     cp -r /opt/openfoam10/tutorials/incompressible/simpleFoam/airFoil2D/ .

@@ -55,7 +55,7 @@ For example:
 dictionary = {'key': 'value'}
 
 run.save_object(
-    object=dictionary,
+    obj=dictionary,
     category='input', name='dictionary',
     allow_pickle=True
 )

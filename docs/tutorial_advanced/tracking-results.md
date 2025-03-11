@@ -165,9 +165,8 @@ We can then edit our boundary conditions block to support a function of temperat
 
 We can then add a new alert to our run: Let us use it to track the temperature at `x=3`, and alert us when the value is above 400 degrees for more than 1 minute (to ensure it isn't just an outlier). To do this we will use the `is above` alert, with the threshold set to 400. After the alert which we have added to monitor non convergence, we can add the following:
 ```py
-run.create_alert(
+run.create_metric_threshold_alert(
   name='temperature_exceeds_maximum',
-  source='metrics',
   metric='temp_at_x.3',
   rule='is above',
   threshold=400,
@@ -185,9 +184,8 @@ If we run our script, we should see now see in the run UI that the temperatures 
 ## Using Firing Alerts to Terminate a Run
 So our alert above will trigger when the centre of the bar reaches 400 degrees, alerting the user that they may want to check how the simulation is proceeding and whether it is worth continuing or aborting the run early. However let's say that we have another alert where we are certain that the run has failed - for example, let's say that we are sure that if the centre of the bar has reached 600 degrees, the material will have fully melted and the bar will have collapsed. When this alert fires, we will want to stop the execution of the script, since further simulations are pointless and a waste of computing resource if our scenario has already failed. To do this, we can specify the `trigger_abort` parameter in our alert definition:
 ```py
-run.create_alert(
+run.create_metric_threshold_alert(
   name='temperature_exceeds_melting_point',
-  source='metrics',
   metric='temp_at_x.3',
   rule='is above',
   threshold=600,

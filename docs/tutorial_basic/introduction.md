@@ -33,7 +33,7 @@ The file should look something like:
 
 ```toml
 [server]
-url = "https://app.simvue.io"
+url = "https://uk.simvue.io"
 token = "eyJ0eXAi..."
 ```
 

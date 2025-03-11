@@ -228,7 +228,7 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
     import shutil
     import time
     import simvue
-    from simvue_integrations.connectors.moose import MooseRun
+    from simvue_moose.connector import MooseRun
 
     script_dir = os.path.dirname(__file__)
 
@@ -272,16 +272,15 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
             run.update_tags([material_type,])
 
             # Add an alert which will automatically abort the run if the handle becomes too hot to touch
-            run.create_alert(
+            run.create_metric_threshold_alert(
                 name='handle_too_hot',
-                source='metrics',
                 metric='handle_temp_avg',
                 rule='is above',
                 threshold=323.15,
                 frequency=1,
                 window=1,
                 trigger_abort=True
-                )
+            )
             
             run.log_event("MOOSE simulation - coffee cup, terminating if handle too hot.") 
             
@@ -293,13 +292,6 @@ When we have setup our run, we must call the `launch()` method to start our MOOS
 
             # Again can add any custom data to the Simvue run once the simulation is finished
             run.log_event("Simulation is finished!")
-
-            # Can create a Client instance for keeping track of if alerts have fired
-            client = simvue.Client()
-            run_id = client.get_run_id_from_name(inputs['run_name'])
-            # If handle got too hot, add a tag for easier categorisation
-            if 'handle_too_hot' in client.get_alerts(run_id):
-                run.update_tags['handle_too_hot']
 
     print("All simulations complete!")
     ```
@@ -328,7 +320,7 @@ You should see the heat flowing from the inside of the cup to the outside and ha
   ![The results of the Ceramic mug simulation in Paraview.](images/moose_paraview.png){ width="1000" }
 </figure>
 
-If you log into the Simvue UI and look in the Runs tab, you should see that three runs have been completed. The runs for mugs made from ceramic and steel completed successfully, with no alerts fired. However the mug made of copper failed to complete, with one of the alerts firing and a 'handle_too_hot' tag associated with it.
+If you log into the Simvue UI and look in the Runs tab, you should see that three runs have been completed. The runs for mugs made from ceramic and steel completed successfully, with no alerts fired. However the mug made of copper failed to complete, with one of the alerts firing and its status set to 'terminated'.
 <figure markdown>
   ![The Simvue run UI showing three runs, corresponding to the Copper, Steel and Ceramic mugs.](images/moose_runs.png){ width="1000" }
 </figure>

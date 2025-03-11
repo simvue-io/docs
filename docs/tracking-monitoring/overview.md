@@ -23,13 +23,15 @@ The `init` method needs to be called in order to create a run. The following can
  * `tags`: tags in the form of a list of strings;
  * `description`: plain text description of the run;
  * `folder`: folder for the run. If none is provided the folder is assumed to be `/`. If the folder doesn't already exist it will be created.
+ * `notification`: whether to send an email to the user when the run finishes, either `'none'` (default), `'all'` (always send an email on run completion), `'error'` (only email if the run finished in an error state) or `'lost'` (only email if the run finished an a lost state).
  * `running`: if set to `False` it is assume that the simulation will not immediately start running, e.g. a job has been submitted to a batch system. When the job starts running it is necessary to reconnect to the run (see below).
  * `retention_period`: the retention period for this run, this is a time description string consisting of an integer value followed by a unit fo time e.g. `'1 hour'`, `'5 days'` etc. Default of `None` removes the lifetime constraint.
- * `resources_metrics_interval`: the interval in seconds at which to record resource metrics, if `None` resource metric logging is disabled completely, the default is 60 seconds.
+ * `timeout`: the period of time which a run will stay active on the server, after which (if no heartbeat is sent by the client) the run will enter the 'lost' state, default is 180s.
  * `visibility`: visibility of this run to other users, by default a run is private:
       - `'tenant'`: run is visible to all users within current user's tenant group.
       - `'public'`: run is publicly viewable to all within the server.
       - A list of user names.
+      * `no_color`: disable colors in terminal logging, default False.
 
 For example:
 ```python

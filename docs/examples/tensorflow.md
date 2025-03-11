@@ -98,20 +98,20 @@ These can all be addressed by using Simvue!
 ## TensorVue
 To make it simple to add Simvue functionality to your Tensorflow models, we have created the TensorVue callback class. If you are not familiar with Tensorflow Callbacks, you can [^^view the Callbacks documentation here^^](https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback). 
 
-To do the section below, you will need to [^^checkout the Simvue Integrations repository^^](https://github.com/simvue-io/integrations) - either clone the repository yourself, or add it to your virtual environment. To do this, create a virtual environment if you haven't already:
+To do the section below, you will need the `simvue-tensorflow` package. To do this, create a virtual environment if you haven't already:
 ```
 python -m venv venv
 source venv/bin/activate
 ```
 Then install the repository using `pip`:
 ```
-pip install git+https://github.com/simvue-io/integrations.git@main#egg=simvue-integrations[tensorflow]
+pip install simvue-tensorflow
 ```
 
 ### Adding Basic Simvue Integration
 In the simplest example, all we need to do to add Simvue functionality to our model training is import the TensorVue class:
 ```py
-import simvue_integrations.plugins.tensorflow as sv_tf
+import simvue_tensorflow.plugin as sv_tf
 ```
 Initialize it with a name for our current project:
 ```py
