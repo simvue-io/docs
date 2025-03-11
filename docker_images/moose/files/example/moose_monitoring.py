@@ -50,7 +50,7 @@ for material_type, inputs in material_inputs.items():
         )
 
         # Add an alert which will automatically abort the run if the handle becomes too hot to touch
-        run.create_threshold_alert(
+        run.create_metric_threshold_alert(
             name="handle_too_hot",
             metric="handle_temp_avg",
             rule="is above",
@@ -70,13 +70,6 @@ for material_type, inputs in material_inputs.items():
 
         # Again can add any custom data to the Simvue run once the simulation is finished
         run.log_event("Simulation is finished!")
-
-        # Can create a Client instance for keeping track of if alerts have fired
-        client = simvue.Client()
-        run_id = client.get_run_id_from_name(inputs["run_name"])
-        # If handle got too hot, add a tag for easier categorisation
-        if "handle_too_hot" in client.get_alerts(run_id):
-            run.update_tags["handle_too_hot"]
 
 print("All simulations complete!")
 

@@ -30,7 +30,7 @@ pip install simvue-fds
 
 You can then use the `FDSRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
-- `fds_input_file_path`: Path to the FDS input file
+- `fds_input_file_path`: Path to the FDS input file. It is typically best practice to specify the full path to the file so that the run can find it, especially if specifying a different working directory below.
 - `workdir_path`: Path to the directory where results will be stored - will be created if it does not already exist. Optional, uses the current working directory by default.
 - `clean_workdir`: Whether to remove FDS results files from the working directory provided above. Optional, by default False
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
@@ -48,7 +48,7 @@ with FDSRun() as run:
    run.init("my_fds_run")
 
    run.launch(
-      "my_input_file.fds",
+      "/path/to/my_input_file.fds",
       "/results",
       ['my_output.smv'],
    )
@@ -71,7 +71,7 @@ with FDSRun() as run:
    run.save_file(os.path.abspath(__file__), "code")
 
    run.launch(
-      "my_input_file.fds",
+      "/path/to/my_input_file.fds",
       "/results",
       ['my_output.smv'],
    )
