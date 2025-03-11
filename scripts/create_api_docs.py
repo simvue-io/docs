@@ -26,7 +26,7 @@ def format_annotation(annotation) -> str:
     try:
         if annotation.__name__ in ("str", "int", "bool", "float"):
             return annotation.__name__
-    except AttriuteError:
+    except AttributeError:
         pass
     return f"{annotation}".replace("typing.", "").replace("Type", "")
 
