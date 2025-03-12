@@ -1,24 +1,38 @@
-### **{{ function_name }}{% if not is_property %}({% if metadata.parameters %}...{% else %}{% endif %}){% endif %}**
-{% if metadata.description %}{{ metadata.description | join('\n') }}{% endif %}
+### **{{ function_name }}{% if not is_property %}({% if metadata.parameters %}...{% else %}{% endif %}){% endif %}**{% if sub_name %} *{{ sub_name}}*{% endif %}
+{% if sub_label %}
+{{ sub_label }}{% endif %}
+{% if metadata.description %}
+{{ metadata.description | join('\n') }}{% endif %}
 {% if metadata.parameters %}
-**Parameters**
+??? info "Parameters"
 
-|   |     |   |
-|---|:---:|---|{% for key, parameter in metadata.parameters.items() %}
-| {{ key }} | `#!python {{ parameter.type }}` | {{ parameter.description }} |{% endfor %}
-{% endif %}
+    |   |     |   |   |
+    |---|:---|:---|---|{% for key, parameter in metadata.parameters.items() %}
+    | {{ key }} | `#!python {{ parameter.type }}` | {% if parameter.default %} `#!python = {{ parameter.default }}` {% endif %} | {{ parameter.description }} |{% endfor %}{% endif %}
+{% if metadata.yields %}
+!!! tip "Yields"
+
+    `#!python {{ metadata.yields[0] }}`
+{% for line in metadata.yields[1:] %}
+    {{ line }}{% endfor %}{% endif %}
 {% if metadata.returns %}
-**Returns**
 
-`#!python {{ metadata.returns[0] }}`
+!!! success "Returns"
+
+    `#!python {{ metadata.returns[0] }}`
 {% for line in metadata.returns[1:] %}
-{{ line }}{% endfor %}
-{% endif %}
+    {{ line }}{% endfor %}{% endif %}
 {%if metadata.raises %}
-**Raises**
 
-`#!python {{ metadata.raises[0] }}`
+!!! failure "Raises"
+
+    `#!python {{ metadata.raises[0] }}`
 {% for line in metadata.raises[1:] %}
-{{ line }}
+    {{ line }}{% endfor %}{% endif %}
+{%if metadata.examples %}
+
+??? example "Examples"
+
+{% for line in metadata.examples %}    {{ line }}
 {% endfor %}
 {% endif %}
