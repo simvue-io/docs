@@ -133,12 +133,7 @@ def parse_numpydoc(
                 if line.strip().startswith("*") and "-" in line:
                     line_components = line.replace("*", "").split("-")
                     line = f"&emsp;`{line_components[0].strip()}` - {line_components[1].strip()}"
-                try:
                     params[name]["description"] += f"{line}<br>"
-                except Exception:
-                    import pdb
-
-                    pdb.set_trace()
         elif log_section == "returns":
             returns.append(line.strip())
         elif log_section == "yields":
