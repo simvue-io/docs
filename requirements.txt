@@ -2,3 +2,4 @@ mkdocs-material
 click
 jinja2
 material-plausible-plugin
+PyYAML
