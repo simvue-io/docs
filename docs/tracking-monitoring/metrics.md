@@ -86,6 +86,18 @@ The Simvue server supports recording of CO2 emission estimates collected as addi
 !!! warning "Relative not absolute comparison"
   The values given by emission metrics should not be taken as accurate representations of the exact CO2 emission. These values are intended only to demonstrate the relative impact different choices can have (e.g. aborting simulations based on termination criteria) in terms of environmental impact.
 
+#### Calculation
+
+The CPU/GPU percentage used for calculating emissions is the percentage of CPU/GPU time the monitored processes used during the interval between the measurement and the current time. Firstly the total power consumption, $P$, is calculated:
+
+$$P = \frac{\mathrm{TDP}_{\mathrm{CPU}}\mathrm{CPU}_{\%} + \mathrm{TDP}_{\mathrm{GPU}}\overline{\mathrm{GPU}_{\%}}}{100(N_{\mathrm{GPU}} + 1)},$$
+
+where $\mathrm{TDP}_{\mathrm{CPU}}$, $\mathrm{TDP}_{\mathrm{GPU}}$, $\mathrm{\mathrm{CPU}}_{\%}$, $\overline{\mathrm{GPU}_{\%}}$, $N_{\mathrm{GPU}}$ are the CPU TDP, GPU TDP, CPU percentage, average GPU percentage across all GPUs, and the number of GPUs respectively. The equivalent $\mathrm{CO}_{2}$ production in kg is then calculated as: 
+
+$$\mathrm{eqCO}_{2} = PI_{\mathrm{C}}\Delta t,$$
+
+where $I_{\mathrm{C}}$ is the carbon intensity and $\Delta t$ the time interval of the measurement.
+
 #### Configuration
 
 To use the feature you will need to provide a CO2 Signal API token available [here](https://www.co2signal.com/), and update your `simvue.toml` configuration file to include an additional `eco` section:
