@@ -112,6 +112,14 @@ intensity_refresh_interval = "2 days" # or alternatively 172800
 local_data_directory = "/home/shared/simvue_cache"
 ```
 
+Finally you can skip use of the CO2 Signal API altogether by specifying a value for the CO2 intensity within the configuration file:
+
+```toml
+[eco]
+...
+co2_intensity = 0.04
+```
+
 #### Enabling for Runs
 
 Emission metrics are disabled by default, but can be enabled using the `config` method:
