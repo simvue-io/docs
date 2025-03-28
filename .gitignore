@@ -1,5 +1,5 @@
 .venv
-docs/reference/*.md
-simvue.toml
-venv/
 site/
+venv/
+simvue.toml
+docs/reference/
