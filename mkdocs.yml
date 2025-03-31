@@ -78,6 +78,12 @@ nav:
   - OpenFOAM: examples/openfoam.md
   - MOOSE: examples/moose.md
   - FDS: examples/fds.md
+- Tools:
+  - Command Line Interface:
+    - Overview: tools/simvue-cli/overview.md
+    - Interacting with Runs: tools/simvue-cli/interacting_with_runs.md
+    - Interacting with Alerts: tools/simvue-cli/interacting_with_alerts.md
+    - Utilities: tools/simvue-cli/utilities.md
 - Development:
   - Low Level API: development/low_level_api.md
 - FAQ:
