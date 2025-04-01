@@ -84,7 +84,7 @@ calling the `init` method.
 The Simvue server supports recording of CO2 emission estimates collected as additional metrics by the `simvue.Run` class. The feature makes use of the [CO2 signal API](https://docs.co2signal.com/#introduction) to obtain a CO2 intensity value for user's current region, using values of CPU and GPU percentage utilisation to then calculate a rough estimate for the amount of equivalent CO2 a run has produced.
 
 !!! warning "Relative not absolute comparison"
-  The values given by emission metrics should not be taken as accurate representations of the exact CO2 emission. These values are intended only to demonstrate the relative impact different choices can have (e.g. aborting simulations based on termination criteria) in terms of environmental impact.
+    The values given by emission metrics should not be taken as accurate representations of the exact CO2 emission. These values are intended only to demonstrate the relative impact different choices can have (e.g. aborting simulations based on termination criteria) in terms of environmental impact.
 
 #### Calculation
 

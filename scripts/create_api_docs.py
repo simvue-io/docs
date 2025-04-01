@@ -97,7 +97,7 @@ def parse_numpydoc(
             continue
 
         if log_section == "parameters":
-            if re.findall(r".+:\s*.+", line):
+            if re.findall(r".+:\s*.+", line) and not line.startswith(" "):
                 name, type_var = (i.strip() for i in line.split(":"))
                 default_str = None
                 annotation = None
@@ -133,6 +133,9 @@ def parse_numpydoc(
                 if line.strip().startswith("*") and "-" in line:
                     line_components = line.replace("*", "").split("-")
                     line = f"&emsp;`{line_components[0].strip()}` - {line_components[1].strip()}"
+                    params[name]["description"] += f"{line}<br>"
+                elif line.startswith(" "):
+                    line_components = line.strip()
                     params[name]["description"] += f"{line}<br>"
         elif log_section == "returns":
             returns.append(line.strip())
