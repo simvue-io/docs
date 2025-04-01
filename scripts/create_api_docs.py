@@ -134,6 +134,9 @@ def parse_numpydoc(
                     line_components = line.replace("*", "").split("-")
                     line = f"&emsp;`{line_components[0].strip()}` - {line_components[1].strip()}"
                     params[name]["description"] += f"{line}<br>"
+                elif line.startswith(" "):
+                    line_components = line.strip()
+                    params[name]["description"] += f"{line}<br>"
         elif log_section == "returns":
             returns.append(line.strip())
         elif log_section == "yields":
