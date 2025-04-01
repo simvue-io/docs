@@ -1,7 +1,7 @@
-# Interacting with Alerts
-The following commands provide interaction with Simvue alerts, including creation of user defined alerts.
+# Interacting with Folders
+The following commands provide interaction with Simvue folders.
 
-## Listing Alerts
+## Listing Folders
 
 To list alerts on the server execute:
 
@@ -17,12 +17,8 @@ features a number of flags which can be used to expand on this information:
 |`--format`|Display format of table, see help string.|`plain`|
 |`--enumerate`|Adds an additional enumeration column to the output.|`False`|
 |`--count`|Set the number of results to return.|`20`|
-|`--auto`|Show if run tag auto-assign is enabled.|`False`|
-|`--run-tags`|Show tags automatically assigned from runs.|`False`|
-|`--enabled`|Show if alert is enabled.|`False`|
-|`--source`|Show alert source.|`False`|
-|`--notification`|Show notification setting.|`False`|
-|`--abort`|Show if alert can abort runs.|`False`|
+|`--path`|Display the folder path.|`False`|
+|`--tags`|Display folder tags.|`False`|
 |`--name`|Display the name of each run.|`False`|
 |`--created`|Display the created timestamp.|`False`|
 |`--description`|Display the description for each run.|`False`|
