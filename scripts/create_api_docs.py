@@ -97,7 +97,7 @@ def parse_numpydoc(
             continue
 
         if log_section == "parameters":
-            if re.findall(r".+:\s*.+", line):
+            if re.findall(r".+:\s*.+", line) and not line.startswith(" "):
                 name, type_var = (i.strip() for i in line.split(":"))
                 default_str = None
                 annotation = None
