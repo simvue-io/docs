@@ -25,63 +25,33 @@ features a number of flags which can be used to expand on this information:
 |`--sort-by`|Column to sort by `created`, `started`, `endtime`, `modified`, `name`.<br>Can be called more than once.|`['created']`|
 |`--reverse`|Reverse the sorting order.|`False`|
 
-For example:
+!!! example
 
-```sh
-$ simvue alert list --name --count 5 --format fancy_grid
-╒════════════════════════╤══════════════════════════════╕
-│ id                     │ name                         │
-╞════════════════════════╪══════════════════════════════╡
-│ mwuPeAmeCC3k366Y3rBdK  │ cli_alert_3846f4a1           │
-├────────────────────────┼──────────────────────────────┤
-│ EKtnYnGWWBz99UoJQRpMR  │ cli_alert_8c88d3f9           │
-├────────────────────────┼──────────────────────────────┤
-│ Wm7hy5PVdkMyqC27xCb5T  │ alert_4                      │
-├────────────────────────┼──────────────────────────────┤
-│ VWD65miGqQQKUex7JQGXg  │ alert_3                      │
-├────────────────────────┼──────────────────────────────┤
-│ QmTiP9dCtpnfKz3Lar3vA  │ alert_2                      │
-╘════════════════════════╧══════════════════════════════╛
-```
+    ```sh
+    $ simvue folder list --path --name --count 2 --format fancy_grid
+    
+    ╒════════════════════════╤═══════════════╤════════╕
+    │ id                     │ path          │ name   │
+    ╞════════════════════════╪═══════════════╪════════╡
+    │ XXXXXXXXXXXXXXXXXXXXX  │ /             │ root   │
+    ╞════════════════════════╪═══════════════╪════════╡
+    │ XXXXXXXXXXXXXXXXXXXXX  │ /simvue_tests │ test   │
+    ╘════════════════════════╧═══════════════╧════════╛
+    ```
 
 ## JSON View
-All available information for a run can be obtained using the `json` sub-command:
+All available information for a folder can be obtained using the `json` sub-command:
 
 ```sh
-simvue alert json <ALERT-ID>
+simvue folder json <ALERT-ID>
 ```
 
 this will return a JSON dump of the response from the server for the given alert. 
 
-As commands are designed to work together, as an example we can view and query the metadata for the latest Simvue alert using the tool [`jq`](https://jqlang.org/download/) by executing:
+!!! example "Combining Commands"
 
-```sh
-simvue alert list --count 1 | simvue run json | jq '.source'
-```
-
-## Creating and Removing Alerts
-
-
-### Creating a User Alert
-
-User alerts can be created on the command line, these are alerts which are manually updated by the user as opposed to being based on metrics or events:
-
-```sh
-simvue alert create
-```
-
-The command has the following options:
-
-|**Option**|**Description**|**Default**|
-|------|-----------|-------|
-|`--abort`|The alert can abort runs.|`False`|
-|`--description`|Description for the alert.|`None`|
-|`--email`|Add email notification to this alert.|`False`|
-
-### Removing an Alert
-
-Alerts can be removed by their identifier:
-
-```sh
-simvue alert remove <RUN-ID>
-```
+    As commands are designed to work together, as an example we can view and query the metadata for the latest Simvue folder using the tool [`jq`](https://jqlang.org/download/) by executing:
+    
+    ```sh
+    simvue folder list --count 1 | simvue folder json | jq '.tags'
+    ```

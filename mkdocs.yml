@@ -81,9 +81,14 @@ nav:
 - Tools:
   - Command Line Interface:
     - Overview: tools/simvue-cli/overview.md
-    - Interacting with Runs: tools/simvue-cli/interacting_with_runs.md
-    - Interacting with Alerts: tools/simvue-cli/interacting_with_alerts.md
+    - Runs: tools/simvue-cli/interacting_with_runs.md
+    - Alerts: tools/simvue-cli/interacting_with_alerts.md
+    - Folders: tools/simvue-cli/interacting_with_folders.md
+    - Artifacts: tools/simvue-cli/interacting_with_artifacts.md
+    - Tags: tools/simvue-cli/interacting_with_tags.md
+    - Storage: tools/simvue-cli/interacting_with_storage.md
     - Utilities: tools/simvue-cli/utilities.md
+    - Administration: tools/simvue-cli/administration.md
 - Development:
   - Low Level API: development/low_level_api.md
 - FAQ:

@@ -27,22 +27,22 @@ features a number of flags which can be used to expand on this information:
 |`--sort-by`|Column to sort by `created`, `started`, `endtime`, `modified`, `name`.<br>Can be called more than once.|`['created']`|
 |`--reverse`|Reverse the sorting order.|`False`|
 
-For example:
+!!! example
 
-```sh
-$ simvue run list --name --count 5 --format fancy_grid
-╒════════════════════════╤══════════════════════════════════════════════╕
-│ id                     │ name                                         │
-╞════════════════════════╪══════════════════════════════════════════════╡
-│ nvy3XnDGa7NSe4Es5HPi2X │ mild-bassoon                                 │
-├────────────────────────┼──────────────────────────────────────────────┤
-│ AyZ2KATcFxXBGRFzmcP59U │ test_completion_callbacks_trigger_set        │
-├────────────────────────┼──────────────────────────────────────────────┤
-│ bHbRFfpzgSwuPAmXch9xTj │ test_completion_trigger_set                  │
-├────────────────────────┼──────────────────────────────────────────────┤
-│ Tf7v4NvHWCLmAzcmTXgNy2 │ test_completion_callbacks_var_change         │
-╘════════════════════════╧══════════════════════════════════════════════╛
-```
+    ```sh
+    $ simvue run list --name --count 5 --format fancy_grid
+    ╒════════════════════════╤══════════════════════════════════════════════╕
+    │ id                     │ name                                         │
+    ╞════════════════════════╪══════════════════════════════════════════════╡
+    │ XXXXXXXXXXXXXXXXXXXXX  │ mild-bassoon                                 │
+    ├────────────────────────┼──────────────────────────────────────────────┤
+    │ XXXXXXXXXXXXXXXXXXXXX  │ test_completion_callbacks_trigger_set        │
+    ├────────────────────────┼──────────────────────────────────────────────┤
+    │ XXXXXXXXXXXXXXXXXXXXX  │ test_completion_trigger_set                  │
+    ├────────────────────────┼──────────────────────────────────────────────┤
+    │ XXXXXXXXXXXXXXXXXXXXX  │ test_completion_callbacks_var_change         │
+    ╘════════════════════════╧══════════════════════════════════════════════╛
+    ```
 
 ## JSON View
 All available information for a run can be obtained using the `json` sub-command:
@@ -53,11 +53,14 @@ simvue run json <RUN-ID>
 
 this will return a JSON dump of the response from the server for the given run. 
 
-As commands are designed to work together, as an example we can view and query the metadata for the latest Simvue run using the tool [`jq`](https://jqlang.org/download/) by executing:
 
-```sh
-simvue run list --count 1 | simvue run json | jq '.metadata'
-```
+!!! example "Combining Commands"
+
+    As commands are designed to work together, as an example we can view and query the metadata for the latest Simvue run using the tool [`jq`](https://jqlang.org/download/) by executing:
+    
+    ```sh
+    simvue run list --count 1 | simvue run json | jq '.metadata'
+    ```
 
 ## Modifying Runs
 
@@ -95,10 +98,12 @@ simvue run log.event T6xPreaB9cX3KafqkRfQ "The rain in Spain falls mainly on the
 
 ### Logging Metrics
 
-Metrics can be logged to active runs using a JSON string. This is useful if running a simple shell script and wanting to forward outputs as metric values:
-```sh
-for i in {0..10}; do simvue run log.metrics T6xPreaB9cX3KafqkRfQ "{\"x\": $i}"; done
-```
+Metrics can be logged to active runs using a JSON string. This is useful if running a simple shell script and wanting to forward outputs as metric values.
+
+!!! example "BASH loop metric gathering"
+    ```sh
+    for i in {0..10}; do simvue run log.metrics T6xPreaB9cX3KafqkRfQ "{\"x\": $i}"; done
+    ```
 
 
 ## Creating, Closing and Removing Runs
@@ -152,36 +157,69 @@ simvue run remove <RUN-ID>
 
 ## Piping Commands Together
 
-In general the commands above have been designed to add simplicity in creating workflows. As an example scenario, say you
-had a terminal based command that returned an integer metric when executed, we could define a workflow in a script `demo.sh`:
+In general the commands above have been designed to add simplicity in creating workflows. 
+
+!!! example "Scripting"
+    As an example scenario, say you had a terminal based command that returned an integer metric when executed.
+    We could define a workflow in a script `demo.sh`: 
+
+    ```sh
+    #!/usr/bin/bash
+    set -e
+    
+    calculate_integer() {
+      echo $((RANDOM % (100 - 2) + 1))
+    }
+    
+    SIMVUE_RUN_ID=$(
+      simvue run create \
+        --name "My Test Simulation" \
+        --folder "/shell_demos" \
+        --timeout 100
+    )
+    
+    simvue run metadata $SIMVUE_RUN_ID '{"random_meta": "demo"}'
+    
+    for x_param in {5..10}; do
+      simvue run log.event $SIMVUE_RUN_ID "Running simulation with x=$x_param"
+      METRIC_VALUE=$(calculate_integer $x_param)
+      simvue run log.metrics $SIMVUE_RUN_ID "{\"x\": $x_param, \"y\": $METRIC_VALUE}"
+    done
+    
+    simvue run close $SIMVUE_RUN_ID
+    ```
+
+## Monitoring Stdin
+The CLI includes a command for creating a run and monitoring outputs from a process via stdin. This is for a very specific use case where
+the output is just a list of delimited values which can be directly read as metrics:
 
 ```sh
-#!/usr/bin/bash
-set -e
-
-calculate_integer() {
-  echo $((RANDOM % (100 - 2) + 1))
-}
-
-SIMVUE_RUN_ID=$(
-  simvue run create \
-    --name "My Test Simulation" \
-    --folder "/shell_demos" \
-    --timeout 100
-)
-
-simvue run metadata $SIMVUE_RUN_ID '{"random_meta": "demo"}'
-
-for x_param in {5..10}; do
-  simvue run log.event $SIMVUE_RUN_ID "Running simulation with x=$x_param"
-  METRIC_VALUE=$(calculate_integer $x_param)
-  simvue run log.metrics $SIMVUE_RUN_ID "{\"x\": $x_param, \"y\": $METRIC_VALUE}"
-done
-
-simvue run close $SIMVUE_RUN_ID
+<process> | simvue monitor
 ```
 
-## Creating Virtual Environments
+!!! example "A simple calculation script"
+    Say we have a script which generates $$x$$ and $$y$$ values and prints them to the command line:
+    ```sh
+    #!/usr/bin/bash
+    set -e
+    
+    dummy_sim() {
+      for i in {0..100}; do
+        echo "$i,$((RANDOM % (100 - 2) + 1))"
+      done
+    }
 
+    dummy_sim | simvue monitor --name "Test run" --delimiter ','
+    ```
 
+The command has additional options:
 
+|**Option**|**Description**|**Default**|
+|------|-----------|-------|
+|`--name`|Name to give to the created run.|`None`|
+|`--description`|Description for the run.|`None`|
+|`--tag`|Label the run with a tag.|`None`|
+|`--folder`|Folder to place this run.|`/`|
+|`--retention`|Time in seconds to keep this run.|`None`|
+|`--delimiter`|Specify the delimiter separating key from value|
+|`--environment`|Include the environment in metadata.|`False`|
