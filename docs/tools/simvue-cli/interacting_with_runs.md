@@ -204,6 +204,7 @@ the output is just a list of delimited values which can be directly read as metr
     set -e
     
     dummy_sim() {
+      echo "x,y"
       for i in {0..100}; do
         echo "$i,$((RANDOM % (100 - 2) + 1))"
       done
@@ -221,5 +222,5 @@ The command has additional options:
 |`--tag`|Label the run with a tag.|`None`|
 |`--folder`|Folder to place this run.|`/`|
 |`--retention`|Time in seconds to keep this run.|`None`|
-|`--delimiter`|Specify the delimiter separating key from value|
+|`--delimiter`|Specify the delimiter separating values.|
 |`--environment`|Include the environment in metadata.|`False`|
