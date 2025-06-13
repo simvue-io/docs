@@ -148,7 +148,10 @@ def parse_numpydoc(
         elif log_section == "raises":
             raises.append(line.strip())
         elif log_section == "examples":
-            examples.append(line)
+            current_indent_level = len(line) - len(line.lstrip())
+            examples.append(
+                f"{(current_indent_level - indent_level) * ' '}{line.strip()}"
+            )
         else:
             if re.findall(r"={3,}", line):
                 continue
