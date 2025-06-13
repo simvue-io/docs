@@ -74,6 +74,7 @@ def parse_numpydoc(
     raises: list[str] = []
     examples: list[str] = []
     params: dict[str, dict[str, str | None]] = {}
+    indent_level: int | None = None
 
     for i, line in enumerate(lines := input_text.splitlines()):
         if "Parameters" in line:
@@ -93,11 +94,14 @@ def parse_numpydoc(
             continue
         line = re.sub(r"-{3,}", "", line)
 
-        if not line:
+        if not line.strip():
             continue
 
         if log_section == "parameters":
-            if re.findall(r".+:\s*.+", line) and not line.startswith(" "):
+            current_indent_level = len(line) - len(line.lstrip())
+            if not indent_level:
+                indent_level = current_indent_level
+            if re.findall(r".+:\s*.+", line) and (current_indent_level <= indent_level):
                 name, type_var = (i.strip() for i in line.split(":"))
                 default_str = None
                 annotation = None
