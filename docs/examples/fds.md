@@ -320,6 +320,15 @@ This should open the GUI. To visualise the results:
 <source src="../images/smokeview_with_vents.mp4" type="video/mp4">
 </video>
 
+### Loading Simulations
+If you have historic FDS simulations which you want to load into Simvue without having to rerun them, you can use the `load()` method of the connector to upload the existing results into Simvue. As an example, see that we have a directory called `example_results` inside the docker container - this contains results for another FDS run, where we doubled the amount of air flowing through the vents compared to the simulation we ran above. To load these results, run this command inside the docker container
+
+```
+python load_results.py
+```
+
+Once the simulation has started, log into the web UI and open the run called `fds_simulation_powerful_vents`. You should see all of the information you would expect to find if you originally ran the simulation using Simvue, including appropriate metadata, artifacts, metrics and events.
+
 ### Comparing Simulations
 
 We can then use the above Python script to run a number of different scenarios, where we vary the time at which the vents are activated and the volume of air through them to determine the optimal setup. Feel free to try this yourself - edit the FDS input file using `nano input_with_vents.fds`, and change the following lines:
