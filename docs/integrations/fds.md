@@ -28,6 +28,8 @@ Then install the repository using `pip`:
 pip install simvue-fds
 ```
 
+### Launch a Simulation
+
 You can then use the `FDSRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.launch()`, passing in the following parameters:
 
 - `fds_input_file_path`: Path to the FDS input file. It is typically best practice to specify the full path to the file so that the run can find it, especially if specifying a different working directory below.
@@ -53,6 +55,26 @@ with FDSRun() as run:
       ['my_output.smv'],
    )
 ```
+
+### Load Existing Results
+
+If you performed an FDS simulation without Simvue, you can use the connector to extract information and load data into Simvue. To do this, stil use the `FDSRun` class as a context manager, in the same way that you would use the base Simvue `Run` class. Initialize the run, and then call `run.load()`, passing in the following parameters:
+
+- `results_dir`: The path to a directory of FDS results files
+- `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
+
+Your Python script may look something like this:
+```py
+from simvue_fds.connector import FDSRun
+
+with FDSRun() as run:
+   run.init("my_loaded_fds_run")
+
+   run.load(
+      "/path/to/my_results_dir",
+   )
+```
+
 ## Adding functionality
 You can extend your script to upload extra information which is specific to your simulation:
 
