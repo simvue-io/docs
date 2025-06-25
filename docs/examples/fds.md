@@ -74,6 +74,7 @@ To easily use Simvue to track your FDS simulations, a connector for the Simvue `
 - Track any variable values which are being output to a CSV file after each step, logging them as Metrics
 - Add the current Time Step and Simulation Time to the Events log
 - Upload selected results files as Output artifacts
+- Optionally parse 2D slices which are present in your results and upload the minimum, maximum and average of each slice as Metrics
 
 !!! further-docs
     For information on how to install and use the FDSRun connector, [^^see the full documentation here.^^](/integrations/fds)
@@ -175,7 +176,7 @@ Once we have setup our run, we must call the `launch()` method to start our FDS 
 - `fds_input_file_path`: Path to the FDS input file
 - `workdir_path`: Path to the directory where results will be stored
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
-- `slice_parse_quantity`: The FDS quantity for which to find any 2D slices saved by the simulation, and upload the min/max/average as metrics. Optional, leave blank to disable slice parsing. To use this feature, `WRITE_XYZ` must be true in your FDS config file. Note that for visibility, use 'SOOT VISIBILITY'.
+- `slice_parse_quantity`: The FDS quantity for which to find any 2D slices saved by the simulation, and upload the min/max/average as metrics. Optional, leave blank to disable slice parsing. To use this feature, `WRITE_XYZ` must be true in your FDS config file. Note that for visibility, use `'SOOT VISIBILITY'`.
 - `slice_parse_interval`: The interval (in minutes) at which to parse and upload 2D slice data - optional, default is 1 minute
 - `slice_parse_ignore_zeros`: Whether to ignore values of zero in the 2D slices - useful if there are obstructions in the mesh like pillars. Optional, default is True.
 - `ulimit`: Value to set the stack size to - for Linux, this should be kept at the default value of 'unlimited'
