@@ -14,6 +14,7 @@ By default, the following things are tracked by the `FDSRun` connector:
 - Track the log file, uploading data produced as metadata and events
 - Track variables values output in the DEVC and HRR CSV files after each step, logging them as metrics
 - Track the DEVC and CTRL log, recording activations as metadata and events
+- Optionally detect 2D slices for a given FDS parameter and record the average, mean and max for each slice as metrics
 - Upload selected results files as Output artifacts
 
 ## Usage
@@ -36,6 +37,9 @@ You can then use the `FDSRun` class as a context manager, in the same way that y
 - `workdir_path`: Path to the directory where results will be stored - will be created if it does not already exist. Optional, uses the current working directory by default.
 - `clean_workdir`: Whether to remove FDS results files from the working directory provided above. Optional, by default False
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
+- `slice_parse_quantity`: The FDS quantity for which to find any 2D slices saved by the simulation, and upload the min/max/average as metrics. Optional, leave blank to disable slice parsing. To use this feature, `WRITE_XYZ` must be true in your FDS config file. Note that for visibility, use 'SOOT VISIBILITY'.
+- `slice_parse_interval`: The interval (in minutes) at which to parse and upload 2D slice data - optional, default is 1 minute
+- `slice_parse_ignore_zeros`: Whether to ignore values of zero in the 2D slices - useful if there are obstructions in the mesh like pillars. Optional, default is True.
 - `ulimit`: Value to set the stack size to - for Linux, this should be kept at the default value of 'unlimited'
 - `fds_env_vars`: A dictionary of any environment variables to pass to the FDS application on startup (optional)
 - `run_in_parallel`: Whether to use MPI to run the FDS job in parallel, by fdefault False
@@ -62,6 +66,8 @@ If you performed an FDS simulation without Simvue, you can use the connector to 
 
 - `results_dir`: The path to a directory of FDS results files
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
+- `slice_parse_quantity`: The FDS quantity for which to find any 2D slices saved by the simulation, and upload the min/max/average as metrics. Optional, leave blank to disable slice parsing. To use this feature, `WRITE_XYZ` must be true in your FDS config file. Note that for visibility, use 'SOOT VISIBILITY'.
+- `slice_parse_ignore_zeros`: Whether to ignore values of zero in the 2D slices - useful if there are obstructions in the mesh like pillars. Optional, default is True.
 
 Your Python script may look something like this:
 ```py

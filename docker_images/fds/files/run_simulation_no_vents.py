@@ -30,9 +30,21 @@ with FDSRun() as run:
         threshold=3,
         trigger_abort=True,
     )
+    
+    run.create_metric_threshold_alert(
+        name="average_visibility_below_three_metres",
+        metric="soot_visibility.z.2_0.avg",
+        frequency=1,
+        window=1,
+        rule="is below",
+        threshold=3,
+        trigger_abort=True,
+    )
 
     run.launch(
         fds_input_file_path="/workdir/input_no_vents.fds",
         workdir_path=f"results_no_vents",
         clean_workdir=True,
+        slice_parse_quantity = "SOOT VISIBILITY",
+
     )
