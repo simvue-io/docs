@@ -1,51 +1,132 @@
+edit_uri: ''
+extra:
+  analytics:
+    domain: docs.simvue.io
+    provider: plausible
+    src: https://plausible.uryisv.cloud/js/plausible.js
+extra_css:
+- stylesheets/extra.css
+extra_javascript:
+- javascripts/mathjax.js
+- https://polyfill.io/v3/polyfill.min.js?features=es6
+- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+markdown_extensions:
+- pymdownx.highlight
+- pymdownx.inlinehilite
+- admonition
+- def_list
+- attr_list
+- md_in_html
+- pymdownx.details
+- pymdownx.caret
+- pymdownx.superfences:
+    custom_fences:
+    - class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format ''
+      name: mermaid
+- pymdownx.highlight:
+    anchor_linenums: true
+- toc:
+    permalink: true
+- pymdownx.arithmatex:
+    generic: true
+nav:
+- Home:
+  - Welcome: index.md
+  - Concepts: home/concepts.md
+  - Terminology: home/terminology.md
+- Introduction: introduction.md
+- Tracking & monitoring:
+  - Getting started: tracking-monitoring/getting-started.md
+  - Overview: tracking-monitoring/overview.md
+  - Configuration: tracking-monitoring/configuration.md
+  - Folders: tracking-monitoring/folders.md
+  - Metrics: tracking-monitoring/metrics.md
+  - Events: tracking-monitoring/events.md
+  - Artifacts: tracking-monitoring/artifacts.md
+  - Alerts: tracking-monitoring/alerts.md
+  - Launching processes: tracking-monitoring/launching_processes.md
+  - Logging handler: tracking-monitoring/logging-handler.md
+- Analysis:
+  - Retrieving runs: analysis/retrieving-runs.md
+  - Folders: analysis/folders.md
+  - Metadata: analysis/metadata.md
+  - Metrics: analysis/metrics.md
+  - Events: analysis/events.md
+  - Artifacts: analysis/artifacts.md
+- Integrations:
+  - Introduction: integrations/introduction.md
+  - Tensorflow Plugin: integrations/tensorflow.md
+  - Custom Connector: integrations/generic.md
+  - MOOSE Connector: integrations/moose.md
+  - Openfoam Connector: integrations/openfoam.md
+  - FDS Connector: integrations/fds.md
+- Tutorials:
+  - Tutorial 1 - Basic Functionality:
+    - Introduction: tutorial_basic/introduction.md
+    - Tracking & Monitoring: tutorial_basic/tracking-and-monitoring.md
+    - Analysis: tutorial_basic/analysis.md
+    - Conclusion: tutorial_basic/conclusion.md
+  - Tutorial 2 - Advanced Functionality:
+    - Introduction: tutorial_advanced/introduction.md
+    - Defining The Problem: tutorial_advanced/defining-the-problem.md
+    - Tracking The Console Log: tutorial_advanced/tracking-the-log.md
+    - Tracking Results: tutorial_advanced/tracking-results.md
+    - Conclusion: tutorial_advanced/conclusion.md
+- Examples:
+  - Tensorflow: examples/tensorflow.md
+  - OpenFOAM: examples/openfoam.md
+  - MOOSE: examples/moose.md
+  - FDS: examples/fds.md
+- Tools:
+  - Command Line Interface:
+    - Overview: tools/simvue-cli/overview.md
+    - Runs: tools/simvue-cli/interacting_with_runs.md
+    - Alerts: tools/simvue-cli/interacting_with_alerts.md
+    - Folders: tools/simvue-cli/interacting_with_folders.md
+    - Artifacts: tools/simvue-cli/interacting_with_artifacts.md
+    - Tags: tools/simvue-cli/interacting_with_tags.md
+    - Storage: tools/simvue-cli/interacting_with_storage.md
+    - Utilities: tools/simvue-cli/utilities.md
+    - Administration: tools/simvue-cli/administration.md
+- Development:
+  - Low Level API: development/low_level_api.md
+- FAQ:
+  - General: faq/general.md
+- Reference:
+  - The Client class: reference/client.md
+  - The Run class: reference/run.md
+  - Low Level API:
+    - api.objects.Run: reference/api_objects_run.md
+    - api.objects.Artifact: reference/api_objects_artifact.md
+    - api.objects.FileArtifact: reference/api_objects_fileartifact.md
+    - api.objects.ObjectArtifact: reference/api_objects_objectartifact.md
+    - api.objects.Metrics: reference/api_objects_metrics.md
+    - api.objects.Events: reference/api_objects_events.md
+    - api.objects.Stats: reference/api_objects_stats.md
+    - api.objects.Storage: reference/api_objects_storage.md
+    - api.objects.S3Storage: reference/api_objects_s3storage.md
+    - api.objects.FileStorage: reference/api_objects_filestorage.md
+plugins:
+- material-plausible
+- search
+repo_url: https://github.com/simvue-io
 site_name: simvue
 theme:
-  name: material
+  favicon: images/favicon.png
   features:
-    - navigation.tabs
-  palette:
-    - scheme: default
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - search.suggest
+  - content.code.copy
   logo: images/logo.png
-nav:
-  - Home:
-    - Welcome: index.md
-    - Concepts: concepts.md
-  - Introduction: introduction.md
-  - Tracking & monitoring:
-    - Getting started: python-client/getting-started.md
-    - Overview: python-client/overview.md
-    - Configuration: python-client/configuration.md
-    - Folders: python-client/folders.md
-    - Metrics: python-client/metrics.md
-    - Events: python-client/events.md
-    - Artifacts: python-client/artifacts.md
-    - Alerts: python-client/alerts.md
-    - Logging handler: python-client/logging-handler.md
-    - Obtaining data: python-client/obtaining-data.md
-  - Reference:
-    - The Run class: reference/run.md
-    - The Client class: reference/client.md
-  - Examples:
-    - Tensorflow: examples/basic-tensorflow.md
-    - OpenFOAM: examples/openfoam.md
-  - FAQ:
-    - General: faq/general.md
-repo_url: https://github.com/simvue-io
-edit_uri: ""
-markdown_extensions:
-  - admonition
-  - def_list
-  - attr_list
-  - md_in_html
-  - pymdownx.details
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - toc:
-      permalink: true
-extra_css:
-  - stylesheets/extra.css
+  name: material
+  palette:
+  - scheme: default
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  - scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode

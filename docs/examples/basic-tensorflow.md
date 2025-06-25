@@ -12,23 +12,23 @@ The code is based on the dynamic recurrent neural network example from [here](ht
 ## Running the code
 
 To run this example, firstly clone the Simvue client GitHub repository:
-```
+```sh
 git clone https://github.com/simvue-io/client
 cd client/examples
 ```
 Create a virtual environment (Linux):
-```
+```sh
 python3 -m venv venv
 source venv/bin/activate
 ```
 Create a virtual environment (Windows):
-```
+```sh
 python3 -m venv venv
 venv\Scripts\activate
 ```
 
 Install the required dependencies:
-```
+```sh
 pip install --upgrade pip
 pip install tensorflow simvue
 ```
@@ -36,14 +36,14 @@ Ensure that Simvue is configured properly, for example by creating a `.simvue.in
 in the UI for more information.
 
 Change directory to Tensorflow folder (cd Tensorflow) and run the code:
-```
+```sh
 python3 dynamic_rnn.py
 ```
 
 ## Explanation
 
 To begin with we import the required class:
-```
+```python
 from simvue import Run
 ```
 We next initialise the run and specify metadata:

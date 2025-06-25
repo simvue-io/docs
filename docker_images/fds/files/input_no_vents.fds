@@ -1,0 +1,30 @@
+# Define name of simulation, which will be the prefix of all output files
+&HEAD CHID='no_vents', TITLE='no_vents' /
+
+&MISC MAXIMUM_VISIBILITY=10. /
+
+# Define the room as a 3m x 4m x 3m cube
+&MESH XB= 0, 3, 0, 4, 0, 3, IJK= 30, 40, 30 /
+
+# Simulate the fire for 60 seconds, output results every second
+&TIME T_END=60. /
+&DUMP NFRAMES=60 /
+
+# Define the type of fuel for the fire
+&REAC ID = 'propane reaction',
+SOOT_YIELD=0.03,
+CO_YIELD=0.05,
+FUEL='PROPANE'/
+
+# Create an obstruction which will function as the fire, HRRPUA = Heat Release Rate per Unit Area
+&OBST XB= 1.3, 1.7, 1.8, 2.2, 0, 0.5, COLOR='RED', SURF_ID='fire1' /
+&SURF ID='fire1', HRRPUA=150 /
+
+# Define slice outputs - generates a 2D slice at y=2, showing the air velocity, temperature and volume of soot
+&SLCF PBY = 2, QUANTITY='VELOCITY', VECTOR=.TRUE./
+&SLCF PBY = 2, QUANTITY='TEMPERATURE'/
+
+# Define device outputs - outputs the flows through the vents, temperature and visibility to a CSV file every second
+&DEVC XB=1.5,1.5,0,0,1.5,1.5, QUANTITY='VISIBILITY', ID='eye_level_visibility' /
+&DEVC XYZ=1.5,0,1.5, QUANTITY='TEMPERATURE', ID='air_temperature' /
+&TAIL /
