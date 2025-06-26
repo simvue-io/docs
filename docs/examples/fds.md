@@ -344,7 +344,11 @@ If you have historic FDS simulations which you want to load into Simvue without 
 python load_results.py
 ```
 
-Once the simulation has started, log into the web UI and open the run called `fds_simulation_powerful_vents`. You should see all of the information you would expect to find if you originally ran the simulation using Simvue, including appropriate metadata, artifacts, metrics and events.
+Once the simulation has started, log into the web UI and open the run called `fds_simulation_powerful_vents`. You should see all of the information you would expect to find if you originally ran the simulation using Simvue, including appropriate metadata, artifacts, metrics and events. Importantly if we look at the 2D slice at `z=2.0` which is tracking the visibility at eye level across the entire room, we can see that with this increased air flow the average visibility in the room quickly recovers as the smoke is blown away:
+
+<figure markdown>
+  ![The Simvue run UI, showing the maximum, minimum and average measurements of soot visibility across a 2D slice at z=2.](images/fds_powerful_vents_visibility.png){ width="1000" }
+</figure>
 
 ### Comparing Simulations
 

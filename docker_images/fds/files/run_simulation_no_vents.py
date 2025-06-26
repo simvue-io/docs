@@ -43,7 +43,7 @@ with FDSRun() as run:
 
     run.launch(
         fds_input_file_path="/workdir/input_no_vents.fds",
-        workdir_path=f"results_no_vents",
+        workdir_path="results_no_vents",
         clean_workdir=True,
         slice_parse_quantity = "SOOT VISIBILITY",
 

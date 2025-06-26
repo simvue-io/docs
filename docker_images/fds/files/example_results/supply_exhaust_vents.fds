@@ -1,14 +1,12 @@
 # Define name of simulation, which will be the prefix of all output files
 &HEAD CHID='supply_exhaust_vents', TITLE='supply_exhaust_vents' /
 
-&MISC MAXIMUM_VISIBILITY=10. /
-
 # Define the room as a 3m x 4m x 3m cube
 &MESH XB= 0, 3, 0, 4, 0, 3, IJK= 30, 40, 30 /
 
 # Simulate the fire for 60 seconds, output results every second
 &TIME T_END=60. /
-&DUMP NFRAMES=60 /
+&DUMP NFRAMES=60, WRITE_XYZ=.TRUE. /
 
 # Define the type of fuel for the fire
 &REAC ID = 'propane reaction',
@@ -37,6 +35,7 @@ FUEL='PROPANE'/
 # Define slice outputs - generates a 2D slice at y=2, showing the air velocity and temperature
 &SLCF PBY = 2, QUANTITY='VELOCITY', VECTOR=.TRUE./
 &SLCF PBY = 2, QUANTITY='TEMPERATURE'/
+&SLCF PBZ = 2, QUANTITY='VISIBILITY' /
 
 # Define device outputs - outputs the flows through the vents, temperature and visibility to a CSV file every second
 &DEVC XB=0,0,1,3,0.2,0.6, QUANTITY='VOLUME FLOW', ID='flow_volume_supply' /

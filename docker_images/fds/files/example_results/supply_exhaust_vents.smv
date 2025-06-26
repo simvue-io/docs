@@ -5,7 +5,7 @@ FDSVERSION
 FDS-6.9.1-0-g889da6a-release
 
 INPF
- input_with_vents.fds
+ vents.fds
 
 REVISION
 Revisio                                                                                                                                                                                                                                                        
@@ -347,6 +347,8 @@ VENT
 CVENT
     0
 
+XYZ
+ supply_exhaust_vents_1.xyz
 SMOKF3D     1   8700.000
  supply_exhaust_vents_1_1.s3d
  SOOT DENSITY
@@ -387,6 +389,11 @@ SLCF     1 # STRUCTURED &     0    30    20    20     0    30 !      2      0
  TEMPERATURE
  temp
  C
+SLCF     1 # STRUCTURED &     0    30     0    40    20    20 !      3      0
+ supply_exhaust_vents_1_6.sf
+ SOOT VISIBILITY
+ VIS_C
+ m
 DEVICE_ACT     timer
      1      0.00     0
 DEVICE_ACT     flow_volume_supply

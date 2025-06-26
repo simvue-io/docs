@@ -10,4 +10,5 @@ with FDSRun() as run:
 
     run.load(
         results_dir="example_results",
+        slice_parse_quantity = "SOOT VISIBILITY"
     )
