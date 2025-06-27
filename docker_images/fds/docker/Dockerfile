@@ -9,7 +9,11 @@ apt install -y \
     python3-pip \
     libxmu6 \
     libglu1 \
-    libgl1 && \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 && \
 apt-get install wget && \
 apt clean
 COPY files /workdir
