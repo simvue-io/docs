@@ -74,6 +74,7 @@ To easily use Simvue to track your FDS simulations, a connector for the Simvue `
 - Track any variable values which are being output to a CSV file after each step, logging them as Metrics
 - Add the current Time Step and Simulation Time to the Events log
 - Upload selected results files as Output artifacts
+- Optionally parse 2D slices which are present in your results and upload the minimum, maximum and average of each slice as Metrics
 
 !!! further-docs
     For information on how to install and use the FDSRun connector, [^^see the full documentation here.^^](/integrations/fds)
@@ -110,11 +111,12 @@ FUEL='PROPANE'/
 &SURF ID='fire1', HRRPUA=150 /
 ```
 
-We can then define the types of outputs which we want FDS to produce - these will be tracked automatically by Simvue. In our case, we will define some 2D slices at the position `y=2` which show us the air velocity and temperature:
+We can then define the types of outputs which we want FDS to produce - these will be tracked automatically by Simvue. In our case, we will define some 2D slices at the position `y=2` which show us the air velocity and temperature, and a slice at `z=2` which shows us the visibility distance at eye level throughout the room.
 
 ```
 &SLCF PBY = 2, QUANTITY='VELOCITY', VECTOR=.TRUE./
 &SLCF PBY = 2, QUANTITY='TEMPERATURE'/
+&SLCF PBZ = 2, QUANTITY='VISIBILITY' /
 ```
 
 We will also imagine that we are standing by the (closed) door which is located in the centre of the front wall (that is, at position x=0, y=1.5). From this position, which is where a firefighter would enter the room, we want to measure the air temperature and visibility at roughly eye level (we will take this to be 1.5m):
@@ -131,14 +133,12 @@ We will also imagine that we are standing by the (closed) door which is located 
     # Define name of simulation, which will be the prefix of all output files
     &HEAD CHID='no_vents', TITLE='no_vents' /
 
-    &MISC MAXIMUM_VISIBILITY=10. /
-
     # Define the room as a 3m x 4m x 3m cube
     &MESH XB= 0, 3, 0, 4, 0, 3, IJK= 30, 40, 30 /
 
     # Simulate the fire for 60 seconds, output results every second
     &TIME T_END=60. /
-    &DUMP NFRAMES=60 /
+    &DUMP NFRAMES=60, WRITE_XYZ=.TRUE. /
 
     # Define the type of fuel for the fire
     &REAC ID = 'propane reaction',
@@ -153,6 +153,8 @@ We will also imagine that we are standing by the (closed) door which is located 
     # Define slice outputs - generates a 2D slice at y=2, showing the air velocity, temperature and volume of soot
     &SLCF PBY = 2, QUANTITY='VELOCITY', VECTOR=.TRUE./
     &SLCF PBY = 2, QUANTITY='TEMPERATURE'/
+    &SLCF PBZ = 2, QUANTITY='VISIBILITY' /
+
 
     # Define device outputs - outputs the flows through the vents, temperature and visibility to a CSV file every second
     &DEVC XB=1.5,1.5,0,0,1.5,1.5, QUANTITY='VISIBILITY', ID='eye_level_visibility' /
@@ -174,6 +176,9 @@ Once we have setup our run, we must call the `launch()` method to start our FDS 
 - `fds_input_file_path`: Path to the FDS input file
 - `workdir_path`: Path to the directory where results will be stored
 - `upload_files`: A list of results file names to be uploaded as Output artifacts - optional, will upload all results files if not specified
+- `slice_parse_quantity`: The FDS quantity for which to find any 2D slices saved by the simulation, and upload the min/max/average as metrics. Optional, leave blank to disable slice parsing. To use this feature, `WRITE_XYZ` must be true in your FDS config file. Note that for visibility, use `'SOOT VISIBILITY'`.
+- `slice_parse_interval`: The interval (in minutes) at which to parse and upload 2D slice data - optional, default is 1 minute
+- `slice_parse_ignore_zeros`: Whether to ignore values of zero in the 2D slices - useful if there are obstructions in the mesh like pillars. Optional, default is True.
 - `ulimit`: Value to set the stack size to - for Linux, this should be kept at the default value of 'unlimited'
 - `fds_env_vars`: A dictionary of any environment variables to pass to the FDS application on startup
 
@@ -211,10 +216,21 @@ Once we have setup our run, we must call the `launch()` method to start our FDS 
             trigger_abort=True
         )
 
+        run.create_metric_threshold_alert(
+            name="average_visibility_below_three_metres",
+            metric="soot_visibility.z.2_0.avg",
+            frequency=1,
+            window=1,
+            rule="is below",
+            threshold=3,
+            trigger_abort=True,
+        )
+
         run.launch(
             fds_input_file_path = "/workdir/input_no_vents.fds",
             workdir_path = f"results_no_vents",
-            clean_workdir = True
+            clean_workdir = True,
+            slice_parse_quantity = "SOOT VISIBILITY",
         )
 
     ```
@@ -232,6 +248,7 @@ Once the simulation has started, log into the web UI and open the run called `fd
 - The input file has been uploaded as an Artifact
 - Information from the input file has been uploaded as Metadata
 - A number of Metrics are being recorded and updated live, including the visibility and temperature
+- The 2D slice at `z=2` showing the visibility distance has been parsed, and the minimum, maximum and average values at each time step has been uploaded as a metric
 - The Events log is being updated with the step which the simulation is currently on
 
 Looking specifically at the Metrics, we can see that the air temperature is rising and the visibility is falling as the fire fills the room with heat and smoke. Set the graphs to display units of time by clicking selecting 'Time' in the 'X-axis units' dropdown in the top right. We can then see that after approximately 30 seconds of the fire burning, the temperature is above 100 degrees and the visibility is dropping below 3 metres.
@@ -319,6 +336,19 @@ This should open the GUI. To visualise the results:
 <video controls>
 <source src="../images/smokeview_with_vents.mp4" type="video/mp4">
 </video>
+
+### Loading Simulations
+If you have historic FDS simulations which you want to load into Simvue without having to rerun them, you can use the `load()` method of the connector to upload the existing results into Simvue. As an example, see that we have a directory called `example_results` inside the docker container - this contains results for another FDS run, where we doubled the amount of air flowing through the vents compared to the simulation we ran above. To load these results, run this command inside the docker container:
+
+```
+python load_results.py
+```
+
+Once the simulation has started, log into the web UI and open the run called `fds_simulation_powerful_vents`. You should see all of the information you would expect to find if you originally ran the simulation using Simvue, including appropriate metadata, artifacts, metrics and events. Importantly if we look at the 2D slice at `z=2.0` which is tracking the visibility at eye level across the entire room, we can see that with this increased air flow the average visibility in the room quickly recovers as the smoke is blown away:
+
+<figure markdown>
+  ![The Simvue run UI, showing the maximum, minimum and average measurements of soot visibility across a 2D slice at z=2.](images/fds_powerful_vents_visibility.png){ width="1000" }
+</figure>
 
 ### Comparing Simulations
 
