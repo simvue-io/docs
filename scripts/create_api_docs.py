@@ -101,7 +101,9 @@ def parse_numpydoc(
             current_indent_level = len(line) - len(line.lstrip())
             if not indent_level:
                 indent_level = current_indent_level
-            if re.findall(r".+:\s*.+", line) and (current_indent_level <= indent_level):
+            if re.findall(r"^\s*[\w\d\_]+\s*:\s*.+", line) and (
+                current_indent_level <= indent_level
+            ):
                 name, type_var = (i.strip() for i in line.split(":"))
                 default_str = None
                 annotation = None
